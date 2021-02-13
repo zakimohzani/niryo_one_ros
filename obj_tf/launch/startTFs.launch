@@ -1,6 +1,11 @@
 <launch>
-  <node pkg="obj_tf" type="broadcastObj.py" name="obj_tf_broadcaster"  output="screen">
-    <param name="scale_linear" value="0.5" type="double"/>
-    <param name="scale_angular" value="1.5" type="double"/>
-  </node>
+	<node pkg="obj_tf" type="broadcastObj.py" name="obj_tf_broadcaster"  output="screen">
+		<param name="scale_linear" value="0.5" type="double"/>
+		<param name="scale_angular" value="1.5" type="double"/>
+	</node>
+
+    <node pkg="tf" type="static_transform_publisher" name="neels_cam_tf_publisher" 
+          args="0.3 -0.8 0.5 0 0 0 world neels_cam 100">
+    </node>
+
 </launch>

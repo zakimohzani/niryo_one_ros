@@ -42,6 +42,9 @@ def broadcastObjectTf(name, x, y, z=0):
                      "/" + name,
                      "/conveyor_belt")
 
+def roboArmFollow(name):
+    pass
+
 def run():
     rospy.loginfo("Let's go")
 
@@ -60,8 +63,20 @@ def run():
         broadcastConveyorTf(positiony)
         # calc form Camera's frame where is the object's frame and input it 
         # below
+        # tf echo new_obj /camera
+        # store this data somewhere
         broadcastObjectTf('obj1', 0.05, -0.5)
         broadcastObjectTf('obj2', -0.05, -0.75)
+        
+        # also add it to moveit's planning scene
+        #box_pose = geometry_msgs.msg.PoseStamped()
+        #box_pose.header.frame_id = "panda_leftfinger"
+        #box_pose.pose.orientation.w = 1.0
+        #box_name = "box"
+        #scene.add_box(box_name, box_pose, size=(0.1, 0.1, 0.1))      
+        
+        roboArmFollow('obj1')               
+        
         rate.sleep()
 
 if __name__ == '__main__':
