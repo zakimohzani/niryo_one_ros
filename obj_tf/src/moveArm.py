@@ -73,22 +73,24 @@ def run():
 
 
 
-    rate = rospy.Rate(50)
+    rate = rospy.Rate(1000)
     startTime = rospy.get_time()    
+    
+    group.set_planning_time(0.1) # seconds
     
     while not rospy.is_shutdown():
 
         try:
             (trans,rot) = listener.lookupTransform('/world', '/obj1', rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
-            group.set_pose_target(start_pose)
-            
-            plan = group.go(wait=True)
-            # Calling `stop()` ensures that there is no residual movement
-            group.stop()
-            # It is always good to clear your targets after planning with poses.
-            # Note: there is no equivalent function for clear_joint_value_targets()
-            group.clear_pose_targets()
+#            group.set_pose_target(start_pose)
+#            
+#            plan = group.go(wait=True)
+#            # Calling `stop()` ensures that there is no residual movement
+#            group.stop()
+#            # It is always good to clear your targets after planning with poses.
+#            # Note: there is no equivalent function for clear_joint_value_targets()
+#            group.clear_pose_targets()
             continue
 
         # robot's frame is also world so we don't need any transform
@@ -102,7 +104,15 @@ def run():
     
         group.set_pose_target(target_pose)
         
-        plan = group.go(wait=True)
+        #plan = group.go(wait=True)
+        plan = group.plan()
+        
+        print("Plan output:")
+        #print(plan)        
+        print(len(plan.joint_trajectory.points))
+        
+        group.execute(plan, wait=True)
+        
         # Calling `stop()` ensures that there is no residual movement
         group.stop()
         # It is always good to clear your targets after planning with poses.
