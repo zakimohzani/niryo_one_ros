@@ -4,7 +4,59 @@ import rospy
 import time
 import tf
 from SimpleNamespace import SimpleNamespace
+from obj_tf.msg import ObjRecognised
 
+objTemplate = SimpleNamespace()
+objTemplate.name = ''
+objTemplate.x = 0 # pos relative to conveyor belt frame
+objTemplate.y = 0 # pos relative to conveyor belt frame
+objTemplate.z = 0
+objTemplate.height = 0
+
+class ObjRecogniser():
+    def __init__(self):
+        self.publisher = rospy.Publisher('/objDetected', ObjRecognised, queue_size=1)
+    
+    def emulateConveyorBelt(s):
+        rospy.Timer(rospy.Duration(5), s.emulateConveyorBeltCallback, oneshot=False)
+    
+    def emulateConveyorBeltCallback(s, event):
+        now = rospy.get_rostime()
+        rospy.loginfo("Current time %i %i", now.secs, now.nsecs)
+        detectedTime = now
+        print("Obj Found - Send mesg")
+        time2 = rospy.Time.now()
+        rospy.loginfo("Current time %i %i", time2.secs, time2.nsecs)
+        deltaT = time2 - detectedTime
+        print("microseconds taken to print previous line %i s  %i usec", deltaT.secs, deltaT.nsecs/1000)
+        
+        msg = ObjRecognised()
+        msg.detectedTime = detectedTime
+        msg.x = 1.1
+        msg.y = 2.2
+        msg.z = 3.3
+        
+        s.publisher.publish(msg)
+        
+
+    def addObjCallback(event):
+        print 'Timer called at ' + str(event.current_real)
+        
+        # what is the distance between conveyor belt and neels cam
+    #     listener = tf.TransformListener()
+    #    try:
+    #        (trans,rot) = listener.lookupTransform('/world', '/neels_cam', rospy.Time(0))
+    #    except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+    #        continue
+    #    (trans,rot) = listener.lookupTransform('/world', '/neels_cam', rospy.Time(0))
+        
+        
+        newObj.y = trans[1]
+    
+    
+    
+    
+    
 
 def broadcastConveyorTf(y):
     br = tf.TransformBroadcaster()
@@ -46,13 +98,20 @@ def roboArmFollow(name):
     pass
 
 def run():
+
+    objRecogniser = ObjRecogniser()
+    objRecogniser.emulateConveyorBelt()    
+    
     rospy.loginfo("Let's go")
 
     rate = rospy.Rate(1)
 
     conveyorSpeed = 0.01 # m / sec    
     
-    startTime = rospy.get_time()    
+    startTime = rospy.get_time()
+    
+    # start program to introduce items onto the belt
+    #rospy.Timer(rospy.Duration(5), addObjCallback)
     
     while not rospy.is_shutdown():
 
