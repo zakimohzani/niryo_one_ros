@@ -9,6 +9,9 @@ from obj_tf.msg import ObjRecognised
 class ObjRecogniser():
     def __init__(s):
         s.publisher = rospy.Publisher('/objDetected', ObjRecognised, queue_size=1)
+        
+        # for simulateObjRecognitionCallback        
+        s.flip = 1
     
     def simulateObjRecognition(s):
         rospy.Timer(rospy.Duration(5), s.simulateObjRecognitionCallback, oneshot=False)
@@ -27,9 +30,15 @@ class ObjRecogniser():
         
         msg = ObjRecognised()
         msg.detectedTime = detectedTime
-        msg.x = 1.1
-        msg.y = 2.2
-        msg.z = 3.3
+        
+        if s.flip == 1:
+            s.flip = -1
+        else:
+            s.flip = 1
+        
+        msg.x = s.flip*0.1
+        msg.y = 0
+        msg.z = 0.2
         
         s.publisher.publish(msg)
         
@@ -55,8 +64,8 @@ class ObjOnConveyorBeltListMaintainer:
         
         mapping = { "name": "obj" + str(s.number), \
                     "detectedTime" : msg.detectedTime, \
-                    "x": trans[0], \
-                    "y": trans[1] \
+                    "x": trans[0] + msg.x, \
+                    "y": trans[1] + msg.y \
                     }        
         s.number = s.number + 1
         s.list.append(mapping)

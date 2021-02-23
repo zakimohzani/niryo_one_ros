@@ -131,9 +131,45 @@ Visualization Manager:
           Value: false
         neels_cam:
           Value: true
+        obj0:
+          Value: true
         obj1:
           Value: true
+        obj10:
+          Value: true
+        obj11:
+          Value: true
+        obj12:
+          Value: true
+        obj13:
+          Value: true
+        obj14:
+          Value: true
+        obj15:
+          Value: true
+        obj16:
+          Value: true
+        obj17:
+          Value: true
+        obj18:
+          Value: true
+        obj19:
+          Value: true
         obj2:
+          Value: true
+        obj3:
+          Value: true
+        obj4:
+          Value: true
+        obj5:
+          Value: true
+        obj6:
+          Value: true
+        obj7:
+          Value: true
+        obj8:
+          Value: true
+        obj9:
           Value: true
         shoulder_link:
           Value: false
@@ -160,9 +196,45 @@ Visualization Manager:
                         tool_link:
                           {}
           conveyor_belt:
+            obj0:
+              {}
             obj1:
               {}
+            obj10:
+              {}
+            obj11:
+              {}
+            obj12:
+              {}
+            obj13:
+              {}
+            obj14:
+              {}
+            obj15:
+              {}
+            obj16:
+              {}
+            obj17:
+              {}
+            obj18:
+              {}
+            obj19:
+              {}
             obj2:
+              {}
+            obj3:
+              {}
+            obj4:
+              {}
+            obj5:
+              {}
+            obj6:
+              {}
+            obj7:
+              {}
+            obj8:
+              {}
+            obj9:
               {}
           neels_cam:
             {}
@@ -193,7 +265,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 2.563694
+      Distance: 6.99059534
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -208,10 +280,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.525398135
+      Pitch: 0.410398245
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.77723664
+      Yaw: 6.27542114
     Saved: ~
 Window Geometry:
   Displays:
