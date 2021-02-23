@@ -1,7 +1,7 @@
 moveit_setup_assistant_config:
   URDF:
     package: niryo_one_description
-    relative_path: urdf/niryo_one.urdf
+    relative_path: urdf/v2/niryo_one.urdf.xacro
   SRDF:
     relative_path: config/niryo_one.srdf
   CONFIG:
