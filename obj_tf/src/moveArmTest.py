@@ -68,6 +68,65 @@ def run():
     group.clear_pose_targets()
 
 
+
+    # lets go elsewhere
+    target_pose = geometry_msgs.msg.Pose()
+    target_pose.orientation.w = 1.0
+    target_pose.position.x = 0.2
+    target_pose.position.y = -0.2
+    target_pose.position.z = 0.2
+
+    group.set_pose_target(target_pose)
+    
+    #plan = group.go(wait=True)
+    plan = group.plan()
+    
+    print("Plan output:")
+    #print(plan)        
+    print(len(plan.joint_trajectory.points))
+    
+    group.execute(plan, wait=True)
+    
+    # Calling `stop()` ensures that there is no residual movement
+    group.stop()
+    # It is always good to clear your targets after planning with poses.
+    # Note: there is no equivalent function for clear_joint_value_targets()
+    group.clear_pose_targets()
+
+
+    # lets go elsewhere
+    target_pose = geometry_msgs.msg.Pose()
+    target_pose.orientation.w = 1.0
+    target_pose.position.x = -0.1
+    target_pose.position.y = -0.2
+    target_pose.position.z = 0.2
+
+    group.set_pose_target(target_pose)
+    
+    #plan = group.go(wait=True)
+    plan = group.plan()
+    
+    print("Plan output:")
+    #print(plan)        
+    print(len(plan.joint_trajectory.points))
+    
+    group.execute(plan, wait=True)
+    
+    # Calling `stop()` ensures that there is no residual movement
+    group.stop()
+    # It is always good to clear your targets after planning with poses.
+    # Note: there is no equivalent function for clear_joint_value_targets()
+    group.clear_pose_targets()
+
+
+
+
+
+
+
+
+
+
     # listen for objects now
     listener = tf.TransformListener()
 
@@ -96,28 +155,7 @@ def run():
         # robot's frame is also world so we don't need any transform
         
         
-        target_pose = geometry_msgs.msg.Pose()
-        target_pose.orientation.w = 1.0
-        target_pose.position.x = trans[0]
-        target_pose.position.y = trans[1]
-        target_pose.position.z = 0.2
-    
-        group.set_pose_target(target_pose)
-        
-        #plan = group.go(wait=True)
-        plan = group.plan()
-        
-        print("Plan output:")
-        #print(plan)        
-        print(len(plan.joint_trajectory.points))
-        
-        group.execute(plan, wait=True)
-        
-        # Calling `stop()` ensures that there is no residual movement
-        group.stop()
-        # It is always good to clear your targets after planning with poses.
-        # Note: there is no equivalent function for clear_joint_value_targets()
-        group.clear_pose_targets()
+
 
         simTime = rospy.get_time() - startTime
         t = simTime

@@ -1,0 +1,4 @@
+<launch>
+  <node pkg="obj_tf" type="moveArmCpp" name="move_arm_node"  output="screen">
+  </node>
+</launch>

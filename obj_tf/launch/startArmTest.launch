@@ -1,0 +1,6 @@
+<launch>
+  <node pkg="obj_tf" type="moveArmTest.py" name="move_arm_node"  output="screen">
+    <param name="scale_linear" value="0.5" type="double"/>
+    <param name="scale_angular" value="1.5" type="double"/>
+  </node>
+</launch>

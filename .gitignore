@@ -10,3 +10,6 @@ tmp_code_to_execute/
 *.egg-info
 *__pycache__
 /.project
+/abb/*
+/descartes/*
+/descartes_tutorials/*

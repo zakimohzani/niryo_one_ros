@@ -132,7 +132,7 @@ class ConveyorBelt:
 
     def simulateMovement(s):
         s.startTime = rospy.get_time()
-        s.speed = 0.30 # m/s
+        s.speed = 0.010 # m/s
         
         
     def broadcastConveyorTf(s, y):
