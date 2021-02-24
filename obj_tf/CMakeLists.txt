@@ -2,7 +2,14 @@ cmake_minimum_required(VERSION 3.0.2)
 project(obj_tf)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
+
+find_package(Eigen3 REQUIRED)
+
+# Eigen 3.2 (Wily) only provides EIGEN3_INCLUDE_DIR, not EIGEN3_INCLUDE_DIRS
+if(NOT EIGEN3_INCLUDE_DIRS)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -12,11 +19,26 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+
+  # below are the ones needed by moveit (copied from tutorial)
+  interactive_markers
+  moveit_core
+  moveit_visual_tools
+  moveit_ros_planning
+  moveit_ros_planning_interface
+  pluginlib
+  geometric_shapes
+  pcl_ros
+  pcl_conversions
+  rosbag
+  tf2_ros
+  tf2_eigen
+  tf2_geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
+find_package(Boost REQUIRED system filesystem date_time thread)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -103,11 +125,22 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+set(THIS_PACKAGE_INCLUDE_DIRS
+#  doc/interactivity/include
+)
+
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES obj_tf
+  LIBRARIES
+    interactivity_utils
+  INCLUDE_DIRS
+    ${THIS_PACKAGE_INCLUDE_DIRS}
   CATKIN_DEPENDS roscpp rospy message_runtime
-#  DEPENDS system_lib
+    moveit_core
+    moveit_visual_tools
+    moveit_ros_planning_interface
+    interactive_markers
+  DEPENDS
+    EIGEN3
 )
 
 ###########
@@ -116,10 +149,12 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
+include_directories(SYSTEM ${THIS_PACKAGE_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
+link_directories(${catkin_LIBRARY_DIRS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
@@ -131,6 +166,9 @@ include_directories(
 ## either from message generation or dynamic reconfigure
 add_executable(moveArmCpp src/moveArmCpp.cpp)
 add_dependencies(moveArmCpp ${moveArmCpp_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(moveArmCpp
+  ${catkin_LIBRARIES} ${Boost_LIBRARIES}
+)
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
@@ -148,9 +186,9 @@ add_dependencies(moveArmCpp ${moveArmCpp_EXPORTED_TARGETS} ${catkin_EXPORTED_TAR
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(moveArmCpp
-  ${catkin_LIBRARIES}
-)
+#target_link_libraries(moveArmCpp
+#  ${catkin_LIBRARIES}
+#)
 
 #############
 ## Install ##
@@ -206,3 +244,5 @@ target_link_libraries(moveArmCpp
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+    
