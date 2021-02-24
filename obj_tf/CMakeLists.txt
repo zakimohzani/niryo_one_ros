@@ -4,12 +4,12 @@ project(obj_tf)
 ## Compile as C++11, supported in ROS Kinetic and newer
 add_compile_options(-std=c++11)
 
-find_package(Eigen3 REQUIRED)
-
-# Eigen 3.2 (Wily) only provides EIGEN3_INCLUDE_DIR, not EIGEN3_INCLUDE_DIRS
-if(NOT EIGEN3_INCLUDE_DIRS)
-  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
-endif()
+#find_package(Eigen3 REQUIRED)
+#
+## Eigen 3.2 (Wily) only provides EIGEN3_INCLUDE_DIR, not EIGEN3_INCLUDE_DIRS
+#if(NOT EIGEN3_INCLUDE_DIRS)
+#  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+#endif()
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -21,24 +21,36 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
 
   # below are the ones needed by moveit (copied from tutorial)
-  interactive_markers
-  moveit_core
-  moveit_visual_tools
-  moveit_ros_planning
-  moveit_ros_planning_interface
-  pluginlib
-  geometric_shapes
-  pcl_ros
-  pcl_conversions
-  rosbag
-  tf2_ros
-  tf2_eigen
-  tf2_geometry_msgs
+#  interactive_markers
+#  moveit_core
+#  moveit_visual_tools
+#  moveit_ros_planning
+#  moveit_ros_planning_interface
+#  pluginlib
+#  geometric_shapes
+#  pcl_ros
+#  pcl_conversions
+#  rosbag
+#  tf2_ros
+#  tf2_eigen
+#  tf2_geometry_msgs
+
+  # list below is copied from
+  roslib
+  descartes_core
+  descartes_moveit
+  descartes_trajectory
+  descartes_planner
+  descartes_utilities
+  trajectory_msgs
+  tf
+  tf_conversions
+  eigen_conversions
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-find_package(Boost REQUIRED system filesystem date_time thread)
+#find_package(Boost REQUIRED system filesystem date_time thread)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -130,17 +142,7 @@ set(THIS_PACKAGE_INCLUDE_DIRS
 )
 
 catkin_package(
-  LIBRARIES
-    interactivity_utils
-  INCLUDE_DIRS
-    ${THIS_PACKAGE_INCLUDE_DIRS}
   CATKIN_DEPENDS roscpp rospy message_runtime
-    moveit_core
-    moveit_visual_tools
-    moveit_ros_planning_interface
-    interactive_markers
-  DEPENDS
-    EIGEN3
 )
 
 ###########
@@ -149,7 +151,6 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(SYSTEM ${THIS_PACKAGE_INCLUDE_DIRS} ${Boost_INCLUDE_DIR} ${EIGEN3_INCLUDE_DIRS})
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
@@ -164,10 +165,11 @@ link_directories(${catkin_LIBRARY_DIRS})
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
+#message("catkin libraries " ${catkin_LIBRARIES})
 add_executable(moveArmCpp src/moveArmCpp.cpp)
 add_dependencies(moveArmCpp ${moveArmCpp_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(moveArmCpp
-  ${catkin_LIBRARIES} ${Boost_LIBRARIES}
+  ${catkin_LIBRARIES}
 )
 
 ## Declare a C++ executable
@@ -245,4 +247,14 @@ target_link_libraries(moveArmCpp
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 
-    
+
+#install(TARGETS moveArmCpp
+#  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
+#
+#install(DIRECTORY include/obj_tf/
+#  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#  FILES_MATCHING PATTERN "*.h"
+#)    
