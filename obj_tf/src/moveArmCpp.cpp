@@ -185,7 +185,7 @@ descartes_core::TrajectoryPtPtr makeTolerancedCartesianPoint(const Eigen::Isomet
 {
   using namespace descartes_core;
   using namespace descartes_trajectory;
-  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 12.0, AxialSymmetricPt::Z_AXIS, TimingConstraint(dt)) );
+  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 120.0, AxialSymmetricPt::X_AXIS, TimingConstraint(dt)) );
 }
 
 std::vector<descartes_core::TrajectoryPtPtr> makePath()
@@ -210,7 +210,7 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
 
 
   Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-  float default_z = 0.3f;
+  float default_z = 0.2f;
   double x_pos, y_pos;
 
   ROS_INFO_STREAM("pose.linear() printed out: ");
@@ -219,7 +219,7 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   ROS_INFO_STREAM("pose.rotation() printed out: ");
   ROS_INFO_STREAM( pose.rotation() );
 
-  for (int ix = 2; ix<4 ; ix++ )
+  for (int ix = 2; ix<3 ; ix++ )
   {
       x_pos = 0.1 * (double) ix;
 
@@ -238,8 +238,14 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
             //pose *= Eigen::AngleAxisd(0.49*M_PI, Eigen::Vector3d::UnitX());
 
             // roll and then yaw transform
-            pose *= Eigen::AngleAxisd(-0.499*M_PI, Eigen::Vector3d::UnitZ());
-            pose *= Eigen::AngleAxisd(0.499*M_PI, Eigen::Vector3d::UnitY());
+            //pose *= Eigen::AngleAxisd(-0.499*M_PI, Eigen::Vector3d::UnitZ());
+            //pose *= Eigen::AngleAxisd(0.499*M_PI, Eigen::Vector3d::UnitY());
+
+            //Eigen::Quaterniond q(0.5, -0.5, 0.5, -0.5);
+            Eigen::Quaterniond q(0.7071, 0.0, 0.7071, 0.0);
+            q.normalize();
+            pose *= q;
+
 
 //            // this flips the tool around so that Z is down
 //            float roll = 0.0*M_PI;
@@ -302,7 +308,7 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
     // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
     descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pattern_origin * pose, time_between_points);
     // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
-    //  descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
+    // descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
     result.push_back(pt);
   }
 
