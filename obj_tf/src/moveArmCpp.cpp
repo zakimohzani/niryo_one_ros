@@ -234,8 +234,12 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
             pose.translation() = Eigen::Vector3d( x_pos, y_pos, default_z);
             
 
-            // pitch transform
-            pose *= Eigen::AngleAxisd(0.49*M_PI, Eigen::Vector3d::UnitX());
+            // 90 deg pitch transform
+            //pose *= Eigen::AngleAxisd(0.49*M_PI, Eigen::Vector3d::UnitX());
+
+            // roll and then yaw transform
+            pose *= Eigen::AngleAxisd(-0.499*M_PI, Eigen::Vector3d::UnitZ());
+            pose *= Eigen::AngleAxisd(0.499*M_PI, Eigen::Vector3d::UnitY());
 
 //            // this flips the tool around so that Z is down
 //            float roll = 0.0*M_PI;
