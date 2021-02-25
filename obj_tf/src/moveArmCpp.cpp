@@ -185,7 +185,7 @@ descartes_core::TrajectoryPtPtr makeTolerancedCartesianPoint(const Eigen::Isomet
 {
   using namespace descartes_core;
   using namespace descartes_trajectory;
-  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 120.0, AxialSymmetricPt::X_AXIS, TimingConstraint(dt)) );
+  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 90.0, AxialSymmetricPt::X_AXIS, TimingConstraint(dt)) );
 }
 
 std::vector<descartes_core::TrajectoryPtPtr> makePath()
@@ -204,13 +204,13 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   // can move it to somewere more convenient.
   const static double step_size = 0.001;
   const static int num_steps = 20;
-  const static double time_between_points = 2;// lowest so far is 0.75
+  const static double time_between_points = 5;// lowest so far is 0.75
 
   EigenSTL::vector_Isometry3d pattern_poses;
 
 
   Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-  float default_z = 0.2f;
+  float default_z = 0.1f;
   double x_pos, y_pos;
 
   ROS_INFO_STREAM("pose.linear() printed out: ");
@@ -219,7 +219,7 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   ROS_INFO_STREAM("pose.rotation() printed out: ");
   ROS_INFO_STREAM( pose.rotation() );
 
-  for (int ix = 2; ix<3 ; ix++ )
+  for (int ix = 2; ix < 4; ix++ )
   {
       x_pos = 0.1 * (double) ix;
 
@@ -242,7 +242,7 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
             //pose *= Eigen::AngleAxisd(0.499*M_PI, Eigen::Vector3d::UnitY());
 
             //Eigen::Quaterniond q(0.5, -0.5, 0.5, -0.5);
-            Eigen::Quaterniond q(0.7071, 0.0, 0.7071, 0.0);
+            Eigen::Quaterniond q(0.699862, 0.0000113, 0.714278, -0.0000341);
             q.normalize();
             pose *= q;
 
@@ -273,30 +273,6 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
 
 
 
-//  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
-//  {
-//    // Create a pose and initialize it to identity
-//    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-//    // set the translation (we're moving along a line in Y)
-//    pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
-//    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
-//    // be pointing down into the ground.
-//    //pose *= Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX()); // this flips the tool around so that Z is down
-//    pattern_poses.push_back(pose);
-//  }
-//
-//  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
-//  {
-//    // Create a pose and initialize it to identity
-//    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-//    // set the translation (we're moving along a line in Y)
-//    pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
-//    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
-//    // be pointing down into the ground.
-//    //pose *= Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX()); // this flips the tool around so that Z is down
-//    pattern_poses.push_back(pose);
-//  }
-
   // Now lets translate these points to Descartes trajectory points
   // The ABB2400 is pretty big, so let's move the path forward and up.
   Eigen::Isometry3d pattern_origin = Eigen::Isometry3d::Identity();
@@ -308,7 +284,7 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
     // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
     descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pattern_origin * pose, time_between_points);
     // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
-    // descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
+    //descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
     result.push_back(pt);
   }
 
