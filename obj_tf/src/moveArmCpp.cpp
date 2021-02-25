@@ -185,7 +185,7 @@ descartes_core::TrajectoryPtPtr makeTolerancedCartesianPoint(const Eigen::Isomet
 {
   using namespace descartes_core;
   using namespace descartes_trajectory;
-  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 90.0, AxialSymmetricPt::X_AXIS, TimingConstraint(dt)) );
+  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 90.0, AxialSymmetricPt::Y_AXIS, TimingConstraint(dt)) );
 }
 
 std::vector<descartes_core::TrajectoryPtPtr> makePath()
@@ -204,13 +204,13 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   // can move it to somewere more convenient.
   const static double step_size = 0.001;
   const static int num_steps = 20;
-  const static double time_between_points = 5;// lowest so far is 0.75
+  const static double time_between_points = 1;// lowest so far is 0.75
 
   EigenSTL::vector_Isometry3d pattern_poses;
 
 
   Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-  float default_z = 0.1f;
+  float default_z = 0.3f;
   double x_pos, y_pos;
 
   ROS_INFO_STREAM("pose.linear() printed out: ");
@@ -219,17 +219,19 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   ROS_INFO_STREAM("pose.rotation() printed out: ");
   ROS_INFO_STREAM( pose.rotation() );
 
+  // start from 20cm. 
+  // 10cm will cause collision with body
   for (int ix = 2; ix < 4; ix++ )
   {
       x_pos = 0.1 * (double) ix;
 
-        for (int ij = -2; ij < 3; ij++)
+        for (int ij = -8; ij < (8+1); ij++)
         {
             // make a new point
             pose = Eigen::Isometry3d::Identity();            
 
             // set the translation against world frame
-            y_pos = 0.05 * (double) ij;
+            y_pos = 0.0125 * (double) ij;
 
             pose.translation() = Eigen::Vector3d( x_pos, y_pos, default_z);
             
@@ -238,11 +240,11 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
             //pose *= Eigen::AngleAxisd(0.49*M_PI, Eigen::Vector3d::UnitX());
 
             // roll and then yaw transform
-            //pose *= Eigen::AngleAxisd(-0.499*M_PI, Eigen::Vector3d::UnitZ());
-            //pose *= Eigen::AngleAxisd(0.499*M_PI, Eigen::Vector3d::UnitY());
+            //pose *= Eigen::AngleAxisd(-0.49*M_PI, Eigen::Vector3d::UnitZ());
+            //pose *= Eigen::AngleAxisd( 0.49*M_PI, Eigen::Vector3d::UnitY());
 
             //Eigen::Quaterniond q(0.5, -0.5, 0.5, -0.5);
-            Eigen::Quaterniond q(0.699862, 0.0000113, 0.714278, -0.0000341);
+            Eigen::Quaterniond q(0.707106, 0.0000001, 0.707106, 0.0000001);
             q.normalize();
             pose *= q;
 
