@@ -204,25 +204,93 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   // can move it to somewere more convenient.
   const static double step_size = 0.001;
   const static int num_steps = 20;
-  const static double time_between_points = 0.5;
+  const static double time_between_points = 2;// lowest so far is 0.75
 
   EigenSTL::vector_Isometry3d pattern_poses;
-  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+
+
+  Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+  float default_z = 0.3f;
+  double x_pos, y_pos;
+
+  ROS_INFO_STREAM("pose.linear() printed out: ");
+  ROS_INFO_STREAM( pose.linear() );
+
+  ROS_INFO_STREAM("pose.rotation() printed out: ");
+  ROS_INFO_STREAM( pose.rotation() );
+
+  for (int ix = 2; ix<4 ; ix++ )
   {
-    // Create a pose and initialize it to identity
-    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-    // set the translation (we're moving along a line in Y)
-    pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
-    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
-    // be pointing down into the ground.
-    pose *= Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX()); // this flips the tool around so that Z is down
-    pattern_poses.push_back(pose);
+      x_pos = 0.1 * (double) ix;
+
+        for (int ij = -2; ij < 3; ij++)
+        {
+            // make a new point
+            pose = Eigen::Isometry3d::Identity();            
+
+            // set the translation against world frame
+            y_pos = 0.05 * (double) ij;
+
+            pose.translation() = Eigen::Vector3d( x_pos, y_pos, default_z);
+            
+
+            // pitch transform
+            pose *= Eigen::AngleAxisd(0.49*M_PI, Eigen::Vector3d::UnitX());
+
+//            // this flips the tool around so that Z is down
+//            float roll = 0.0*M_PI;
+//            float pitch = 0.0*M_PI;
+//            float yaw = 0.0*M_PI;
+//            Eigen::AngleAxisd rollAngle(roll, Eigen::Vector3d::UnitZ());
+//            Eigen::AngleAxisd pitchAngle(pitch, Eigen::Vector3d::UnitX());
+//            Eigen::AngleAxisd yawAngle(yaw, Eigen::Vector3d::UnitY());
+//            
+//            
+//            Eigen::Quaternion<double> q = rollAngle * pitchAngle * yawAngle;
+//            
+//            Eigen::Matrix3d rotationMatrix = q.toRotationMatrix();            
+//
+//            // debug
+//            ROS_INFO_STREAM( rotationMatrix << "is unitary: " << rotationMatrix.isUnitary() );
+//
+//
+//            pose.linear() = rotationMatrix;
+//            //pose.rotation() = rotationMatrix;
+
+            pattern_poses.push_back(pose);
+        }
   }
+
+
+
+//  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+//  {
+//    // Create a pose and initialize it to identity
+//    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+//    // set the translation (we're moving along a line in Y)
+//    pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
+//    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+//    // be pointing down into the ground.
+//    //pose *= Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX()); // this flips the tool around so that Z is down
+//    pattern_poses.push_back(pose);
+//  }
+//
+//  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+//  {
+//    // Create a pose and initialize it to identity
+//    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+//    // set the translation (we're moving along a line in Y)
+//    pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
+//    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+//    // be pointing down into the ground.
+//    //pose *= Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX()); // this flips the tool around so that Z is down
+//    pattern_poses.push_back(pose);
+//  }
 
   // Now lets translate these points to Descartes trajectory points
   // The ABB2400 is pretty big, so let's move the path forward and up.
   Eigen::Isometry3d pattern_origin = Eigen::Isometry3d::Identity();
-  pattern_origin.translation() = Eigen::Vector3d(0.1, 0.1, 0.2);
+  pattern_origin.translation() = Eigen::Vector3d(0, 0, 0);
 
   std::vector<descartes_core::TrajectoryPtPtr> result;
   for (const auto& pose : pattern_poses)
