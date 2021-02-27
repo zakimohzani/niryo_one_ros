@@ -18,6 +18,10 @@
 // Includes the utility function for converting to trajectory_msgs::JointTrajectory's
 #include <descartes_utilities/ros_conversions.h>
 
+#include <vector>
+#include </usr/include/eigen3/Eigen/Geometry>
+
+
 /**
  * Makes a dummy trajectory for the robot to follow.
  */
@@ -27,6 +31,13 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath();
  * Sends a ROS trajectory to the robot controller
  */
 bool executeTrajectory(const trajectory_msgs::JointTrajectory& trajectory);
+
+
+// from jerome's tutorial
+std::vector<Eigen::Affine3d> line(	Eigen::Affine3d start_pose, Eigen::Affine3d end_pose, int steps);
+#include <tutorial_utilities/path_generation.h>
+#include <tutorial_utilities/collision_object_utils.h>
+#include <tutorial_utilities/visualization.h>
 
 int main(int argc, char** argv)
 {
@@ -204,13 +215,13 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   // can move it to somewere more convenient.
   const static double step_size = 0.001;
   const static int num_steps = 20;
-  const static double time_between_points = 1;// lowest so far is 0.75
+  const static double time_between_points = 10;// lowest so far is 0.75
 
   EigenSTL::vector_Isometry3d pattern_poses;
 
 
   Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-  float default_z = 0.3f;
+  float default_z = 0.15f;
   double x_pos, y_pos;
 
   ROS_INFO_STREAM("pose.linear() printed out: ");
@@ -219,76 +230,138 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   ROS_INFO_STREAM("pose.rotation() printed out: ");
   ROS_INFO_STREAM( pose.rotation() );
 
+
+  // from old tutorial
+  
+  typedef std::vector<descartes_core::TrajectoryPtPtr> TrajectoryVec;
+  double x, y, z, rx, ry, rz;
+  x = 0.2;
+  y = 0.0;
+  z = 0.1;
+  // the xyz facing towards the robot. No clue why. I have to read up on CV unit vector directions
+  rx = 0.9999*M_PI;
+  ry = 0.0*M_PI;
+  rz = 0.9999*M_PI;
+  TrajectoryVec points;
+  int N_points = 3;
+
+  std::vector<Eigen::Affine3d> poses;
+  Eigen::Affine3d startPose;
+  Eigen::Affine3d endPose;
+  startPose = descartes_core::utils::toFrame(x, y, z, rx, ry, rz, descartes_core::utils::EulerConventions::XYZ);
+  endPose = descartes_core::utils::toFrame(x, y, z+0.2, rx, ry, rz, descartes_core::utils::EulerConventions::XYZ);
+  poses = line(startPose, endPose, N_points);
+
+  ROS_INFO_STREAM("startPose.translation() printed out: ");
+  ROS_INFO_STREAM( startPose.translation() );
+  ROS_INFO_STREAM("startPose.rotation() printed out: ");
+  ROS_INFO_STREAM( startPose.rotation() );
+
+  ROS_INFO_STREAM("endPose.translation() printed out: ");
+  ROS_INFO_STREAM( endPose.translation() );
+  ROS_INFO_STREAM("endPose.rotation() printed out: ");
+  ROS_INFO_STREAM( endPose.rotation() );
+
+
   // start from 20cm. 
   // 10cm will cause collision with body
-  for (int ix = 2; ix < 4; ix++ )
-  {
-      x_pos = 0.1 * (double) ix;
-
-        for (int ij = -8; ij < (8+1); ij++)
-        {
-            // make a new point
-            pose = Eigen::Isometry3d::Identity();            
-
-            // set the translation against world frame
-            y_pos = 0.0125 * (double) ij;
-
-            pose.translation() = Eigen::Vector3d( x_pos, y_pos, default_z);
-            
-
-            // 90 deg pitch transform
-            //pose *= Eigen::AngleAxisd(0.49*M_PI, Eigen::Vector3d::UnitX());
-
-            // roll and then yaw transform
-            //pose *= Eigen::AngleAxisd(-0.49*M_PI, Eigen::Vector3d::UnitZ());
-            //pose *= Eigen::AngleAxisd( 0.49*M_PI, Eigen::Vector3d::UnitY());
-
-            //Eigen::Quaterniond q(0.5, -0.5, 0.5, -0.5);
-            Eigen::Quaterniond q(0.707106, 0.0000001, 0.707106, 0.0000001);
-            q.normalize();
-            pose *= q;
-
-
-//            // this flips the tool around so that Z is down
-//            float roll = 0.0*M_PI;
-//            float pitch = 0.0*M_PI;
-//            float yaw = 0.0*M_PI;
-//            Eigen::AngleAxisd rollAngle(roll, Eigen::Vector3d::UnitZ());
-//            Eigen::AngleAxisd pitchAngle(pitch, Eigen::Vector3d::UnitX());
-//            Eigen::AngleAxisd yawAngle(yaw, Eigen::Vector3d::UnitY());
-//            
-//            
-//            Eigen::Quaternion<double> q = rollAngle * pitchAngle * yawAngle;
-//            
-//            Eigen::Matrix3d rotationMatrix = q.toRotationMatrix();            
+//  for (int ix = 2; ix < 4; ix++ )
+//  {
+//      x_pos = 0.1 * (double) ix;
 //
-//            // debug
-//            ROS_INFO_STREAM( rotationMatrix << "is unitary: " << rotationMatrix.isUnitary() );
+//        for (int ij = -8; ij < (8+1); ij++)
+//        {
+//            // make a new point
+//            pose = Eigen::Isometry3d::Identity();            
+//
+//            // set the translation against world frame
+//            y_pos = 0.0125 * (double) ij;
+//
+//            pose.translation() = Eigen::Vector3d( x_pos, y_pos, default_z);
+//            
+//
+//            // 90 deg pitch transform
+//            //pose *= Eigen::AngleAxisd(0.49*M_PI, Eigen::Vector3d::UnitX());
+//
+//            // roll and then yaw transform
+//            //pose *= Eigen::AngleAxisd(-0.49*M_PI, Eigen::Vector3d::UnitZ());
+//            //pose *= Eigen::AngleAxisd( 0.49*M_PI, Eigen::Vector3d::UnitY());
+//
+//            //Eigen::Quaterniond q(0.5, -0.5, 0.5, -0.5);
+//            Eigen::Quaterniond q(0.707106, 0.0000001, 0.707106, 0.0000001);
+//            q.normalize();
+//            pose.linear() = q.toRotationMatrix();
 //
 //
-//            pose.linear() = rotationMatrix;
-//            //pose.rotation() = rotationMatrix;
-
-            pattern_poses.push_back(pose);
-        }
-  }
-
-
-
-  // Now lets translate these points to Descartes trajectory points
-  // The ABB2400 is pretty big, so let's move the path forward and up.
-  Eigen::Isometry3d pattern_origin = Eigen::Isometry3d::Identity();
-  pattern_origin.translation() = Eigen::Vector3d(0, 0, 0);
+////            // this flips the tool around so that Z is down
+////            float roll = 0.0*M_PI;
+////            float pitch = 0.0*M_PI;
+////            float yaw = 0.0*M_PI;
+////            Eigen::AngleAxisd rollAngle(roll, Eigen::Vector3d::UnitZ());
+////            Eigen::AngleAxisd pitchAngle(pitch, Eigen::Vector3d::UnitX());
+////            Eigen::AngleAxisd yawAngle(yaw, Eigen::Vector3d::UnitY());
+////            
+////            
+////            Eigen::Quaternion<double> q = rollAngle * pitchAngle * yawAngle;
+////            
+////            Eigen::Matrix3d rotationMatrix = q.toRotationMatrix();            
+////
+////            // debug
+////            ROS_INFO_STREAM( rotationMatrix << "is unitary: " << rotationMatrix.isUnitary() );
+////
+////
+////            pose.linear() = rotationMatrix;
+////            //pose.rotation() = rotationMatrix;
+//
+//            pattern_poses.push_back(pose);
+//        }
+//  }
+//
+//
+//
+//  // Now lets translate these points to Descartes trajectory points
+//  // The ABB2400 is pretty big, so let's move the path forward and up.
+//  Eigen::Isometry3d pattern_origin = Eigen::Isometry3d::Identity();
+//  pattern_origin.translation() = Eigen::Vector3d(0, 0, 0);
 
   std::vector<descartes_core::TrajectoryPtPtr> result;
-  for (const auto& pose : pattern_poses)
+  for (const auto& pose2 : poses)
   {
+
+    Eigen::Affine3d a;
+    Eigen::Isometry3d b;
+    a = pose2;
+    b.translation() = a.translation();
+    b.linear() = a.rotation();
+
     // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
-    descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pattern_origin * pose, time_between_points);
+    descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(b, time_between_points);
     // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
     //descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
     result.push_back(pt);
   }
+
+//  // Visualize the trajectory points in RViz
+//  // Transform the generated poses into a markerArray message that can be visualized by RViz
+//  visualization_msgs::MarkerArray ma;
+//  ma = tutorial_utilities::createMarkerArray(poses);
+//  // Start the publisher for the Rviz Markers
+//  ros::Publisher vis_pub = nh.advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 1);
+//
+//  // Wait for subscriber and publish the markerArray once the subscriber is found.
+//  ROS_INFO("Waiting for marker subscribers.");
+//  if (waitForSubscribers(vis_pub, ros::Duration(2.0)))
+//  {
+//    ROS_INFO("Subscriber found, publishing markers.");
+//    vis_pub.publish(ma);
+//    ros::spinOnce();
+//    loop_rate.sleep();
+//  }
+//  else
+//  {
+//    ROS_ERROR("No subscribers connected, markers not published");
+//  }
+
 
   // Note that we could also add a joint point representing the starting location of the robot, or a joint point
   // representing the desired end pose of the robot to the front and back of the vector respectively.
@@ -314,3 +387,20 @@ bool executeTrajectory(const trajectory_msgs::JointTrajectory& trajectory)
   
   return ac.sendGoalAndWait(goal) == actionlib::SimpleClientGoalState::SUCCEEDED;
 }
+
+
+    std::vector<Eigen::Affine3d> line(	Eigen::Affine3d start_pose, Eigen::Affine3d end_pose, int steps)
+	{
+		Eigen::Vector3d translation_vector;
+		translation_vector = end_pose.translation() - start_pose.translation();
+		translation_vector = translation_vector / steps;
+		Eigen::Translation<double,3> translate(translation_vector);
+
+		std::vector<Eigen::Affine3d> poses;
+		poses.push_back(start_pose);
+		for(int i = 0; i < (steps - 1); ++i)
+		{
+			poses.push_back(translate * poses.back());
+		}
+		return poses;
+	}
