@@ -46,6 +46,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   tf_conversions
   eigen_conversions
+  tutorial_utilities
 )
 
 ## System dependencies are found with CMake's conventions
