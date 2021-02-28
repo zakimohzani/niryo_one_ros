@@ -70,16 +70,6 @@ int main(int argc, char** argv)
   // could be anything. We typically have our tool's positive Z-axis point outward from the grinder, welder, etc.
   const std::string tcp_frame = "tool_link";
 
-  if (nh.hasParam("ikfast_tool_frame"))
-  {
-    ROS_INFO("Found 'ikfast_tool_frame'");
-  }
-  else
-  {
-    ROS_INFO("No param named 'ikfast_tool_frame'");
-  }
-
-
   // Before you can use a model, you must call initialize. This will load robot models and sanity check the model.
   if (!model->initialize(robot_description, group_name, world_frame, tcp_frame))
   {
@@ -138,13 +128,6 @@ int main(int argc, char** argv)
   std::vector<std::string> names;
   nh.getParam("controller_joint_names", names);
 
-  ROS_INFO("length of joints: %lu", names.size() );
-  for ( auto name : names)
-  {
-	ROS_INFO("name of joints: %s", name.c_str() );
-  }
-  
-
   // Create a JointTrajectory
   trajectory_msgs::JointTrajectory joint_solution;
   joint_solution.joint_names = names;
@@ -157,9 +140,6 @@ int main(int argc, char** argv)
     ROS_ERROR("Unable to convert Descartes trajectory to joint points");
     return -5;
   }
-
-  ROS_INFO("Reached this point");
-
 
   // 6. Send the ROS trajectory to the robot for execution
   if (!executeTrajectory(joint_solution))
@@ -185,7 +165,7 @@ descartes_core::TrajectoryPtPtr makeTolerancedCartesianPoint(const Eigen::Isomet
 {
   using namespace descartes_core;
   using namespace descartes_trajectory;
-  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 12.0, AxialSymmetricPt::Z_AXIS, TimingConstraint(dt)) );
+  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 12.0, AxialSymmetricPt::X_AXIS, TimingConstraint(dt)) );
 }
 
 std::vector<descartes_core::TrajectoryPtPtr> makePath()
@@ -202,11 +182,14 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
 
   // First thing, let's generate a pattern with its origin at zero. We'll define another transform later that
   // can move it to somewere more convenient.
-  const static double step_size = 0.001;
+  const static double step_size = 0.02;
   const static int num_steps = 20;
-  const static double time_between_points = 0.5;
+  const static double time_between_points = 1.0;
 
   EigenSTL::vector_Isometry3d pattern_poses;
+
+  // MYCOMMENT: Trajectory 1
+  // MYCOMMENT: Make tool point straight while translating along +ve y-axis 
   for (int i = -num_steps / 2; i < num_steps / 2; ++i)
   {
     // Create a pose and initialize it to identity
@@ -214,15 +197,59 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
     // set the translation (we're moving along a line in Y)
     pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
     // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
-    // be pointing down into the ground.
-    pose *= Eigen::AngleAxisd(M_PI, Eigen::Vector3d::UnitX()); // this flips the tool around so that Z is down
+    // be pointing down into the ground. 
+    //pose *= Eigen::AngleAxisd(-0.25*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Don't change tool position
     pattern_poses.push_back(pose);
   }
+
+  // MYCOMMENT: Trajectory 2
+  // MYCOMMENT: Make tool point straight while translating along -ve y-axis 
+  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+  {
+    // Create a pose and initialize it to identity
+    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+    // set the translation (we're moving along a line in Y)
+    pose.translation() = Eigen::Vector3d(0, i * -step_size, 0);
+    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+    // be pointing down into the ground. 
+    //pose *= Eigen::AngleAxisd(-0.25*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Don't change tool position
+    pattern_poses.push_back(pose);
+  }
+
+
+  // MYCOMMENT: Trajectory 3
+  // MYCOMMENT: Make tool point up while translating along +ve y-axis 
+  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+  {
+    // Create a pose and initialize it to identity
+    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+    // set the translation (we're moving along a line in Y)
+    pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
+    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+    // be pointing down into the ground. 
+    pose *= Eigen::AngleAxisd(-0.5*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Make the tool point up
+    pattern_poses.push_back(pose);
+  }
+
+  // MYCOMMENT: Trajectory 4
+  // MYCOMMENT: Make tool point down while translating along -ve y-axis 
+  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+  {
+    // Create a pose and initialize it to identity
+    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+    // set the translation (we're moving along a line in Y)
+    pose.translation() = Eigen::Vector3d(0, i * -step_size, 0);
+    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+    // be pointing down into the ground. 
+    pose *= Eigen::AngleAxisd( 0.5*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Make the tool point up
+    pattern_poses.push_back(pose);
+  }
+
 
   // Now lets translate these points to Descartes trajectory points
   // The ABB2400 is pretty big, so let's move the path forward and up.
   Eigen::Isometry3d pattern_origin = Eigen::Isometry3d::Identity();
-  pattern_origin.translation() = Eigen::Vector3d(0.1, 0.1, 0.2);
+  pattern_origin.translation() = Eigen::Vector3d(0.25, 0.001, 0.3); // shift y by 0.001 cos algo fails when y=0
 
   std::vector<descartes_core::TrajectoryPtPtr> result;
   for (const auto& pose : pattern_poses)
