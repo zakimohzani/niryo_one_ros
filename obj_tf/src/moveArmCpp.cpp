@@ -18,6 +18,11 @@
 // Includes the utility function for converting to trajectory_msgs::JointTrajectory's
 #include <descartes_utilities/ros_conversions.h>
 
+
+#include <tutorial_utilities/path_generation.h>
+#include <tutorial_utilities/collision_object_utils.h>
+#include <tutorial_utilities/visualization.h>
+
 /**
  * Makes a dummy trajectory for the robot to follow.
  */
@@ -27,6 +32,17 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath();
  * Sends a ROS trajectory to the robot controller
  */
 bool executeTrajectory(const trajectory_msgs::JointTrajectory& trajectory);
+
+EigenSTL::vector_Isometry3d makePath1a();
+descartes_core::TrajectoryPtPtr makeCartesianPoint(const Eigen::Isometry3d& pose, double dt);
+descartes_core::TrajectoryPtPtr makeTolerancedCartesianPoint(const Eigen::Isometry3d& pose, double dt);
+
+
+/**
+ * Waits for a subscriber to subscribe to a publisher
+ */
+bool waitForSubscribers(ros::Publisher &pub, ros::Duration timeout);
+
 
 int main(int argc, char** argv)
 {
@@ -84,7 +100,74 @@ int main(int argc, char** argv)
   // come from CAD or from surfaces that were "scanned".
 
   // Make the path by calling a helper function. See makePath()'s definition for more discussion about paths.
-  std::vector<descartes_core::TrajectoryPtPtr> points = makePath();
+  // MYCOMMENT: Re-integrated the helper for visualisation
+  std::vector<descartes_core::TrajectoryPtPtr> points;// = makePath();
+
+  // In Descartes, trajectories are composed of "points". Each point describes what joint positions of the robot can
+  // satisfy it. You can have a "joint point" for which only a single solution is acceptable. You might have a
+  // fully defined cartesian point for which many (8 or 16) different robot configurations might work. You could
+  // allow extra tolerances in any of these and even more points satisfy the constraints.
+
+  // In this first tutorial, we're just going to describe a simple cartesian trajectory that moves the robot
+  // along a line in the XY plane.
+
+  // Step 1: Let's start by just doing the math to generate the poses we want.
+
+  // First thing, let's generate a pattern with its origin at zero. We'll define another transform later that
+  // can move it to somewere more convenient.
+  const static double step_size = 0.02;
+  const static int num_steps = 20;
+  const static double time_between_points = 1.0;
+
+  EigenSTL::vector_Isometry3d pattern_poses;
+
+  pattern_poses = makePath1a();
+
+  for (const auto& pose : pattern_poses)
+  {
+    // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
+    descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pose, time_between_points);
+    // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
+    //  descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
+    points.push_back(pt);
+  }
+
+  // MYCOMMENT: Before we move on, let's visualise the steps
+  // and convert Isometry to Affine
+  std::vector<Eigen::Affine3d> posesA;
+  Eigen::Affine3d aff;
+  for (const auto& iso : pattern_poses)
+  {
+//    aff.translation() = iso.translation();
+//    aff.rotation()    = iso.linear();
+//    posesA.push_back(aff);
+    ROS_INFO_STREAM("iso.linear() printed out: ");
+    ROS_INFO_STREAM(iso.linear() );
+  }
+
+  // Visualize the trajectory points in RViz
+  // Transform the generated poses into a markerArray message that can be visualized by RViz
+  visualization_msgs::MarkerArray ma;
+  ma = tutorial_utilities::createMarkerArray(posesA);
+  // Start the publisher for the Rviz Markers
+  ros::Publisher vis_pub = nh.advertise<visualization_msgs::MarkerArray>("visualization_marker_array", 1);
+
+  // Wait for subscriber and publish the markerArray once the subscriber is found.
+  ROS_INFO("Waiting for marker subscribers.");
+  ros::Rate loop_rate(10);
+  if (waitForSubscribers(vis_pub, ros::Duration(2.0)))
+  {
+    ROS_INFO("Subscriber found, publishing markers.");
+    vis_pub.publish(ma);
+    ros::spinOnce();
+    loop_rate.sleep();
+  }
+  else
+  {
+    ROS_ERROR("No subscribers connected, markers not published");
+  }
+
+
 
   // 3. Now we create a planner that can fuse your kinematic world with the points you want to move the robot
   // along. There are a couple of planners now. DensePlanner is the naive, brute force approach to solving the
@@ -188,6 +271,44 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
 
   EigenSTL::vector_Isometry3d pattern_poses;
 
+  pattern_poses = makePath1a();
+
+  std::vector<descartes_core::TrajectoryPtPtr> result;
+  for (const auto& pose : pattern_poses)
+  {
+    // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
+    descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pose, time_between_points);
+    // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
+    //  descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
+    result.push_back(pt);
+  }
+
+  // Note that we could also add a joint point representing the starting location of the robot, or a joint point
+  // representing the desired end pose of the robot to the front and back of the vector respectively.
+
+  return result;
+}
+
+EigenSTL::vector_Isometry3d makePath1a()
+{
+  // In Descartes, trajectories are composed of "points". Each point describes what joint positions of the robot can
+  // satisfy it. You can have a "joint point" for which only a single solution is acceptable. You might have a
+  // fully defined cartesian point for which many (8 or 16) different robot configurations might work. You could
+  // allow extra tolerances in any of these and even more points satisfy the constraints.
+
+  // In this first tutorial, we're just going to describe a simple cartesian trajectory that moves the robot
+  // along a line in the XY plane.
+
+  // Step 1: Let's start by just doing the math to generate the poses we want.
+
+  // First thing, let's generate a pattern with its origin at zero. We'll define another transform later that
+  // can move it to somewere more convenient.
+  const static double step_size = 0.02;
+  const static int num_steps = 20;
+  const static double time_between_points = 1.0;
+
+  EigenSTL::vector_Isometry3d pattern_poses;
+
   // MYCOMMENT: Trajectory 1
   // MYCOMMENT: Make tool point straight while translating along +ve y-axis 
   for (int i = -num_steps / 2; i < num_steps / 2; ++i)
@@ -245,6 +366,8 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
     pattern_poses.push_back(pose);
   }
 
+  EigenSTL::vector_Isometry3d pattern_pose_translated;
+
 
   // Now lets translate these points to Descartes trajectory points
   // The ABB2400 is pretty big, so let's move the path forward and up.
@@ -254,18 +377,12 @@ std::vector<descartes_core::TrajectoryPtPtr> makePath()
   std::vector<descartes_core::TrajectoryPtPtr> result;
   for (const auto& pose : pattern_poses)
   {
-    // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
-    descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pattern_origin * pose, time_between_points);
-    // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
-    //  descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
-    result.push_back(pt);
+    pattern_pose_translated.push_back(pattern_origin * pose);
   }
 
-  // Note that we could also add a joint point representing the starting location of the robot, or a joint point
-  // representing the desired end pose of the robot to the front and back of the vector respectively.
-
-  return result;
+  return pattern_pose_translated;
 }
+
 
 bool executeTrajectory(const trajectory_msgs::JointTrajectory& trajectory)
 {
@@ -284,4 +401,19 @@ bool executeTrajectory(const trajectory_msgs::JointTrajectory& trajectory)
   goal.goal_time_tolerance = ros::Duration(1.0);
   
   return ac.sendGoalAndWait(goal) == actionlib::SimpleClientGoalState::SUCCEEDED;
+}
+
+bool waitForSubscribers(ros::Publisher &pub, ros::Duration timeout)
+{
+  if (pub.getNumSubscribers() > 0)
+    return true;
+  ros::Time start = ros::Time::now();
+  ros::Rate waitTime(0.5);
+  while (ros::Time::now() - start < timeout)
+  {
+    waitTime.sleep();
+    if (pub.getNumSubscribers() > 0)
+      break;
+  }
+  return pub.getNumSubscribers() > 0;
 }
