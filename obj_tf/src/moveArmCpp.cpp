@@ -266,10 +266,12 @@ EigenSTL::vector_Isometry3d makePath1a()
 
   EigenSTL::vector_Isometry3d pattern_poses;
 
+ 
     Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0, 0);
+/*  pose.translation() = Eigen::Vector3d(0, 0, 0);
     pose *= Eigen::AngleAxisd(-0.5*M_PI, Eigen::Vector3d::UnitY());
     pattern_poses.push_back(pose);
+*/
 
 
     pose = Eigen::Isometry3d::Identity();
