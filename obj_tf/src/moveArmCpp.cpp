@@ -116,7 +116,7 @@ int main(int argc, char** argv)
   // First thing, let's generate a pattern with its origin at zero. We'll define another transform later that
   // can move it to somewere more convenient.
   const static double step_size = 0.02;
-  const static int num_steps = 20;
+  const static int num_steps = 10;
   const static double time_between_points = 1.0;
 
   EigenSTL::vector_Isometry3d pattern_poses;
@@ -135,14 +135,12 @@ int main(int argc, char** argv)
   // MYCOMMENT: Before we move on, let's visualise the steps
   // and convert Isometry to Affine
   std::vector<Eigen::Affine3d> posesA;
-  Eigen::Affine3d aff;
-  for (const auto& iso : pattern_poses)
+  Eigen::AffineCompact3d aff;
+  for (auto& iso : pattern_poses)
   {
-//    aff.translation() = iso.translation();
-//    aff.rotation()    = iso.linear();
-//    posesA.push_back(aff);
-    ROS_INFO_STREAM("iso.linear() printed out: ");
-    ROS_INFO_STREAM(iso.linear() );
+    aff.translation() = iso.translation();
+    aff.linear()    = iso.linear();
+    posesA.push_back(aff);
   }
 
   // Visualize the trajectory points in RViz
@@ -251,44 +249,6 @@ descartes_core::TrajectoryPtPtr makeTolerancedCartesianPoint(const Eigen::Isomet
   return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 12.0, AxialSymmetricPt::X_AXIS, TimingConstraint(dt)) );
 }
 
-std::vector<descartes_core::TrajectoryPtPtr> makePath()
-{
-  // In Descartes, trajectories are composed of "points". Each point describes what joint positions of the robot can
-  // satisfy it. You can have a "joint point" for which only a single solution is acceptable. You might have a
-  // fully defined cartesian point for which many (8 or 16) different robot configurations might work. You could
-  // allow extra tolerances in any of these and even more points satisfy the constraints.
-
-  // In this first tutorial, we're just going to describe a simple cartesian trajectory that moves the robot
-  // along a line in the XY plane.
-
-  // Step 1: Let's start by just doing the math to generate the poses we want.
-
-  // First thing, let's generate a pattern with its origin at zero. We'll define another transform later that
-  // can move it to somewere more convenient.
-  const static double step_size = 0.02;
-  const static int num_steps = 20;
-  const static double time_between_points = 1.0;
-
-  EigenSTL::vector_Isometry3d pattern_poses;
-
-  pattern_poses = makePath1a();
-
-  std::vector<descartes_core::TrajectoryPtPtr> result;
-  for (const auto& pose : pattern_poses)
-  {
-    // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
-    descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pose, time_between_points);
-    // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
-    //  descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
-    result.push_back(pt);
-  }
-
-  // Note that we could also add a joint point representing the starting location of the robot, or a joint point
-  // representing the desired end pose of the robot to the front and back of the vector respectively.
-
-  return result;
-}
-
 EigenSTL::vector_Isometry3d makePath1a()
 {
   // In Descartes, trajectories are composed of "points". Each point describes what joint positions of the robot can
@@ -330,7 +290,7 @@ EigenSTL::vector_Isometry3d makePath1a()
     // Create a pose and initialize it to identity
     Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
     // set the translation (we're moving along a line in Y)
-    pose.translation() = Eigen::Vector3d(0, i * -step_size, 0);
+    pose.translation() = Eigen::Vector3d(0, i * -step_size, -0.05);
     // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
     // be pointing down into the ground. 
     //pose *= Eigen::AngleAxisd(-0.25*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Don't change tool position
@@ -345,7 +305,7 @@ EigenSTL::vector_Isometry3d makePath1a()
     // Create a pose and initialize it to identity
     Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
     // set the translation (we're moving along a line in Y)
-    pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
+    pose.translation() = Eigen::Vector3d(0, i * step_size, -0.1);
     // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
     // be pointing down into the ground. 
     pose *= Eigen::AngleAxisd(-0.5*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Make the tool point up
@@ -359,7 +319,7 @@ EigenSTL::vector_Isometry3d makePath1a()
     // Create a pose and initialize it to identity
     Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
     // set the translation (we're moving along a line in Y)
-    pose.translation() = Eigen::Vector3d(0, i * -step_size, 0);
+    pose.translation() = Eigen::Vector3d(0, i * -step_size, -0.15);
     // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
     // be pointing down into the ground. 
     pose *= Eigen::AngleAxisd( 0.5*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Make the tool point up
@@ -374,7 +334,6 @@ EigenSTL::vector_Isometry3d makePath1a()
   Eigen::Isometry3d pattern_origin = Eigen::Isometry3d::Identity();
   pattern_origin.translation() = Eigen::Vector3d(0.25, 0.001, 0.3); // shift y by 0.001 cos algo fails when y=0
 
-  std::vector<descartes_core::TrajectoryPtPtr> result;
   for (const auto& pose : pattern_poses)
   {
     pattern_pose_translated.push_back(pattern_origin * pose);
