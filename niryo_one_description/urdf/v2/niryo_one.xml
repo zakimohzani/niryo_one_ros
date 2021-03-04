@@ -1,0 +1,6 @@
+<robot file="niryo_one.dae">
+        <Manipulator name="niryo_one">
+          <base>base_link</base>
+          <effector>tool_link</effector>
+        </Manipulator>
+</robot>
