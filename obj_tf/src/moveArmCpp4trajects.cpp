@@ -115,7 +115,9 @@ int main(int argc, char** argv)
 
   // First thing, let's generate a pattern with its origin at zero. We'll define another transform later that
   // can move it to somewere more convenient.
-  const static double time_between_points = 3.0;
+  const static double step_size = 0.02;
+  const static int num_steps = 10;
+  const static double time_between_points = 1.0;
 
   EigenSTL::vector_Isometry3d pattern_poses;
 
@@ -124,9 +126,9 @@ int main(int argc, char** argv)
   for (const auto& pose : pattern_poses)
   {
     // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
-    //descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pose, time_between_points);
+    descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pose, time_between_points);
     // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
-      descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pose, time_between_points);
+    //  descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pattern_origin * pose, time_between_points);
     points.push_back(pt);
   }
 
@@ -263,36 +265,66 @@ EigenSTL::vector_Isometry3d makePath1a()
   // can move it to somewere more convenient.
   const static double step_size = 0.02;
   const static int num_steps = 2;
+  const static double time_between_points = 1.0;
 
   EigenSTL::vector_Isometry3d pattern_poses;
 
+  // MYCOMMENT: Trajectory 1
+  // MYCOMMENT: Make tool point straight while translating along +ve y-axis 
+  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+  {
+    // Create a pose and initialize it to identity
     Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0, 0);
-    pose *= Eigen::AngleAxisd(-0.5*M_PI, Eigen::Vector3d::UnitY());
+    // set the translation (we're moving along a line in Y)
+    pose.translation() = Eigen::Vector3d(0, i * step_size, 0);
+    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+    // be pointing down into the ground. 
+    //pose *= Eigen::AngleAxisd(-0.25*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Don't change tool position
     pattern_poses.push_back(pose);
+  }
 
-
-    pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0, -0.05);
-    pose *= Eigen::AngleAxisd(-0.25*M_PI, Eigen::Vector3d::UnitY()); 
+  // MYCOMMENT: Trajectory 2
+  // MYCOMMENT: Make tool point straight while translating along -ve y-axis 
+  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+  {
+    // Create a pose and initialize it to identity
+    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+    // set the translation (we're moving along a line in Y)
+    pose.translation() = Eigen::Vector3d(0, i * -step_size, -0.05);
+    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+    // be pointing down into the ground. 
+    //pose *= Eigen::AngleAxisd(-0.25*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Don't change tool position
     pattern_poses.push_back(pose);
+  }
 
 
-    pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0, -0.1);
-    pose *= Eigen::AngleAxisd(-0.0*M_PI, Eigen::Vector3d::UnitY()); 
+  // MYCOMMENT: Trajectory 3
+  // MYCOMMENT: Make tool point up while translating along +ve y-axis 
+  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+  {
+    // Create a pose and initialize it to identity
+    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+    // set the translation (we're moving along a line in Y)
+    pose.translation() = Eigen::Vector3d(0, i * step_size, -0.1);
+    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+    // be pointing down into the ground. 
+    pose *= Eigen::AngleAxisd(-0.5*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Make the tool point up
     pattern_poses.push_back(pose);
+  }
 
-    pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0, -0.15);
-    pose *= Eigen::AngleAxisd( 0.25*M_PI, Eigen::Vector3d::UnitY()); 
+  // MYCOMMENT: Trajectory 4
+  // MYCOMMENT: Make tool point down while translating along -ve y-axis 
+  for (int i = -num_steps / 2; i < num_steps / 2; ++i)
+  {
+    // Create a pose and initialize it to identity
+    Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
+    // set the translation (we're moving along a line in Y)
+    pose.translation() = Eigen::Vector3d(0, i * -step_size, -0.15);
+    // set the orientation. By default, the tool will be pointing up into the air when we usually want it to
+    // be pointing down into the ground. 
+    pose *= Eigen::AngleAxisd( 0.5*M_PI, Eigen::Vector3d::UnitY()); // MYCOMMENT: Make the tool point up
     pattern_poses.push_back(pose);
-
-    pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0, -0.20);
-    pose *= Eigen::AngleAxisd( 0.5*M_PI, Eigen::Vector3d::UnitY()); 
-    pattern_poses.push_back(pose);
-
+  }
 
   EigenSTL::vector_Isometry3d pattern_pose_translated;
 
