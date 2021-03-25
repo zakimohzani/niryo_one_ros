@@ -84,6 +84,14 @@ def run():
         camera_pose.pose.orientation.w = 1.0
         camera_name = "camera"
         scene.add_box(camera_name, camera_pose, size=(0.12, 0.12, 0.04))  
+
+        box3_pose = geometry_msgs.msg.PoseStamped()
+        box3_pose.header.frame_id = "world"
+        box3_pose.pose.position.x = 0.2
+        box3_pose.pose.position.y = 0
+        box3_pose.pose.position.z = 0.2
+        box3_pose.pose.orientation.w = 1.0
+        scene.add_box("box3", box3_pose, size=(0.1, 0.1, 0.1))
         
         rate.sleep()
 
