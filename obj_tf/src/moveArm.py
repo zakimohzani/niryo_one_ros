@@ -136,7 +136,40 @@ def state_picked_up_obj_and_dumping_it():
     rospy.loginfo('state = state_picked_up_obj_and_dumping_it')
 
     # do something
+    group = moveitNs.group
     
+    start_pose = geometry_msgs.msg.Pose()
+    start_pose.orientation.w = 1.0
+    start_pose.position.x = 0
+    start_pose.position.y = 0.2
+    start_pose.position.z = 0.2
+
+    rospy.loginfo("Going to drop-off location")
+
+
+    group.set_pose_target(start_pose)
+    
+    plan = group.go(wait=True)
+    # Calling `stop()` ensures that there is no residual movement
+    group.stop()
+    # It is always good to clear your targets after planning with poses.
+    # Note: there is no equivalent function for clear_joint_value_targets()
+    group.clear_pose_targets()
+    
+
+    time.sleep(0.01)
+
+
+    start_pose.position.x = -0.10
+    group.set_pose_target(start_pose)
+    
+    plan = group.go(wait=True)
+    # Calling `stop()` ensures that there is no residual movement
+    group.stop()
+    # It is always good to clear your targets after planning with poses.
+    # Note: there is no equivalent function for clear_joint_value_targets()
+    group.clear_pose_targets()
+
     # if event has been created then change state
     currentState = 'state_look_for_new_obj';
 
@@ -176,6 +209,7 @@ def run():
 
     global currentState
     currentState = 'state_look_for_new_obj'
+    currentState = 'state_picked_up_obj_and_dumping_it'
 
     while not rospy.is_shutdown():
         # Implicit state machine. Based on code from: 
