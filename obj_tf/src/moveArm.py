@@ -27,6 +27,7 @@ def state_look_for_new_obj():
 
     # do something
     group = moveitNs.group
+    listener = moveitNs.listener    
     
     start_pose = geometry_msgs.msg.Pose()
     start_pose.orientation.w = 1.0
@@ -34,7 +35,7 @@ def state_look_for_new_obj():
     start_pose.position.y = -0.3
     start_pose.position.z = 0.2
 
-    rospy.loginfo("Let's go")
+    rospy.loginfo("Lookout stance")
 
 
     group.set_pose_target(start_pose)
@@ -46,6 +47,16 @@ def state_look_for_new_obj():
     # Note: there is no equivalent function for clear_joint_value_targets()
     group.clear_pose_targets()
 
+    rospy.loginfo("Getting list of transforms")
+    t = tf.Transformer(True, rospy.Duration(10.0))
+    print(t.allFramesAsString())
+    print(t.getFrameStrings())
+    
+    (trans,rot) = listener.lookupTransform('/world', '/obj0', rospy.Time(0))
+
+    print("%f", trans[1])
+
+
     # if event has been created then change state
     currentState = 'state_picking_up_obj';
 
@@ -55,9 +66,8 @@ def state_picking_up_obj():
 
     # do something
     group = moveitNs.group
-    
-    # listen for objects now
-    listener = tf.TransformListener()    
+    listener = moveitNs.listener    
+  
     
     rate = rospy.Rate(10)
     startTime = rospy.get_time()    
@@ -206,6 +216,10 @@ def run():
     # store some of these variables so that states can access it
     global moveitNs    
     moveitNs.group = group
+    
+    # listen for objects now
+    listener = tf.TransformListener() 
+    moveitNs.listener = listener
 
     global currentState
     currentState = 'state_look_for_new_obj'
