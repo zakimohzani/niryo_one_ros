@@ -73,7 +73,7 @@ def run():
 
 
 
-    rate = rospy.Rate(1000)
+    rate = rospy.Rate(10)
     startTime = rospy.get_time()    
     
     group.set_planning_time(0.1) # seconds
@@ -104,7 +104,16 @@ def run():
     
         group.set_pose_target(target_pose)
         
-        #plan = group.go(wait=True)
+        
+        # BUG: Niryo driver's doesn't actually wait for the movement to complete
+        # before sending a 'complete' signal to Moveit
+        # Hence, the following sentence is not a blocking statement
+        # setting the wait-timer too low would mean the robot will never move
+        # because plan after plan after plan are continously being streamed to 
+        # it
+        plan = group.go(wait=True)
+
+        """
         plan = group.plan()
         
         print("Plan output:")
@@ -112,12 +121,15 @@ def run():
         print(len(plan.joint_trajectory.points))
         
         group.execute(plan, wait=True)
+        """
         
+
+        #print("Stopping arm")
         # Calling `stop()` ensures that there is no residual movement
-        group.stop()
+        #group.stop()
         # It is always good to clear your targets after planning with poses.
         # Note: there is no equivalent function for clear_joint_value_targets()
-        group.clear_pose_targets()
+        #group.clear_pose_targets()
 
         simTime = rospy.get_time() - startTime
         t = simTime
