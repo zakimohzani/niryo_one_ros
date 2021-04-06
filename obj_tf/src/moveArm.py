@@ -11,11 +11,13 @@ import copy
 import moveit_commander
 import moveit_msgs.msg
 import geometry_msgs.msg
-from math import pi
+from math import pi, sqrt
 from std_msgs.msg import String
 from moveit_commander.conversions import pose_to_list
+import operator
 
 
+# I didn't make a class, so I'm passing some moveit components via this variable
 global moveitNs
 moveitNs = SimpleNamespace()
 
@@ -26,6 +28,7 @@ def state_look_for_new_obj():
     rospy.loginfo('state = state_look_for_new_obj')
 
     # do something
+    global moveitNs 
     group = moveitNs.group
     listener = moveitNs.listener    
     
@@ -35,7 +38,7 @@ def state_look_for_new_obj():
     start_pose.position.y = -0.3
     start_pose.position.z = 0.2
 
-    rospy.loginfo("Lookout stance")
+    rospy.loginfo("Go to Lookout stance")
 
 
     group.set_pose_target(start_pose)
@@ -47,16 +50,40 @@ def state_look_for_new_obj():
     # Note: there is no equivalent function for clear_joint_value_targets()
     group.clear_pose_targets()
 
+
+
     rospy.loginfo("Getting list of transforms")
-    t = tf.Transformer(True, rospy.Duration(10.0))
-    print(t.allFramesAsString())
-    print(t.getFrameStrings())
+
+    list_of_tfs = listener.getFrameStrings()
+    #print("ALL TFS")
+    #print(list_of_tfs)
     
-    (trans,rot) = listener.lookupTransform('/world', '/obj0', rospy.Time(0))
+    # from: https://stackoverflow.com/questions/44357731/filter-list-of-strings-starting-with-specific-keyword
+    PartialWord = "obj"
+    list_of_objs = [word for word in list_of_tfs if word.startswith(PartialWord)]
 
-    print("%f", trans[1])
+    #print("ALL OBJS")
+    #print(list_of_objs)
 
+    distance_of_objs_from_end_effector = []
+    
+    lowest_distance_so_far = 100
+    obj_name_with_the_lowest_distance = ''
+    obj_distance_dict = {}
+    for obj_id in list_of_objs:
+        (trans,rot) = listener.lookupTransform('/base_link', obj_id, rospy.Time(0))
+        distance = sqrt( (trans[0] - start_pose.position.x)**2 + \
+                        (trans[1] - start_pose.position.y)**2 )
+        obj_distance_dict[obj_id] = distance
 
+    
+    obj_name_with_the_lowest_distance = min(obj_distance_dict.iteritems(), key=operator.itemgetter(1))[0]
+            
+    #print(obj_distance_dict)
+    print('Selected obj:')
+    print(obj_name_with_the_lowest_distance)
+    moveitNs.targetTF = obj_name_with_the_lowest_distance
+    
     # if event has been created then change state
     currentState = 'state_picking_up_obj';
 
@@ -77,7 +104,7 @@ def state_picking_up_obj():
     while not rospy.is_shutdown():
 
         try:
-            (trans,rot) = listener.lookupTransform('/world', '/obj0', rospy.Time(0))
+            (trans,rot) = listener.lookupTransform('/world', moveitNs.targetTF, rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
 #            group.set_pose_target(start_pose)
 #            
