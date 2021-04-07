@@ -127,7 +127,8 @@ def state_picking_up_obj():
     listener = moveitNs.listener    
   
     
-    rate = rospy.Rate(10)
+    rate = rospy.Rate(10) # doesn't work
+    
     startTime = rospy.get_time()    
     
     group.set_planning_time(0.1) # seconds
@@ -135,7 +136,7 @@ def state_picking_up_obj():
     while not rospy.is_shutdown():
 
         try:
-            (trans,rot) = listener.lookupTransform('/world', moveitNs.targetTF, rospy.Time(0))
+            (trans,rot) = listener.lookupTransform('/base_link', moveitNs.targetTF, rospy.Time(0))
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
 #            group.set_pose_target(start_pose)
 #            
@@ -148,6 +149,8 @@ def state_picking_up_obj():
             continue
 
         # robot's frame is also world so we don't need any transform
+        print("Y: %f" % trans[1])        
+        
         
         if trans[1] > 0.1:
             rospy.loginfo("assume object has been picked up")           
@@ -169,6 +172,8 @@ def state_picking_up_obj():
         # setting the wait-timer too low would mean the robot will never move
         # because plan after plan after plan are continously being streamed to 
         # it
+        
+        startTime = rospy.get_time()
         plan = group.go(wait=True)
 
         """
@@ -181,6 +186,10 @@ def state_picking_up_obj():
         group.execute(plan, wait=True)
         """
         
+        simTime = rospy.get_time() - startTime
+        t = simTime
+        print("Sim time: %f" % t)        
+        
 
         #print("Stopping arm")
         # Calling `stop()` ensures that there is no residual movement
@@ -189,11 +198,8 @@ def state_picking_up_obj():
         # Note: there is no equivalent function for clear_joint_value_targets()
         #group.clear_pose_targets()
 
-        simTime = rospy.get_time() - startTime
-        t = simTime
-        print("Sim time: %f", t)
-        
-        rate.sleep()
+        # rate.sleep() # doesn't work 
+        time.sleep(0.05)
         
         
     # if event has been created then change state

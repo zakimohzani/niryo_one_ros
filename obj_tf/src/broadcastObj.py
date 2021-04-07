@@ -14,7 +14,7 @@ class ObjRecogniser():
         s.flip = 1
     
     def simulateObjRecognition(s):
-        rospy.Timer(rospy.Duration(30), s.simulateObjRecognitionCallback, oneshot=False)
+        rospy.Timer(rospy.Duration(10), s.simulateObjRecognitionCallback, oneshot=False)
     
     def simulateObjRecognitionCallback(s, event):
         now = rospy.get_rostime()
@@ -132,7 +132,7 @@ class ConveyorBelt:
 
     def simulateMovement(s):
         s.startTime = rospy.get_time()
-        s.speed = 0.005 # m/s
+        s.speed = 0.05 # m/s
         
         
     def broadcastConveyorTf(s, y):
