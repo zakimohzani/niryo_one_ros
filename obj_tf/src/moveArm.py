@@ -99,8 +99,11 @@ def state_look_for_new_obj():
     obj_name_with_the_lowest_distance = ''
     obj_distance_dict = {}
     for obj_id in list_of_objs:
-        (trans,rot) = listener.lookupTransform('/base_link', obj_id, rospy.Time(0))
-        
+        try:
+            (trans,rot) = listener.lookupTransform('/base_link', obj_id, rospy.Time(0))
+        except (tf.ExtrapolationException):
+            continue
+            
         desired_y_pos = start_pose.position.y - 0.05        
         
         distance = sqrt( (trans[0] - start_pose.position.x)**2 + \
