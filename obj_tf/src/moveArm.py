@@ -188,22 +188,27 @@ def state_picking_up_obj():
         # because plan after plan after plan are continously being streamed to 
         # it
         
+        """
         startTime = rospy.get_time()
         plan = group.go(wait=True)
-
-        """
-        plan = group.plan()
-        
-        print("Plan output:")
-        #print(plan)        
-        print(len(plan.joint_trajectory.points))
-        
-        group.execute(plan, wait=True)
-        """
-        
         simTime = rospy.get_time() - startTime
-        t = simTime
-        print("Sim time: %f" % t)        
+        print("Planning & execution time: %f" % simTime)  
+        """
+
+        startTime = rospy.get_time()        
+        plan = group.plan()
+        simTime = rospy.get_time() - startTime
+        print("Planning time: %f" % simTime)
+        
+        #print("Plan output:")
+        #print(plan)        
+        #print(len(plan.joint_trajectory.points))
+        
+        startTime = rospy.get_time() 
+        group.execute(plan, wait=True)
+        simTime = rospy.get_time() - startTime
+        print("Execution time: %f" % simTime)
+     
         
 
         #print("Stopping arm")
@@ -214,7 +219,7 @@ def state_picking_up_obj():
         #group.clear_pose_targets()
 
         # rate.sleep() # doesn't work 
-        time.sleep(0.05)
+        time.sleep(0.1)
         
         
     # if event has been created then change state
