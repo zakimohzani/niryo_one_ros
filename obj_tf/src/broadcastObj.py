@@ -78,6 +78,7 @@ class ObjOnConveyorBeltListMaintainer:
         return s.list
     
     def removeObjFromListCallback(s, msg):
+        y_pos_to_remove_obj = 0.9
         for item in s.list:
             #print(item["name"])
             try:
@@ -85,7 +86,7 @@ class ObjOnConveyorBeltListMaintainer:
             except (tf.LookupException, tf.ExtrapolationException):
                 continue
             #print("%s, Y:%f" % (item["name"], trans[1]))
-            if trans[1] > 0.7:
+            if trans[1] > y_pos_to_remove_obj:
                 s.list.remove(item)
     
 class ObjTfBroadcaster:

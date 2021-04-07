@@ -35,13 +35,18 @@ def state_going_to_pickup():
     
     global start_pose
     start_pose = geometry_msgs.msg.Pose()
-    start_pose.orientation.w = 1.0
+    q = tf.transformations.quaternion_about_axis(0.5*pi, (0, 1, 0))
+    #print(q)
+    start_pose.orientation.x = q[0]
+    start_pose.orientation.y = q[1]
+    start_pose.orientation.z = q[2]
+    start_pose.orientation.w = q[3]
+    
     start_pose.position.x = 0.3
     start_pose.position.y = -0.3
     start_pose.position.z = 0.2
 
     rospy.loginfo("Go to Lookout stance")
-
 
     group.set_pose_target(start_pose)
     
@@ -161,10 +166,17 @@ def state_picking_up_obj():
         
         
         target_pose = geometry_msgs.msg.Pose()
-        target_pose.orientation.w = 1.0
+        q = tf.transformations.quaternion_about_axis(0.5*pi, (0, 1, 0))
+        #print(q)
+        target_pose.orientation.x = q[0]
+        target_pose.orientation.y = q[1]
+        target_pose.orientation.z = q[2]
+        target_pose.orientation.w = q[3]                
         target_pose.position.x = trans[0]
         target_pose.position.y = trans[1]
         target_pose.position.z = 0.2
+
+
     
         group.set_pose_target(target_pose)
         
@@ -216,7 +228,13 @@ def state_picked_up_obj_and_dumping_it():
     group = moveitNs.group
     
     start_pose = geometry_msgs.msg.Pose()
-    start_pose.orientation.w = 1.0
+    q = tf.transformations.quaternion_about_axis(0.5*pi, (0, 1, 0))
+    #print(q)
+    start_pose.orientation.x = q[0]
+    start_pose.orientation.y = q[1]
+    start_pose.orientation.z = q[2]
+    start_pose.orientation.w = q[3]
+    
     start_pose.position.x = 0
     start_pose.position.y = 0.2
     start_pose.position.z = 0.2
