@@ -53,7 +53,11 @@ class ObjOnConveyorBeltListMaintainer:
         s.list = []
         s.number = 0
         s.listener = tf.TransformListener()
-        
+
+        broadcastFrequency = 1.0
+        rospy.Timer(rospy.Duration(1.0/broadcastFrequency), 
+                    s.removeObjFromListCallback, oneshot=False) 
+
     def subscriberCallback(s, msg):
         print("SUB:------------")        
         print("SUB: received it")
@@ -73,8 +77,16 @@ class ObjOnConveyorBeltListMaintainer:
     def getList(s):
         return s.list
     
-    def removeObjFromList(s, msg):
-        print("removeObjFromList is undefined")
+    def removeObjFromListCallback(s, msg):
+        for item in s.list:
+            #print(item["name"])
+            try:
+                (trans,rot) = s.listener.lookupTransform('/base_link', item["name"], rospy.Time(0))
+            except (tf.LookupException, tf.ExtrapolationException):
+                continue
+            #print("%s, Y:%f" % (item["name"], trans[1]))
+            if trans[1] > 0.7:
+                s.list.remove(item)
     
 class ObjTfBroadcaster:
     def __init__(s, objOnConveyorBeltListMaintainer):
@@ -124,7 +136,9 @@ class ConveyorBelt:
     def broadcastCallback(s, event):
         # update position       
         t = rospy.get_time() - s.startTime
-        print("Broadcasting %f", t)
+        debug_msg = False        
+        if debug_msg:       
+            print("Broadcasting %f", t)
         s.currentYPos = s.speed * t
         
         # call legacy function, can't be bothered to refactor this
