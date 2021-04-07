@@ -20,18 +20,20 @@ import operator
 # I didn't make a class, so I'm passing some moveit components via this variable
 global moveitNs
 moveitNs = SimpleNamespace()
+global start_pose
 
 global currentState
 
-def state_look_for_new_obj():
+def state_going_to_pickup():
     global currentState # required for the state machine
-    rospy.loginfo('state = state_look_for_new_obj')
+    rospy.loginfo('state = state_going_to_pickup')
 
     # do something
     global moveitNs 
     group = moveitNs.group
     listener = moveitNs.listener    
     
+    global start_pose
     start_pose = geometry_msgs.msg.Pose()
     start_pose.orientation.w = 1.0
     start_pose.position.x = 0.3
@@ -50,8 +52,34 @@ def state_look_for_new_obj():
     # Note: there is no equivalent function for clear_joint_value_targets()
     group.clear_pose_targets()
 
+    
+    # the wait attribute doesn't work with niryo, and we won't have the guarantee
+    # that it arrived there so we need a new state
+    
+    (trans,rot) = listener.lookupTransform('/base_link', '/tool_link', rospy.Time(0))
+       
+    distance = sqrt( (trans[0] - start_pose.position.x)**2 + \
+                    (trans[1] - start_pose.position.y)**2 )
 
+    rospy.loginfo(distance)
 
+    # if event has been created then change state
+    if distance > 0.05:
+        currentState = 'state_going_to_pickup';
+    else:
+        currentState = 'state_look_for_new_obj';
+    
+
+def state_look_for_new_obj():
+    global currentState # required for the state machine
+    rospy.loginfo('state = state_look_for_new_obj')
+
+    # do something
+    global moveitNs 
+    group = moveitNs.group
+    listener = moveitNs.listener       
+    
+    
     rospy.loginfo("Getting list of transforms")
 
     list_of_tfs = listener.getFrameStrings()
@@ -72,8 +100,11 @@ def state_look_for_new_obj():
     obj_distance_dict = {}
     for obj_id in list_of_objs:
         (trans,rot) = listener.lookupTransform('/base_link', obj_id, rospy.Time(0))
+        
+        desired_y_pos = start_pose.position.y - 0.05        
+        
         distance = sqrt( (trans[0] - start_pose.position.x)**2 + \
-                        (trans[1] - start_pose.position.y)**2 )
+                        (trans[1] - desired_y_pos)**2 )
         obj_distance_dict[obj_id] = distance
 
     
@@ -208,7 +239,7 @@ def state_picked_up_obj_and_dumping_it():
     group.clear_pose_targets()
 
     # if event has been created then change state
-    currentState = 'state_look_for_new_obj';
+    currentState = 'state_going_to_pickup';
 
 
 
@@ -263,7 +294,7 @@ def run():
         state()
         # End of state machine code    
         
-        time.sleep(5)
+        time.sleep(1)
 
 
 if __name__ == '__main__':
