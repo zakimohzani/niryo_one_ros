@@ -115,7 +115,7 @@ int main(int argc, char** argv)
 
   // First thing, let's generate a pattern with its origin at zero. We'll define another transform later that
   // can move it to somewere more convenient.
-  const static double time_between_points = 1.0;
+  const static double time_between_points = 0.5;
 
   EigenSTL::vector_Isometry3d pattern_poses;
 
@@ -126,8 +126,7 @@ int main(int argc, char** argv)
     // This creates a trajectory that searches around the tool Z and let's the robot move in that null space
     //descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pose, time_between_points);
     // This creates a trajectory that is rigid. The tool cannot float and must be at exactly this point.
-      descartes_core::TrajectoryPtPtr pt = makeTolerancedCartesianPoint(pose, time_between_points);
-      //descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pose, time_between_points);
+      descartes_core::TrajectoryPtPtr pt = makeCartesianPoint(pose, time_between_points);
     points.push_back(pt);
   }
 
@@ -245,7 +244,7 @@ descartes_core::TrajectoryPtPtr makeTolerancedCartesianPoint(const Eigen::Isomet
 {
   using namespace descartes_core;
   using namespace descartes_trajectory;
-  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 6.0, AxialSymmetricPt::X_AXIS, TimingConstraint(dt)) );
+  return TrajectoryPtPtr( new AxialSymmetricPt(pose, M_PI / 30.0, AxialSymmetricPt::X_AXIS, TimingConstraint(dt)) );
 }
 
 EigenSTL::vector_Isometry3d makePath1a()
@@ -269,40 +268,30 @@ EigenSTL::vector_Isometry3d makePath1a()
 
  
     Eigen::Isometry3d pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, -0.2, 0);
-    pose *= Eigen::AngleAxisd(0.5*M_PI, Eigen::Vector3d::UnitY());
+    pose.translation() = Eigen::Vector3d(0, 0, 0);
+    pose *= Eigen::AngleAxisd(-0.15*M_PI, Eigen::Vector3d::UnitY());
     pattern_poses.push_back(pose);
 
 
     pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, -0.1, 0);
-    pose *= Eigen::AngleAxisd(0.5*M_PI, Eigen::Vector3d::UnitY()); 
+    pose.translation() = Eigen::Vector3d(0, 0, -0.05);
+    pose *= Eigen::AngleAxisd(-0.125*M_PI, Eigen::Vector3d::UnitY()); 
     pattern_poses.push_back(pose);
 
 
     pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0,  0);
-    pose *= Eigen::AngleAxisd(0.5*M_PI, Eigen::Vector3d::UnitY()); 
+    pose.translation() = Eigen::Vector3d(0, 0, -0.1);
+    pose *= Eigen::AngleAxisd(-0.10*M_PI, Eigen::Vector3d::UnitY()); 
     pattern_poses.push_back(pose);
 
     pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0.1, 0);
-    pose *= Eigen::AngleAxisd(0.5*M_PI, Eigen::Vector3d::UnitY()); 
+    pose.translation() = Eigen::Vector3d(0, 0, -0.15);
+    pose *= Eigen::AngleAxisd( 0.125*M_PI, Eigen::Vector3d::UnitY()); 
     pattern_poses.push_back(pose);
 
     pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(0, 0.2, 0);
-    pose *= Eigen::AngleAxisd(0.5*M_PI, Eigen::Vector3d::UnitY()); 
-    pattern_poses.push_back(pose);
-
-    pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(-0.1, 0.2, 0);
-    pose *= Eigen::AngleAxisd(0.5*M_PI, Eigen::Vector3d::UnitY()); 
-    pattern_poses.push_back(pose);
-
-    pose = Eigen::Isometry3d::Identity();
-    pose.translation() = Eigen::Vector3d(-0.2, 0.2, 0);
-    pose *= Eigen::AngleAxisd(0.5*M_PI, Eigen::Vector3d::UnitY()); 
+    pose.translation() = Eigen::Vector3d(0, 0, -0.20);
+    pose *= Eigen::AngleAxisd( 0.15*M_PI, Eigen::Vector3d::UnitY()); 
     pattern_poses.push_back(pose);
 
 
@@ -312,7 +301,7 @@ EigenSTL::vector_Isometry3d makePath1a()
   // Now lets translate these points to Descartes trajectory points
   // The ABB2400 is pretty big, so let's move the path forward and up.
   Eigen::Isometry3d pattern_origin = Eigen::Isometry3d::Identity();
-  pattern_origin.translation() = Eigen::Vector3d(0.3, 0.001, 0.2); // shift y by 0.001 cos algo fails when y=0
+  pattern_origin.translation() = Eigen::Vector3d(0.25, 0.001, 0.3); // shift y by 0.001 cos algo fails when y=0
 
   for (const auto& pose : pattern_poses)
   {
