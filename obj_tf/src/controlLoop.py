@@ -21,6 +21,8 @@ from moveit_python_tools.get_fk import GetFK
 from geometry_msgs.msg import PoseStamped
 
 
+
+
 # I didn't make a class, so I'm passing some moveit components via this variable
 global moveitNs
 moveitNs = SimpleNamespace()
@@ -75,9 +77,9 @@ def run():
     gik = GetIK("arm")
     ps = PoseStamped()
     ps.header.frame_id = 'base_link'
-    ps.pose.position.x = 0.1
+    ps.pose.position.x = 0.2
     ps.pose.position.y = -0.2
-    ps.pose.position.z = 0.2
+    ps.pose.position.z = 0.3
     ps.pose.orientation = start_pose.orientation
     respIK = gik.get_ik(ps)
     print("Printing result of GetIK")
@@ -116,6 +118,31 @@ def run():
         simTime = rospy.get_time() - startTime
         print("Planning time: %f" % simTime)
         
+        import actionlib
+        from moveit_msgs.msg import ExecuteTrajectoryAction 
+        from moveit_msgs.msg import ExecuteTrajectoryGoal
+        from moveit_msgs.msg import ExecuteTrajectoryResult
+
+        client = actionlib.SimpleActionClient('/execute_trajectory', ExecuteTrajectoryAction)
+        client.wait_for_server()
+
+        goal = ExecuteTrajectoryGoal()
+
+        from moveit_msgs.msg import RobotTrajectory
+        from trajectory_msgs.msg import JointTrajectory
+        from trajectory_msgs.msg import JointTrajectoryPoint
+        rt = RobotTrajectory()
+        jt = JointTrajectory()
+        jt.header.frame_id = '/world'
+        jt.points = JointTrajectoryPoint()
+        jt.points.positions = positions
+        jt.joint_names = respIK.solution.joint_state.name
+        rt.joint_trajectory = jt
+        goal.trajectory = rt
+
+        print(" - ")
+        print("ExectureTrajGoal msg")
+        print(goal)
 
     while not rospy.is_shutdown():
 
