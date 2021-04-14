@@ -65,18 +65,57 @@ def run():
     listener = tf.TransformListener() 
     moveitNs.listener = listener
 
+    start_pose = geometry_msgs.msg.Pose()
+    q = tf.transformations.quaternion_about_axis(0.5*pi, (0, 1, 0))
+    start_pose.orientation.x = q[0]
+    start_pose.orientation.y = q[1]
+    start_pose.orientation.z = q[2]
+    start_pose.orientation.w = q[3]
+
     gik = GetIK("arm")
     ps = PoseStamped()
-    ps.header.frame_id = 'tool_link'
+    ps.header.frame_id = 'base_link'
     ps.pose.position.x = 0.1
-    ps.pose.orientation.w = 1.0
-    print gik.get_ik(ps)
+    ps.pose.position.y = -0.2
+    ps.pose.position.z = 0.2
+    ps.pose.orientation = start_pose.orientation
+    respIK = gik.get_ik(ps)
+    print("Printing result of GetIK")
+    print respIK
+
+    print("Extracting positions")
+    positions = respIK.solution.joint_state.position
+    print(positions)
+
 
     gfk = GetFK("tool_link","base_link")
     resp = gfk.get_current_fk()
     from moveit_python_tools.friendly_error_codes import moveit_error_dict
     rospy.loginfo(moveit_error_dict[resp.error_code.val])
     rospy.loginfo(resp)
+
+    print("End of GetFK")
+
+    if not positions:
+        print("Invalid FK")
+    else:
+        joint_goal = group.get_current_joint_values()
+        print("current joint vals")
+        print(joint_goal)
+        joint_goal[0] = positions[0]
+        joint_goal[1] = positions[1]
+        joint_goal[2] = positions[2]
+        joint_goal[3] = positions[3]
+        joint_goal[4] = positions[4]
+        joint_goal[5] = positions[5]
+        print("target joint vals")
+        print(joint_goal)
+
+        startTime = rospy.get_time()        
+        group.go(joint_goal, wait=True)
+        simTime = rospy.get_time() - startTime
+        print("Planning time: %f" % simTime)
+        
 
     while not rospy.is_shutdown():
 
