@@ -78,7 +78,7 @@ def run():
     ps = PoseStamped()
     ps.header.frame_id = 'base_link'
     ps.pose.position.x = 0.2
-    ps.pose.position.y = -0.2
+    ps.pose.position.y = -0.01
     ps.pose.position.z = 0.3
     ps.pose.orientation = start_pose.orientation
     respIK = gik.get_ik(ps)
@@ -113,11 +113,13 @@ def run():
         print("target joint vals")
         print(joint_goal)
 
+        """
         startTime = rospy.get_time()        
         group.go(joint_goal, wait=True)
         simTime = rospy.get_time() - startTime
         print("Planning time: %f" % simTime)
-        
+        """
+
         import actionlib
         from moveit_msgs.msg import ExecuteTrajectoryAction 
         from moveit_msgs.msg import ExecuteTrajectoryGoal
@@ -134,8 +136,9 @@ def run():
         rt = RobotTrajectory()
         jt = JointTrajectory()
         jt.header.frame_id = '/world'
-        jt.points = JointTrajectoryPoint()
-        jt.points.positions = positions
+        jtp = JointTrajectoryPoint()
+        jtp.positions = positions
+        jt.points.append(jtp)
         jt.joint_names = respIK.solution.joint_state.name
         rt.joint_trajectory = jt
         goal.trajectory = rt
@@ -143,6 +146,16 @@ def run():
         print(" - ")
         print("ExectureTrajGoal msg")
         print(goal)
+
+        def feedback_callback(feedback):
+            print('Received some feedback from executeTraj')
+        
+        client.send_goal(goal, feedback_cb=feedback_callback)
+
+        client.wait_for_result()
+
+        print('[Result] State: %d'%(client.get_state()))
+
 
     while not rospy.is_shutdown():
 
