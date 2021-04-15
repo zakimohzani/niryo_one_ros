@@ -66,25 +66,16 @@
   <build_depend>tf_conversions</build_depend>
 
 
-  <build_depend>descartes_core</build_depend>
-  <build_depend>descartes_moveit</build_depend>
-  <build_depend>descartes_planner</build_depend>
-  <build_depend>descartes_trajectory</build_depend>
-  <build_depend>descartes_utilities</build_depend>
+
   <build_depend>trajectory_msgs</build_depend>
 
   <exec_depend>roslib</exec_depend>
-  <exec_depend>descartes_core</exec_depend>
-  <exec_depend>descartes_moveit</exec_depend>
-  <exec_depend>descartes_planner</exec_depend>
-  <exec_depend>descartes_trajectory</exec_depend>
-  <exec_depend>descartes_utilities</exec_depend>
+
   <exec_depend>trajectory_msgs</exec_depend>
   <exec_depend>tf</exec_depend>
   <exec_depend>tf_conversions</exec_depend>
 
-  <build_depend>tutorial_utilities</build_depend>
-  <exec_depend>tutorial_utilities</exec_depend>
+
   <!-- The export tag contains other, unspecified, tags -->
   <export>
     <!-- Other tools can request additional information be placed here -->

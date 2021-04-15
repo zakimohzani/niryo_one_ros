@@ -37,16 +37,12 @@ find_package(catkin REQUIRED COMPONENTS
 
   # list below is copied from
   roslib
-  descartes_core
-  descartes_moveit
-  descartes_trajectory
-  descartes_planner
-  descartes_utilities
+
   trajectory_msgs
   tf
   tf_conversions
   eigen_conversions
-  tutorial_utilities
+
 )
 
 ## System dependencies are found with CMake's conventions
@@ -167,11 +163,11 @@ link_directories(${catkin_LIBRARY_DIRS})
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
 #message("catkin libraries " ${catkin_LIBRARIES})
-add_executable(moveArmCpp src/moveArmCpp.cpp)
-add_dependencies(moveArmCpp ${moveArmCpp_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(moveArmCpp
-  ${catkin_LIBRARIES}
-)
+#add_executable(moveArmCpp src/moveArmCpp.cpp)
+#add_dependencies(moveArmCpp ${moveArmCpp_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(moveArmCpp
+#  ${catkin_LIBRARIES}
+#)
 
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
