@@ -43,21 +43,21 @@ def run():
 
     # We can get the name of the reference frame for this robot:
     planning_frame = group.get_planning_frame()
-    print "============ Reference frame: %s" % planning_frame
+    print("============ Reference frame: %s" % planning_frame)
     
     # We can also print the name of the end-effector link for this group:
     eef_link = group.get_end_effector_link()
-    print "============ End effector: %s" % eef_link
+    print("============ End effector: %s" % eef_link)
     
     # We can get a list of all the groups in the robot:
     group_names = robot.get_group_names()
-    print "============ Robot Groups:", robot.get_group_names()
+    print("============ Robot Groups:", robot.get_group_names())
     
     # Sometimes for debugging it is useful to print the entire state of the
     # robot:
-    print "============ Printing robot state"
-    print robot.get_current_state()
-    print ""  
+    print( "============ Printing robot state")
+    print( robot.get_current_state())
+    print("")
     
     # store some of these variables so that states can access it
     global moveitNs    
@@ -83,7 +83,7 @@ def run():
     ps.pose.orientation = start_pose.orientation
     respIK = gik.get_ik(ps)
     print("Printing result of GetIK")
-    print respIK
+    print(respIK)
 
     print("Extracting positions")
     positions = respIK.solution.joint_state.position
@@ -113,13 +113,18 @@ def run():
         print("target joint vals")
         print(joint_goal)
 
-        """
+        print "============ Press `Enter` to call moveit go()"
+        raw_input()
         startTime = rospy.get_time()        
         group.go(joint_goal, wait=True)
         simTime = rospy.get_time() - startTime
         print("Planning time: %f" % simTime)
-        """
 
+
+        print "============ Press `Enter` to call ExecuteTrajectoryAction"
+        joint_goal[0] = joint_goal[0]+0.1 
+
+        raw_input()
         import actionlib
         from moveit_msgs.msg import ExecuteTrajectoryAction 
         from moveit_msgs.msg import ExecuteTrajectoryGoal
@@ -138,7 +143,7 @@ def run():
         jt.header.frame_id = '/world'
         jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
         jtp = JointTrajectoryPoint()
-        jtp.positions = positions
+        jtp.positions = joint_goal
         jt.points.append(jtp)
         jt.joint_names = respIK.solution.joint_state.name
         rt.joint_trajectory = jt
