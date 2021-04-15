@@ -136,6 +136,7 @@ def run():
         rt = RobotTrajectory()
         jt = JointTrajectory()
         jt.header.frame_id = '/world'
+        jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
         jtp = JointTrajectoryPoint()
         jtp.positions = positions
         jt.points.append(jtp)
