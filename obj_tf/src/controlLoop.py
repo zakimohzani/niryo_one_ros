@@ -143,7 +143,13 @@ def run():
         jt.header.frame_id = '/world'
         jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
         jtp = JointTrajectoryPoint()
-        jtp.positions = joint_goal
+        jtp.positions = copy.copy(joint_goal)
+        jt.points.append(jtp)
+
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.1
+        jtp.time_from_start.nsecs = 10000000
         jt.points.append(jtp)
         jt.joint_names = respIK.solution.joint_state.name
         rt.joint_trajectory = jt
