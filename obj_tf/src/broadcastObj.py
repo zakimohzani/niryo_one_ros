@@ -14,7 +14,7 @@ class ObjRecogniser():
         s.flip = 1
     
     def simulateObjRecognition(s):
-        rospy.Timer(rospy.Duration(10), s.simulateObjRecognitionCallback, oneshot=False)
+        rospy.Timer(rospy.Duration(5), s.simulateObjRecognitionCallback, oneshot=False)
     
     def simulateObjRecognitionCallback(s, event):
         now = rospy.get_rostime()
@@ -53,11 +53,7 @@ class ObjOnConveyorBeltListMaintainer:
         s.list = []
         s.number = 0
         s.listener = tf.TransformListener()
-
-        broadcastFrequency = 1.0
-        rospy.Timer(rospy.Duration(1.0/broadcastFrequency), 
-                    s.removeObjFromListCallback, oneshot=False) 
-
+        
     def subscriberCallback(s, msg):
         print("SUB:------------")        
         print("SUB: received it")
@@ -77,17 +73,8 @@ class ObjOnConveyorBeltListMaintainer:
     def getList(s):
         return s.list
     
-    def removeObjFromListCallback(s, msg):
-        y_pos_to_remove_obj = 0.9
-        for item in s.list:
-            #print(item["name"])
-            try:
-                (trans,rot) = s.listener.lookupTransform('/base_link', item["name"], rospy.Time(0))
-            except (tf.LookupException, tf.ExtrapolationException):
-                continue
-            #print("%s, Y:%f" % (item["name"], trans[1]))
-            if trans[1] > y_pos_to_remove_obj:
-                s.list.remove(item)
+    def removeObjFromList(s, msg):
+        print("removeObjFromList is undefined")
     
 class ObjTfBroadcaster:
     def __init__(s, objOnConveyorBeltListMaintainer):
@@ -137,9 +124,7 @@ class ConveyorBelt:
     def broadcastCallback(s, event):
         # update position       
         t = rospy.get_time() - s.startTime
-        debug_msg = False        
-        if debug_msg:       
-            print("Broadcasting %f", t)
+        print("Broadcasting %f", t)
         s.currentYPos = s.speed * t
         
         # call legacy function, can't be bothered to refactor this
@@ -147,7 +132,7 @@ class ConveyorBelt:
 
     def simulateMovement(s):
         s.startTime = rospy.get_time()
-        s.speed = 0.05 # m/s
+        s.speed = 0.010 # m/s
         
         
     def broadcastConveyorTf(s, y):
@@ -174,8 +159,9 @@ def roboArmFollow(name):
 
 def run():
 
-    objRecogniser = ObjRecogniser()
-    objRecogniser.simulateObjRecognition()    
+
+    #objRecogniser = ObjRecogniser()
+    #objRecogniser.simulateObjRecognition()    
 
     # wait a bit to initialise subscriber
     rospy.sleep(1)
