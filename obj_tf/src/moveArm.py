@@ -126,6 +126,19 @@ def state_look_for_new_obj():
     # if event has been created then change state
     currentState = 'state_picking_up_obj';
 
+
+
+from moveit_python_tools.get_ik import GetIK
+from moveit_python_tools.get_fk import GetFK
+from geometry_msgs.msg import PoseStamped
+import actionlib
+from moveit_msgs.msg import ExecuteTrajectoryAction 
+from moveit_msgs.msg import ExecuteTrajectoryGoal
+from moveit_msgs.msg import ExecuteTrajectoryResult
+from moveit_msgs.msg import RobotTrajectory
+from trajectory_msgs.msg import JointTrajectory
+from trajectory_msgs.msg import JointTrajectoryPoint
+
 def state_picking_up_obj():
     global currentState # required for the state machine
     rospy.loginfo('state = state_picking_up_obj')
@@ -134,7 +147,12 @@ def state_picking_up_obj():
     group = moveitNs.group
     listener = moveitNs.listener    
   
-    
+
+    def feedback_callback(feedback):
+        print('Received some feedback from executeTraj')
+    client = actionlib.SimpleActionClient('/execute_trajectory', ExecuteTrajectoryAction)
+    client.wait_for_server()
+
     rate = rospy.Rate(10) # doesn't work
     
     startTime = rospy.get_time()    
@@ -177,40 +195,66 @@ def state_picking_up_obj():
         target_pose.position.z = 0.2
 
 
-    
-        group.set_pose_target(target_pose)
+        # HACK: copied in code forom controlLoopTest.py
+        gik = GetIK("arm")
+        ps = PoseStamped()
+        ps.header.frame_id = 'base_link'
+        ps.pose.position.x = trans[0]
+        ps.pose.position.y = trans[1]
+        ps.pose.position.z = 0.2
+        ps.pose.orientation = target_pose.orientation
+        respIK = gik.get_ik(ps)
+        print("Printing result of GetIK")
+        print(respIK)
         
-        
-        # BUG: Niryo driver's doesn't actually wait for the movement to complete
-        # before sending a 'complete' signal to Moveit
-        # Hence, the following sentence is not a blocking statement
-        # setting the wait-timer too low would mean the robot will never move
-        # because plan after plan after plan are continously being streamed to 
-        # it
-        
-        """
-        startTime = rospy.get_time()
-        plan = group.go(wait=True)
-        simTime = rospy.get_time() - startTime
-        print("Planning & execution time: %f" % simTime)  
-        """
+        print("Extracting positions")
+        positions = respIK.solution.joint_state.position
+        print(positions)        
 
-        startTime = rospy.get_time()        
-        plan = group.plan()
-        simTime = rospy.get_time() - startTime
-        print("Planning time: %f" % simTime)
-        
-        #print("Plan output:")
-        #print(plan)        
-        #print(len(plan.joint_trajectory.points))
-        
-        startTime = rospy.get_time() 
-        group.execute(plan, wait=True)
-        simTime = rospy.get_time() - startTime
-        print("Execution time: %f" % simTime)
-     
-        
+        if not positions:
+            print("Invalid FK")
+            continue   
 
+        joint_goal = group.get_current_joint_values()
+        print("current joint vals")
+        print(joint_goal)
+
+        # HACK: resolve this list-tuple dilemma.
+        joint_goal[0] = positions[0]
+        joint_goal[1] = positions[1]
+        joint_goal[2] = positions[2]
+        joint_goal[3] = positions[3]
+        joint_goal[4] = positions[4]
+        joint_goal[5] = positions[5]
+        print("target joint vals")
+        print(joint_goal)        
+
+
+
+        goal = ExecuteTrajectoryGoal()
+
+
+        # send that message over
+        rt = RobotTrajectory()
+        jt = JointTrajectory()
+        jt.header.frame_id = '/world'
+        jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jt.points.append(jtp)
+
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.02
+        jtp.time_from_start.nsecs = 10000000
+        jt.points.append(jtp)
+        jt.joint_names = respIK.solution.joint_state.name
+        rt.joint_trajectory = jt
+        goal.trajectory = rt
+
+        client.send_goal(goal, feedback_cb=feedback_callback)
+
+        client.wait_for_result()
         #print("Stopping arm")
         # Calling `stop()` ensures that there is no residual movement
         #group.stop()
