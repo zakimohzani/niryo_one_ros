@@ -169,8 +169,66 @@ def run():
         print('[Result] State: %d'%(client.get_state()))
 
 
-    while not rospy.is_shutdown():
+    import numpy as np
+    y1 = np.arange(-0.2,0.2,0.04)
+    y2 = y1[::-1]
+    yrange = np.concatenate([y1,y2])
 
+    for i in yrange:
+        print(i)
+    
+
+    i = -1 # initial state
+    while not rospy.is_shutdown():
+        i = i + 1
+
+        if i > (yrange.size-1):
+            i = 0
+        print(yrange[i])
+
+        # get desired pose
+        ps.pose.position.x = 0.2
+        ps.pose.position.y = yrange[i]
+        ps.pose.position.z = 0.2
+        ps.pose.orientation = start_pose.orientation
+        respIK = gik.get_ik(ps)
+        print("Printing result of GetIK")
+        print(respIK)
+
+        print("Extracting positions")
+        positions = respIK.solution.joint_state.position
+        print(positions)
+        
+        # HACK: resolve this list-tuple dilemma. 
+        joint_goal[0] = positions[0]
+        joint_goal[1] = positions[1]
+        joint_goal[2] = positions[2]
+        joint_goal[3] = positions[3]
+        joint_goal[4] = positions[4]
+        joint_goal[5] = positions[5]
+
+
+        # send that message over
+        rt = RobotTrajectory()
+        jt = JointTrajectory()
+        jt.header.frame_id = '/world'
+        jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jt.points.append(jtp)
+
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.02
+        jtp.time_from_start.nsecs = 10000000
+        jt.points.append(jtp)
+        jt.joint_names = respIK.solution.joint_state.name
+        rt.joint_trajectory = jt
+        goal.trajectory = rt
+
+        client.send_goal(goal, feedback_cb=feedback_callback)
+
+        client.wait_for_result()
 
         time.sleep(1)
 
