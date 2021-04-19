@@ -118,15 +118,6 @@ def run():
     # Note: there is no equivalent function for clear_joint_value_targets()
     group.clear_pose_targets()
 
-
-
-
-
-
-
-
-
-
     # listen for objects now
     listener = tf.TransformListener()
 
