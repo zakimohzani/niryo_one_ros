@@ -122,7 +122,7 @@ def run():
 
 
         print "============ Press `Enter` to call ExecuteTrajectoryAction"
-        joint_goal[0] = joint_goal[0]+0.1 
+        joint_goal[0] = joint_goal[0]-0.1
 
         raw_input()
         import actionlib
@@ -148,7 +148,7 @@ def run():
 
         jtp = JointTrajectoryPoint()
         jtp.positions = copy.copy(joint_goal)
-        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.6
+        jtp.positions[0] = copy.copy(jtp.positions[0]) -0.1
         jtp.time_from_start.nsecs = 10000000
         jt.points.append(jtp)
         jt.joint_names = respIK.solution.joint_state.name
@@ -170,7 +170,7 @@ def run():
 
 
     import numpy as np
-    y1 = np.arange(-0.2,0.2,0.04)
+    y1 = np.arange(-0.2,0.0,0.04)
     y2 = y1[::-1]
     yrange = np.concatenate([y1,y2])
 
