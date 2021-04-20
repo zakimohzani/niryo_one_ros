@@ -19,9 +19,10 @@ import operator
 from moveit_python_tools.get_ik import GetIK
 from moveit_python_tools.get_fk import GetFK
 from geometry_msgs.msg import PoseStamped
+from sensor_msgs.msg import JointState
 
-
-
+from niryo_one_python_api.niryo_one_api import *
+import math
 
 # I didn't make a class, so I'm passing some moveit components via this variable
 global moveitNs
@@ -94,8 +95,11 @@ def run():
     resp = gfk.get_current_fk()
     from moveit_python_tools.friendly_error_codes import moveit_error_dict
     rospy.loginfo(moveit_error_dict[resp.error_code.val])
-    rospy.loginfo(resp)
-
+    rospy.loginfo("Printing resp")
+    if resp:
+        rospy.loginfo(resp)
+    else:
+        rospy.loginfo("empty response")
     print("End of GetFK")
 
     if not positions:
@@ -110,8 +114,27 @@ def run():
         joint_goal[3] = positions[3]
         joint_goal[4] = positions[4]
         joint_goal[5] = positions[5]
+
+        # joint_goal[0] -= 0.005
+        # joint_goal[1] += 0.005
+        # joint_goal[2] += 0.005
+        # joint_goal[3] -= 0.005
+        # joint_goal[4] -= 0.005
+        # joint_goal[5] -= 0.005
+
         print("target joint vals")
         print(joint_goal)
+
+
+        print "============ Press `Enter` to call niryo move_pose"
+	raw_input()
+	n = NiryoOne()
+
+	n.calibrate_auto()
+	print "Go to observation position"
+	n.move_pose(0.2, 0, 0.2, 0, math.radians(90), 0)
+
+        
 
         print "============ Press `Enter` to call moveit go()"
         raw_input()
@@ -122,7 +145,7 @@ def run():
 
 
         print "============ Press `Enter` to call ExecuteTrajectoryAction"
-        joint_goal[0] = joint_goal[0]-0.1
+        # joint_goal[0] = joint_goal[0]-0.1
 
         raw_input()
         import actionlib

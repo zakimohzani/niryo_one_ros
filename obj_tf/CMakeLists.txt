@@ -19,6 +19,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  
+
 
   # below are the ones needed by moveit (copied from tutorial)
 #  interactive_markers
