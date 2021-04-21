@@ -35,6 +35,8 @@ global currentState
 def run():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('move_arm_node')
+    rate = rospy.Rate(0.5)
+
     robot = moveit_commander.RobotCommander()
     scene = moveit_commander.PlanningSceneInterface()
 
@@ -127,12 +129,12 @@ def run():
 
 
         print "============ Press `Enter` to call niryo move_pose"
-	raw_input()
-	n = NiryoOne()
+        raw_input()
+        n = NiryoOne()
 
-	n.calibrate_auto()
-	print "Go to observation position"
-	n.move_pose(0.2, 0, 0.2, 0, math.radians(90), 0)
+        n.calibrate_auto()
+        print "Go to observation position"
+        n.move_pose(0.2, 0, 0.2, 0, math.radians(90), 0)
 
         
 
@@ -196,7 +198,7 @@ def run():
     y1 = np.arange(-0.2,0.0,0.04)
     y2 = y1[::-1]
     yrange = np.concatenate([y1,y2])
-
+         
     for i in yrange:
         print(i)
     
@@ -205,15 +207,26 @@ def run():
     while not rospy.is_shutdown():
         i = i + 1
 
-        if i > (yrange.size-1):
-            i = 0
-        print(yrange[i])
+        #oscillate between a range, uses y1 and y2 from above
+        # if i > (yrange.size-1):
+        #     i = 0
+        # print(yrange[i])
+
+        #oscillate by a fixed amount in the y axis around current position
+        if i%2 == 0:
+            oscillateY = -0.1
+        else:
+            oscillateY = 0.1
+        
+        currentPose = group.get_current_pose()
+
 
         # get desired pose
-        ps.pose.position.x = 0.2
-        ps.pose.position.y = yrange[i]
-        ps.pose.position.z = 0.2
-        ps.pose.orientation = start_pose.orientation
+        #initial code for this had x = 0.2, y = yrange[i], z = 0.2 . This one fails one time, and then executes
+        ps.pose.position.x = currentPose.pose.position.x
+        ps.pose.position.y = currentPose.pose.position.y + oscillateY
+        ps.pose.position.z = currentPose.pose.position.z
+        ps.pose.orientation = currentPose.pose.orientation
         respIK = gik.get_ik(ps)
         print("Printing result of GetIK")
         print(respIK)
@@ -253,7 +266,7 @@ def run():
 
         client.wait_for_result()
 
-        time.sleep(1)
+        rate.sleep()
 
 
 if __name__ == '__main__':
