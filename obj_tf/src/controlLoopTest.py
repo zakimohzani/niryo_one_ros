@@ -242,7 +242,7 @@ def run():
         joint_goal[3] = positions[3]
         joint_goal[4] = positions[4]
         joint_goal[5] = positions[5]
-
+        print(type(joint_goal[5]))
 
         # send that message over
         rt = RobotTrajectory()
