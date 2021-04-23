@@ -75,6 +75,7 @@ add_service_files(
   SetString.srv
   TakePicture.srv
   UpdateConveyorId.srv
+  generatetraj.srv
 )
 
 add_action_files(
