@@ -256,6 +256,9 @@ def run():
         jtp = JointTrajectoryPoint()
         jtp.positions = copy.copy(joint_goal)
         jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.02
+        rospy.loginfo("Joint target positions ")
+        rospy.loginfo(jtp.positions)
+        rospy.loginfo(type(jtp.positions))  
         jtp.time_from_start.nsecs = 10000000
         jt.points.append(jtp)
         jt.joint_names = respIK.solution.joint_state.name
