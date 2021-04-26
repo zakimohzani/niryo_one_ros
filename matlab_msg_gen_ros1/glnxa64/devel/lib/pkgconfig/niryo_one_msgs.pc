@@ -1,0 +1,8 @@
+prefix=/home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/devel
+
+Name: niryo_one_msgs
+Description: Description of niryo_one_msgs
+Version: 0.0.0
+Cflags: -I/home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/devel/include
+Libs: -L/home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/devel/lib 
+Requires: message_runtime geometry_msgs moveit_msgs roscpp sensor_msgs std_msgs

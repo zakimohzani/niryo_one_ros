@@ -1,0 +1,32 @@
+function [data, info] = getPositionListResponse
+%GetPositionList gives an empty data for niryo_one_msgs/GetPositionListResponse
+% Copyright 2019-2020 The MathWorks, Inc.
+data = struct();
+[data.positions, info.positions] = ros.internal.ros.custommessages.niryo_one_msgs.position;
+info.positions.MLdataType = 'struct';
+info.positions.MaxLen = NaN;
+info.positions.MinLen = 0;
+data.positions = data.positions([],1);
+info.MessageType = 'niryo_one_msgs/GetPositionListResponse';
+info.constant = 0;
+info.default = 0;
+info.maxstrlen = NaN;
+info.MaxLen = 1;
+info.MinLen = 1;
+info.MatPath = cell(1,16);
+info.MatPath{1} = 'positions';
+info.MatPath{2} = 'positions.name';
+info.MatPath{3} = 'positions.joints';
+info.MatPath{4} = 'positions.rpy';
+info.MatPath{5} = 'positions.rpy.roll';
+info.MatPath{6} = 'positions.rpy.pitch';
+info.MatPath{7} = 'positions.rpy.yaw';
+info.MatPath{8} = 'positions.point';
+info.MatPath{9} = 'positions.point.x';
+info.MatPath{10} = 'positions.point.y';
+info.MatPath{11} = 'positions.point.z';
+info.MatPath{12} = 'positions.quaternion';
+info.MatPath{13} = 'positions.quaternion.x';
+info.MatPath{14} = 'positions.quaternion.y';
+info.MatPath{15} = 'positions.quaternion.z';
+info.MatPath{16} = 'positions.quaternion.w';

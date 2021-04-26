@@ -1,0 +1,32 @@
+function [data, info] = editGripRequest
+%EditGrip gives an empty data for niryo_one_msgs/EditGripRequest
+% Copyright 2019-2020 The MathWorks, Inc.
+data = struct();
+[data.CREATE, info.CREATE] = ros.internal.ros.messages.ros.default_type('int32',1, 1);
+[data.REMOVE, info.REMOVE] = ros.internal.ros.messages.ros.default_type('int32',1, -1);
+[data.cmd, info.cmd] = ros.internal.ros.messages.ros.default_type('int32',1);
+[data.name, info.name] = ros.internal.ros.messages.ros.char('string',0);
+[data.workspace, info.workspace] = ros.internal.ros.messages.ros.char('string',0);
+[data.robot_pose, info.robot_pose] = ros.internal.ros.custommessages.niryo_one_msgs.robotState;
+info.robot_pose.MLdataType = 'struct';
+info.MessageType = 'niryo_one_msgs/EditGripRequest';
+info.constant = 0;
+info.default = 0;
+info.maxstrlen = NaN;
+info.MaxLen = 1;
+info.MinLen = 1;
+info.MatPath = cell(1,14);
+info.MatPath{1} = 'CREATE';
+info.MatPath{2} = 'REMOVE';
+info.MatPath{3} = 'cmd';
+info.MatPath{4} = 'name';
+info.MatPath{5} = 'workspace';
+info.MatPath{6} = 'robot_pose';
+info.MatPath{7} = 'robot_pose.position';
+info.MatPath{8} = 'robot_pose.position.x';
+info.MatPath{9} = 'robot_pose.position.y';
+info.MatPath{10} = 'robot_pose.position.z';
+info.MatPath{11} = 'robot_pose.rpy';
+info.MatPath{12} = 'robot_pose.rpy.roll';
+info.MatPath{13} = 'robot_pose.rpy.pitch';
+info.MatPath{14} = 'robot_pose.rpy.yaw';

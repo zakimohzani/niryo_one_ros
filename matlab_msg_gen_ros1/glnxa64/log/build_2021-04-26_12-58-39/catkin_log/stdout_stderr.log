@@ -1,0 +1,416 @@
+ROS_DISTRO was set to 'kinetic' before. Please make sure that the environment does not mix paths from different distributions.
+CMake Warning (dev) in CMakeLists.txt:
+  No project() command is present.  The top-level CMakeLists.txt file must
+  contain a literal, direct call to the project() command.  Add a line of
+  code such as
+
+    project(ProjectName)
+
+  near the top of the file, but after cmake_minimum_required().
+
+  CMake is pretending there is a "project(Project)" command on the first
+  line.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- The C compiler identification is GNU 5.4.0
+-- The CXX compiler identification is GNU 5.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Deprecation Warning at CMakeLists.txt:4 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+-- Using CATKIN_DEVEL_PREFIX: /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/devel
+-- Using CMAKE_PREFIX_PATH: /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1;/usr/local/MATLAB/R2020b/toolbox/ros/mlroscpp/custom_messages
+-- This workspace overlays: /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1;/usr/local/MATLAB/R2020b/toolbox/ros/mlroscpp/custom_messages
+-- Found PythonInterp: /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 (found suitable version "2.7.12", minimum required is "2") 
+-- Using PYTHON_EXECUTABLE: /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2
+-- Using Debian Python package layout
+-- Using empy: /usr/bin/empy
+-- Using CATKIN_ENABLE_TESTING: off
+-- catkin 0.7.17
+-- BUILD_SHARED_LIBS is on
+-- BUILD_SHARED_LIBS is on
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~~  traversing 2 packages in topological order:
+-- ~~  - obj_tf
+-- ~~  - niryo_one_msgs
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- +++ processing catkin package: 'obj_tf'
+-- ==> add_subdirectory(obj_tf)
+-- Disabling the following message generators: geneus;genlisp;gennodejs
+-- Using these message generators: gencpp;genpy
+-- obj_tf: 1 messages, 0 services
+-- +++ processing catkin package: 'niryo_one_msgs'
+-- ==> add_subdirectory(niryo_one_msgs)
+-- Disabling the following message generators: geneus;genlisp;gennodejs
+-- Using these message generators: gencpp;genpy
+-- niryo_one_msgs: 18 messages, 40 services
+-- Configuring done
+-- Generating done
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    Boost_NAMESPACE
+
+
+-- Build files have been written to: /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build
+[1/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/ProcessState.msg
+[2/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/obj_tf && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py obj_tf /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/obj_tf/msg/ObjRecognised.msg
+[3/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/generatetraj.srv
+[4/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/OpenGripper.srv
+[5/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SetConveyor.srv
+[6/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/HardwareStatus.msg std_msgs/Header
+[7/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/TakePicture.srv
+[8/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/PingDxlTool.srv
+[9/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SetString.srv
+[10/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetWorkspaceList.srv
+[11/640] Generating Python from MSG obj_tf/ObjRecognised
+[12/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/RobotMoveCommand.msg shape_msgs/SolidPrimitive:object_recognition_msgs/ObjectType:geometry_msgs/Transform:geometry_msgs/Pose:trajectory_msgs/MultiDOFJointTrajectory:shape_msgs/Plane:niryo_one_msgs/ShiftPose:std_msgs/Header:geometry_msgs/Wrench:niryo_one_msgs/TrajectoryPlan:geometry_msgs/Twist:moveit_msgs/RobotState:shape_msgs/MeshTriangle:trajectory_msgs/MultiDOFJointTrajectoryPoint:niryo_one_msgs/ToolCommand:geometry_msgs/Point:trajectory_msgs/JointTrajectory:sensor_msgs/MultiDOFJointState:trajectory_msgs/JointTrajectoryPoint:moveit_msgs/AttachedCollisionObject:geometry_msgs/Quaternion:sensor_msgs/JointState:shape_msgs/Mesh:moveit_msgs/RobotTrajectory:niryo_one_msgs/RPY:moveit_msgs/CollisionObject:geometry_msgs/Vector3
+[13/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetDigitalIO.srv
+[14/640] Generating C++ code from obj_tf/ObjRecognised.msg
+[15/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/MatlabMoveResult.msg
+[16/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/ConveyorFeedback.msg
+[17/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/DebugMarkers.srv sensor_msgs/CompressedImage:std_msgs/Header
+[18/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/CloseGripper.srv
+[19/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/Trajectory.msg shape_msgs/SolidPrimitive:object_recognition_msgs/ObjectType:geometry_msgs/Transform:geometry_msgs/Wrench:trajectory_msgs/MultiDOFJointTrajectory:shape_msgs/Plane:std_msgs/Header:geometry_msgs/Pose:niryo_one_msgs/TrajectoryPlan:geometry_msgs/Twist:moveit_msgs/RobotState:shape_msgs/MeshTriangle:trajectory_msgs/MultiDOFJointTrajectoryPoint:geometry_msgs/Point:trajectory_msgs/JointTrajectory:sensor_msgs/MultiDOFJointState:trajectory_msgs/JointTrajectoryPoint:moveit_msgs/AttachedCollisionObject:geometry_msgs/Quaternion:sensor_msgs/JointState:shape_msgs/Mesh:moveit_msgs/RobotTrajectory:moveit_msgs/CollisionObject:geometry_msgs/Vector3
+[20/640] Generating Python msg __init__.py for obj_tf
+[21/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/SequenceAutorunStatus.msg
+[22/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetSequenceList.srv niryo_one_msgs/Sequence
+[23/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/ManageProcess.srv
+[24/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetWorkspaceRatio.srv
+[25/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/RPY.msg
+[26/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/EditGrip.srv niryo_one_msgs/RPY:geometry_msgs/Point:niryo_one_msgs/RobotState
+[27/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SetBool.srv
+[28/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/EditWorkspace.srv niryo_one_msgs/RPY:geometry_msgs/Point:niryo_one_msgs/RobotState
+[29/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/PullAirVacuumPump.srv
+[30/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SendCustomDxlValue.srv
+[31/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetWorkspaceRobotPoses.srv niryo_one_msgs/RPY:geometry_msgs/Point:niryo_one_msgs/RobotState
+[32/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetInt.srv
+[33/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/ShiftPose.msg
+[34/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/ToolCommand.msg
+[35/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetCalibrationCam.srv sensor_msgs/CameraInfo:std_msgs/Header:sensor_msgs/RegionOfInterest:std_msgs/Empty
+[36/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/LogStatus.msg std_msgs/Header
+[37/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/TrajectoryPlan.msg shape_msgs/SolidPrimitive:object_recognition_msgs/ObjectType:geometry_msgs/Transform:geometry_msgs/Wrench:trajectory_msgs/MultiDOFJointTrajectory:shape_msgs/Plane:std_msgs/Header:geometry_msgs/Pose:trajectory_msgs/JointTrajectory:geometry_msgs/Twist:moveit_msgs/RobotState:shape_msgs/MeshTriangle:trajectory_msgs/MultiDOFJointTrajectoryPoint:geometry_msgs/Point:sensor_msgs/MultiDOFJointState:trajectory_msgs/JointTrajectoryPoint:moveit_msgs/AttachedCollisionObject:geometry_msgs/Quaternion:sensor_msgs/JointState:shape_msgs/Mesh:moveit_msgs/RobotTrajectory:moveit_msgs/CollisionObject:geometry_msgs/Vector3
+[38/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/ObjDetection.srv sensor_msgs/CompressedImage:std_msgs/Header:niryo_one_msgs/ObjectPose
+[39/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/ManageTrajectory.srv shape_msgs/SolidPrimitive:object_recognition_msgs/ObjectType:geometry_msgs/Transform:geometry_msgs/Wrench:trajectory_msgs/MultiDOFJointTrajectory:shape_msgs/Plane:std_msgs/Header:geometry_msgs/Pose:niryo_one_msgs/TrajectoryPlan:geometry_msgs/Twist:moveit_msgs/RobotState:shape_msgs/MeshTriangle:trajectory_msgs/MultiDOFJointTrajectoryPoint:niryo_one_msgs/Trajectory:geometry_msgs/Point:trajectory_msgs/JointTrajectory:sensor_msgs/MultiDOFJointState:trajectory_msgs/JointTrajectoryPoint:moveit_msgs/AttachedCollisionObject:geometry_msgs/Quaternion:sensor_msgs/JointState:shape_msgs/Mesh:moveit_msgs/RobotTrajectory:moveit_msgs/CollisionObject:geometry_msgs/Vector3
+[40/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/ChangeMotorConfig.srv
+[41/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SetSequenceAutorun.srv
+[42/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/PushAirVacuumPump.srv
+[43/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/ControlConveyor.srv
+[44/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/DigitalIOState.msg
+[45/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SetCalibrationCam.srv
+[46/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetTargetPose.srv niryo_one_msgs/RPY:geometry_msgs/Point:niryo_one_msgs/RobotState
+[47/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetTrajectoryList.srv shape_msgs/SolidPrimitive:object_recognition_msgs/ObjectType:geometry_msgs/Transform:geometry_msgs/Wrench:trajectory_msgs/MultiDOFJointTrajectory:shape_msgs/Plane:std_msgs/Header:geometry_msgs/Pose:niryo_one_msgs/TrajectoryPlan:geometry_msgs/Twist:moveit_msgs/RobotState:shape_msgs/MeshTriangle:trajectory_msgs/MultiDOFJointTrajectoryPoint:niryo_one_msgs/Trajectory:geometry_msgs/Point:trajectory_msgs/JointTrajectory:sensor_msgs/MultiDOFJointState:trajectory_msgs/JointTrajectoryPoint:moveit_msgs/AttachedCollisionObject:geometry_msgs/Quaternion:sensor_msgs/JointState:shape_msgs/Mesh:moveit_msgs/RobotTrajectory:moveit_msgs/CollisionObject:geometry_msgs/Vector3
+[48/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/UpdateConveyorId.srv
+[49/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/RobotMove.srv shape_msgs/SolidPrimitive:object_recognition_msgs/ObjectType:geometry_msgs/Transform:geometry_msgs/Pose:trajectory_msgs/MultiDOFJointTrajectory:shape_msgs/Plane:niryo_one_msgs/ShiftPose:std_msgs/Header:geometry_msgs/Wrench:niryo_one_msgs/TrajectoryPlan:geometry_msgs/Twist:moveit_msgs/RobotState:shape_msgs/MeshTriangle:trajectory_msgs/MultiDOFJointTrajectoryPoint:niryo_one_msgs/ToolCommand:geometry_msgs/Point:trajectory_msgs/JointTrajectory:sensor_msgs/MultiDOFJointState:trajectory_msgs/JointTrajectoryPoint:moveit_msgs/AttachedCollisionObject:geometry_msgs/Quaternion:sensor_msgs/JointState:shape_msgs/Mesh:moveit_msgs/RobotTrajectory:niryo_one_msgs/RPY:moveit_msgs/CollisionObject:geometry_msgs/Vector3:niryo_one_msgs/RobotMoveCommand
+[50/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/RobotState.msg niryo_one_msgs/RPY:geometry_msgs/Point
+[51/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SetLeds.srv
+[52/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/ObjectPose.msg
+[53/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/DebugColorDetection.srv sensor_msgs/CompressedImage:std_msgs/Header
+[54/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/ManagePosition.srv geometry_msgs/Point:niryo_one_msgs/RPY:geometry_msgs/Quaternion:niryo_one_msgs/Position
+[55/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/ChangeHardwareVersion.srv
+[56/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/Sequence.msg
+[57/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/GetPositionList.srv geometry_msgs/Point:niryo_one_msgs/RPY:geometry_msgs/Quaternion:niryo_one_msgs/Position
+[58/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/Position.msg geometry_msgs/Point:niryo_one_msgs/RPY:geometry_msgs/Quaternion
+[59/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SetDigitalIO.srv
+[60/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/SetInt.srv
+[61/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/srv/ManageSequence.srv niryo_one_msgs/Sequence
+[62/640] cd /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/niryo_one_msgs && /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build/catkin_generated/env_cached.sh /home/niryo/.matlab/R2020b/ros1/glnxa64/venv/bin/python2 /usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/genmsg/cmake/../../../lib/genmsg/genmsg_check_deps.py niryo_one_msgs /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/niryo_one_msgs/msg/SoftwareVersion.msg
+[63/640] Generating C++ code from niryo_one_msgs/DigitalIOState.msg
+[64/640] Generating C++ code from niryo_one_msgs/ChangeHardwareVersion.srv
+[65/640] Generating C++ code from niryo_one_msgs/DebugColorDetection.srv
+[66/640] Generating C++ code from niryo_one_msgs/ChangeMotorConfig.srv
+[67/640] Generating C++ code from niryo_one_msgs/ControlConveyor.srv
+[68/640] Generating C++ code from niryo_one_msgs/ConveyorFeedback.msg
+[69/640] Generating C++ code from niryo_one_msgs/GetWorkspaceRatio.srv
+[70/640] Generating C++ code from niryo_one_msgs/GetSequenceList.srv
+[71/640] Building CXX object obj_tf/CMakeFiles/obj_tf_matlab.dir/src/obj_tf_msg_ObjRecognised_publisher.cpp.o
+[72/640] Building CXX object obj_tf/CMakeFiles/obj_tf_matlab.dir/src/obj_tf_ObjRecognised_common.cpp.o
+[73/640] Generating C++ code from niryo_one_msgs/GetWorkspaceList.srv
+[74/640] Generating C++ code from niryo_one_msgs/GetTargetPose.srv
+[75/640] Generating C++ code from niryo_one_msgs/EditWorkspace.srv
+[76/640] Building CXX object obj_tf/CMakeFiles/obj_tf_matlab.dir/src/obj_tf_msg_ObjRecognised_subscriber.cpp.o
+[77/640] Generating C++ code from niryo_one_msgs/CloseGripper.srv
+[78/640] Generating C++ code from niryo_one_msgs/ManageSequence.srv
+[79/640] Linking CXX shared library /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/devel/lib/libobj_tf_matlab.so
+[80/640] Generating C++ code from niryo_one_msgs/GetDigitalIO.srv
+[81/640] Generating C++ code from niryo_one_msgs/DebugMarkers.srv
+[82/640] Generating C++ code from niryo_one_msgs/GetTrajectoryList.srv
+[83/640] Generating C++ code from niryo_one_msgs/EditGrip.srv
+[84/640] Generating C++ code from niryo_one_msgs/GetCalibrationCam.srv
+[85/640] Generating Python from MSG niryo_one_msgs/ObjectPose
+[86/640] Generating C++ code from niryo_one_msgs/GetInt.srv
+[87/640] Generating C++ code from niryo_one_msgs/GetPositionList.srv
+[88/640] Generating Python from MSG niryo_one_msgs/Position
+[89/640] Generating Python from MSG niryo_one_msgs/ProcessState
+[90/640] Generating C++ code from niryo_one_msgs/PingDxlTool.srv
+[91/640] Generating C++ code from niryo_one_msgs/LogStatus.msg
+[92/640] Generating C++ code from niryo_one_msgs/ProcessState.msg
+[93/640] Generating C++ code from niryo_one_msgs/HardwareStatus.msg
+[94/640] Generating C++ code from niryo_one_msgs/GetWorkspaceRobotPoses.srv
+[95/640] Generating C++ code from niryo_one_msgs/OpenGripper.srv
+[96/640] Generating C++ code from niryo_one_msgs/RPY.msg
+[97/640] Generating C++ code from niryo_one_msgs/ManagePosition.srv
+[98/640] Generating C++ code from niryo_one_msgs/ManageProcess.srv
+[99/640] Generating C++ code from niryo_one_msgs/ObjectPose.msg
+[100/640] Generating Python from MSG niryo_one_msgs/MatlabMoveResult
+[101/640] Generating C++ code from niryo_one_msgs/MatlabMoveResult.msg
+[102/640] Generating C++ code from niryo_one_msgs/Position.msg
+[103/640] Generating C++ code from niryo_one_msgs/ManageTrajectory.srv
+[104/640] Generating C++ code from niryo_one_msgs/ObjDetection.srv
+[105/640] Generating C++ code from niryo_one_msgs/RobotMoveCommand.msg
+[106/640] Generating C++ code from niryo_one_msgs/SetDigitalIO.srv
+[107/640] Generating C++ code from niryo_one_msgs/RobotMove.srv
+[108/640] Generating C++ code from niryo_one_msgs/PullAirVacuumPump.srv
+[109/640] Generating C++ code from niryo_one_msgs/PushAirVacuumPump.srv
+[110/640] Generating C++ code from niryo_one_msgs/SetInt.srv
+[111/640] Generating C++ code from niryo_one_msgs/SendCustomDxlValue.srv
+[112/640] Generating C++ code from niryo_one_msgs/TrajectoryPlan.msg
+[113/640] Generating Python code from SRV niryo_one_msgs/GetCalibrationCam
+[114/640] Generating C++ code from niryo_one_msgs/RobotState.msg
+[115/640] Generating C++ code from niryo_one_msgs/Sequence.msg
+[116/640] Generating C++ code from niryo_one_msgs/SequenceAutorunStatus.msg
+[117/640] Generating C++ code from niryo_one_msgs/Trajectory.msg
+[118/640] Generating C++ code from niryo_one_msgs/SetBool.srv
+[119/640] Generating C++ code from niryo_one_msgs/SetCalibrationCam.srv
+[120/640] Generating C++ code from niryo_one_msgs/SetConveyor.srv
+[121/640] Generating C++ code from niryo_one_msgs/SetSequenceAutorun.srv
+[122/640] Generating C++ code from niryo_one_msgs/SetString.srv
+[123/640] Generating C++ code from niryo_one_msgs/SoftwareVersion.msg
+[124/640] Generating C++ code from niryo_one_msgs/SetLeds.srv
+[125/640] Generating C++ code from niryo_one_msgs/ShiftPose.msg
+[126/640] Generating C++ code from niryo_one_msgs/TakePicture.srv
+[127/640] Generating C++ code from niryo_one_msgs/ToolCommand.msg
+[128/640] Generating C++ code from niryo_one_msgs/UpdateConveyorId.srv
+[129/640] Generating Python from MSG niryo_one_msgs/ConveyorFeedback
+[130/640] Generating Python from MSG niryo_one_msgs/DigitalIOState
+[131/640] Generating Python from MSG niryo_one_msgs/HardwareStatus
+[132/640] Generating C++ code from niryo_one_msgs/generatetraj.srv
+[133/640] Generating Python from MSG niryo_one_msgs/LogStatus
+[134/640] Generating Python from MSG niryo_one_msgs/ToolCommand
+[135/640] Generating Python code from SRV niryo_one_msgs/CloseGripper
+[136/640] Generating Python from MSG niryo_one_msgs/SequenceAutorunStatus
+[137/640] Generating Python from MSG niryo_one_msgs/ShiftPose
+[138/640] Generating Python code from SRV niryo_one_msgs/DebugColorDetection
+[139/640] Generating Python from MSG niryo_one_msgs/SoftwareVersion
+[140/640] Generating Python from MSG niryo_one_msgs/RPY
+[141/640] Generating Python from MSG niryo_one_msgs/RobotMoveCommand
+[142/640] Generating Python from MSG niryo_one_msgs/RobotState
+[143/640] Generating Python from MSG niryo_one_msgs/Sequence
+[144/640] Generating Python code from SRV niryo_one_msgs/ControlConveyor
+[145/640] Generating Python from MSG niryo_one_msgs/Trajectory
+[146/640] Generating Python code from SRV niryo_one_msgs/ChangeMotorConfig
+[147/640] Generating Python code from SRV niryo_one_msgs/DebugMarkers
+[148/640] Generating Python from MSG niryo_one_msgs/TrajectoryPlan
+[149/640] Generating Python code from SRV niryo_one_msgs/ManagePosition
+[150/640] Generating Python code from SRV niryo_one_msgs/GetWorkspaceRatio
+[151/640] Generating Python code from SRV niryo_one_msgs/ChangeHardwareVersion
+[152/640] Generating Python code from SRV niryo_one_msgs/EditGrip
+[153/640] Generating Python code from SRV niryo_one_msgs/EditWorkspace
+[154/640] Generating Python code from SRV niryo_one_msgs/GetSequenceList
+[155/640] Generating Python code from SRV niryo_one_msgs/GetDigitalIO
+[156/640] Generating Python code from SRV niryo_one_msgs/GetInt
+[157/640] Generating Python code from SRV niryo_one_msgs/GetPositionList
+[158/640] Generating Python code from SRV niryo_one_msgs/GetTargetPose
+[159/640] Generating Python code from SRV niryo_one_msgs/GetWorkspaceList
+[160/640] Generating Python code from SRV niryo_one_msgs/GetTrajectoryList
+[161/640] Generating Python code from SRV niryo_one_msgs/generatetraj
+[162/640] Generating Python code from SRV niryo_one_msgs/GetWorkspaceRobotPoses
+[163/640] Generating Python code from SRV niryo_one_msgs/ManageSequence
+[164/640] Generating Python code from SRV niryo_one_msgs/PullAirVacuumPump
+[165/640] Generating Python code from SRV niryo_one_msgs/SendCustomDxlValue
+[166/640] Generating Python code from SRV niryo_one_msgs/PushAirVacuumPump
+[167/640] Generating Python code from SRV niryo_one_msgs/ManageTrajectory
+[168/640] Generating Python code from SRV niryo_one_msgs/OpenGripper
+[169/640] Generating Python code from SRV niryo_one_msgs/ManageProcess
+[170/640] Generating Python code from SRV niryo_one_msgs/ObjDetection
+[171/640] Generating Python code from SRV niryo_one_msgs/SetBool
+[172/640] Generating Python code from SRV niryo_one_msgs/SetCalibrationCam
+[173/640] Generating Python code from SRV niryo_one_msgs/PingDxlTool
+[174/640] Generating Python code from SRV niryo_one_msgs/SetConveyor
+[175/640] Generating Python code from SRV niryo_one_msgs/SetLeds
+[176/640] Generating Python code from SRV niryo_one_msgs/SetSequenceAutorun
+[177/640] Generating Python code from SRV niryo_one_msgs/RobotMove
+[178/640] Generating Python code from SRV niryo_one_msgs/SetDigitalIO
+[179/640] Generating Python code from SRV niryo_one_msgs/SetInt
+[180/640] Generating Python code from SRV niryo_one_msgs/TakePicture
+[181/640] Generating Python code from SRV niryo_one_msgs/UpdateConveyorId
+[182/640] Generating Python code from SRV niryo_one_msgs/SetString
+[183/640] Generating Python msg __init__.py for niryo_one_msgs
+[184/640] Generating Python srv __init__.py for niryo_one_msgs
+[185/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ChangeHardwareVersion_response_common.cpp.o
+[186/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ConveyorFeedback_publisher.cpp.o
+[187/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ConveyorFeedback_common.cpp.o
+[188/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ConveyorFeedback_subscriber.cpp.o
+[189/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_SoftwareVersion_common.cpp.o
+[190/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DigitalIOState_publisher.cpp.o
+[191/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DigitalIOState_common.cpp.o
+[192/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DigitalIOState_subscriber.cpp.o
+[193/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_HardwareStatus_publisher.cpp.o
+[194/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_HardwareStatus_common.cpp.o
+[195/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_HardwareStatus_subscriber.cpp.o
+[196/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_LogStatus_common.cpp.o
+[197/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_LogStatus_publisher.cpp.o
+[198/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_MatlabMoveResult_common.cpp.o
+[199/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_LogStatus_subscriber.cpp.o
+[200/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_MatlabMoveResult_publisher.cpp.o
+[201/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_MatlabMoveResult_subscriber.cpp.o
+[202/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ObjectPose_common.cpp.o
+[203/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ObjectPose_publisher.cpp.o
+[204/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ObjectPose_subscriber.cpp.o
+[205/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_Position_common.cpp.o
+[206/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_Position_publisher.cpp.o
+[207/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_Position_subscriber.cpp.o
+[208/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ProcessState_common.cpp.o
+[209/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ProcessState_publisher.cpp.o
+[210/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ProcessState_subscriber.cpp.o
+[211/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_RPY_common.cpp.o
+[212/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_RPY_publisher.cpp.o
+[213/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_RPY_subscriber.cpp.o
+[214/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_RobotMoveCommand_publisher.cpp.o
+[215/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_RobotMoveCommand_common.cpp.o
+[216/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_RobotMoveCommand_subscriber.cpp.o
+[217/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_RobotState_common.cpp.o
+[218/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_RobotState_publisher.cpp.o
+[219/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_Sequence_common.cpp.o
+[220/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_RobotState_subscriber.cpp.o
+[221/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_Sequence_publisher.cpp.o
+[222/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_Sequence_subscriber.cpp.o
+[223/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_SequenceAutorunStatus_publisher.cpp.o
+[224/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_SequenceAutorunStatus_common.cpp.o
+[225/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_SequenceAutorunStatus_subscriber.cpp.o
+[226/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ShiftPose_common.cpp.o
+[227/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ShiftPose_publisher.cpp.o
+[228/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ShiftPose_subscriber.cpp.o
+[229/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_GetWorkspaceRobotPosesRequest_publisher.cpp.o
+[230/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_GetWorkspaceRobotPosesRequest_subscriber.cpp.o
+[231/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_SoftwareVersion_publisher.cpp.o
+[232/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ToolCommand_common.cpp.o
+[233/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_SoftwareVersion_subscriber.cpp.o
+[234/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ToolCommand_publisher.cpp.o
+[235/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ToolCommand_subscriber.cpp.o
+[236/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_Trajectory_publisher.cpp.o
+[237/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_Trajectory_common.cpp.o
+[238/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_Trajectory_subscriber.cpp.o
+[239/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_TrajectoryPlan_common.cpp.o
+[240/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_TrajectoryPlan_publisher.cpp.o
+[241/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ChangeHardwareVersion_request_common.cpp.o
+[242/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_TrajectoryPlan_subscriber.cpp.o
+[243/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_GetSequenceListResponse_common.cpp.o
+[244/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_ChangeHardwareVersion_client.cpp.o
+[245/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ChangeHardwareVersionRequest_publisher.cpp.o
+[246/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_ChangeHardwareVersion_server.cpp.o
+[247/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ChangeHardwareVersionRequest_subscriber.cpp.o
+[248/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ChangeHardwareVersionResponse_publisher.cpp.o
+[249/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ChangeHardwareVersionRequest_common.cpp.o
+[250/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ChangeHardwareVersionResponse_subscriber.cpp.o
+[251/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ChangeHardwareVersionResponse_common.cpp.o
+[252/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ChangeMotorConfig_request_common.cpp.o
+[253/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ChangeMotorConfig_response_common.cpp.o
+[254/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_ChangeMotorConfig_client.cpp.o
+[255/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_ChangeMotorConfig_server.cpp.o
+[256/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ChangeMotorConfigRequest_publisher.cpp.o
+[257/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ChangeMotorConfigRequest_subscriber.cpp.o
+[258/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ChangeMotorConfigResponse_publisher.cpp.o
+[259/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ChangeMotorConfigResponse_subscriber.cpp.o
+[260/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ChangeMotorConfigRequest_common.cpp.o
+[261/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ChangeMotorConfigResponse_common.cpp.o
+[262/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_CloseGripper_request_common.cpp.o
+[263/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_CloseGripper_response_common.cpp.o
+[264/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_CloseGripper_client.cpp.o
+[265/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_CloseGripper_server.cpp.o
+[266/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_CloseGripperRequest_publisher.cpp.o
+[267/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_CloseGripperRequest_subscriber.cpp.o
+[268/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_CloseGripperResponse_publisher.cpp.o
+[269/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_CloseGripperRequest_common.cpp.o
+[270/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_CloseGripperResponse_subscriber.cpp.o
+[271/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_CloseGripperResponse_common.cpp.o
+[272/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ControlConveyor_request_common.cpp.o
+[273/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ControlConveyor_response_common.cpp.o
+[274/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_ControlConveyor_client.cpp.o
+[275/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ControlConveyorRequest_publisher.cpp.o
+[276/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_ControlConveyor_server.cpp.o
+[277/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ControlConveyorResponse_publisher.cpp.o
+[278/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ControlConveyorRequest_subscriber.cpp.o
+[279/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_ControlConveyorResponse_subscriber.cpp.o
+[280/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ControlConveyorRequest_common.cpp.o
+[281/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DebugColorDetection_request_common.cpp.o
+[282/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_ControlConveyorResponse_common.cpp.o
+[283/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DebugColorDetection_response_common.cpp.o
+[284/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_DebugColorDetection_client.cpp.o
+[285/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_DebugColorDetection_server.cpp.o
+[286/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DebugColorDetectionResponse_publisher.cpp.o
+[287/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DebugColorDetectionRequest_publisher.cpp.o
+[288/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DebugColorDetectionResponse_subscriber.cpp.o
+[289/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DebugColorDetectionRequest_subscriber.cpp.o
+[290/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DebugColorDetectionRequest_common.cpp.o
+[291/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DebugMarkers_request_common.cpp.o
+[292/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DebugColorDetectionResponse_common.cpp.o
+[293/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DebugMarkers_response_common.cpp.o
+[294/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DebugMarkersRequest_publisher.cpp.o
+[295/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_DebugMarkers_client.cpp.o
+[296/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_DebugMarkers_server.cpp.o
+[297/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DebugMarkersRequest_subscriber.cpp.o
+[298/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DebugMarkersResponse_publisher.cpp.o
+[299/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DebugMarkersRequest_common.cpp.o
+[300/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_DebugMarkersResponse_subscriber.cpp.o
+[301/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_DebugMarkersResponse_common.cpp.o
+[302/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_EditGrip_response_common.cpp.o
+[303/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_EditGrip_request_common.cpp.o
+[304/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_EditGrip_client.cpp.o
+[305/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_EditGripRequest_publisher.cpp.o
+[306/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_EditGripResponse_publisher.cpp.o
+[307/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_EditGripRequest_subscriber.cpp.o
+[308/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_EditGrip_server.cpp.o
+[309/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_EditGripRequest_common.cpp.o
+[310/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_EditGripResponse_subscriber.cpp.o
+[311/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_EditGripResponse_common.cpp.o
+[312/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_EditWorkspace_request_common.cpp.o
+[313/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_EditWorkspace_response_common.cpp.o
+[314/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_EditWorkspaceRequest_publisher.cpp.o
+[315/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_EditWorkspace_client.cpp.o
+[316/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_EditWorkspace_server.cpp.o
+[317/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_EditWorkspaceResponse_publisher.cpp.o
+[318/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_srv_ManageSequence_server.cpp.o
+[319/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_EditWorkspaceRequest_subscriber.cpp.o
+[320/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_msg_EditWorkspaceResponse_subscriber.cpp.o
+[321/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_EditWorkspaceRequest_common.cpp.o
+[322/640] Building CXX object niryo_one_msgs/CMakeFiles/niryo_one_msgs_matlab.dir/src/niryo_one_msgs_EditWorkspaceResponse_common.cpp.o
+Base path: /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64
+Source space: /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src
+Build space: /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build
+Devel space: /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/devel
+Install space: /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/install
+Creating symlink "/home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src/CMakeLists.txt" pointing to "/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/share/catkin/cmake/toplevel.cmake"
+####
+#### Running command: "cmake /home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/src -DBoost_NAMESPACE=mwboost -DCATKIN_ENABLE_TESTING=off -DCMAKE_PREFIX_PATH=/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1;/usr/local/MATLAB/R2020b/toolbox/ros/mlroscpp/custom_messages -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_FLAGS_RELEASE=-O0 -DCATKIN_DEVEL_PREFIX=/home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/devel -DCMAKE_INSTALL_PREFIX=/home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/install -G Ninja" in "/home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build"
+####
+####
+#### Running command: "ninja install install -j4 -l4" in "/home/niryo/catkin_ws/src/matlab_msg_gen_ros1/glnxa64/build"
+####
+Traceback (most recent call last):
+  File "/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/bin/catkin_make", line 298, in <module>
+    sys.exit(main())
+  File "/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/bin/catkin_make", line 242, in main
+    run_command(cmd, make_path)
+  File "/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/lib/python2.7/site-packages/catkin/builder.py", line 239, in run_command
+    proc.wait()
+  File "/usr/lib/python2.7/subprocess.py", line 1392, in wait
+ninja: build stopped: interrupted by user.
+    pid, sts = _eintr_retry_call(os.waitpid, self.pid, 0)
+  File "/usr/lib/python2.7/subprocess.py", line 476, in _eintr_retry_call
+    return func(*args)
+KeyboardInterrupt

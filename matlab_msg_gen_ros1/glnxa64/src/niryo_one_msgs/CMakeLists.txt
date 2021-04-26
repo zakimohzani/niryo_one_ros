@@ -1,0 +1,651 @@
+cmake_minimum_required(VERSION 3.5)
+project(niryo_one_msgs)
+set(CMAKE_VERBOSE_MAKEFILE ON)
+# Default to C99
+if(NOT CMAKE_C_STANDARD)
+  set(CMAKE_C_STANDARD 99)
+endif()
+# Default to C++14
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 14)
+endif()
+if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+## Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  std_msgs
+  message_generation
+  geometry_msgs
+  moveit_msgs
+  sensor_msgs
+  std_msgs
+)
+## System dependencies are found with CMake''s conventions
+################################################
+## Declare ROS messages, services and actions ##
+################################################
+add_message_files(
+    FILES
+    ConveyorFeedback.msg
+    DigitalIOState.msg
+    HardwareStatus.msg
+    LogStatus.msg
+    MatlabMoveResult.msg
+    ObjectPose.msg
+    Position.msg
+    ProcessState.msg
+    RPY.msg
+    RobotMoveCommand.msg
+    RobotState.msg
+    Sequence.msg
+    SequenceAutorunStatus.msg
+    ShiftPose.msg
+    SoftwareVersion.msg
+    ToolCommand.msg
+    Trajectory.msg
+    TrajectoryPlan.msg
+)
+add_service_files(
+    FILES
+    ChangeHardwareVersion.srv
+    ChangeMotorConfig.srv
+    CloseGripper.srv
+    ControlConveyor.srv
+    DebugColorDetection.srv
+    DebugMarkers.srv
+    EditGrip.srv
+    EditWorkspace.srv
+    GetCalibrationCam.srv
+    GetDigitalIO.srv
+    GetInt.srv
+    GetPositionList.srv
+    GetSequenceList.srv
+    GetTargetPose.srv
+    GetTrajectoryList.srv
+    GetWorkspaceList.srv
+    GetWorkspaceRatio.srv
+    GetWorkspaceRobotPoses.srv
+    ManagePosition.srv
+    ManageProcess.srv
+    ManageSequence.srv
+    ManageTrajectory.srv
+    ObjDetection.srv
+    OpenGripper.srv
+    PingDxlTool.srv
+    PullAirVacuumPump.srv
+    PushAirVacuumPump.srv
+    RobotMove.srv
+    SendCustomDxlValue.srv
+    SetBool.srv
+    SetCalibrationCam.srv
+    SetConveyor.srv
+    SetDigitalIO.srv
+    SetInt.srv
+    SetLeds.srv
+    SetSequenceAutorun.srv
+    SetString.srv
+    TakePicture.srv
+    UpdateConveyorId.srv
+    generatetraj.srv
+)
+find_package( geometry_msgs REQUIRED)
+find_package( moveit_msgs REQUIRED)
+find_package( roscpp REQUIRED)
+find_package( sensor_msgs REQUIRED)
+find_package( std_msgs REQUIRED)
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+  geometry_msgs
+  moveit_msgs
+  sensor_msgs
+  std_msgs
+)
+## The catkin_package macro generates cmake config files for your package
+## Declare things to be passed to dependent projects
+## INCLUDE_DIRS: uncomment this if you package contains header files
+## LIBRARIES: libraries you create in this project that dependent projects also need
+## CATKIN_DEPENDS: catkin_packages dependent projects also need
+## DEPENDS: system dependencies of this project that dependent projects also need
+catkin_package(
+  CATKIN_DEPENDS
+  "message_runtime"
+  "geometry_msgs"
+  "moveit_msgs"
+  "roscpp"
+  "sensor_msgs"
+  "std_msgs"
+)
+###########
+## Build ##
+###########
+## Specify additional locations of header files
+## Your package locations should be listed before other locations
+# include_directories(include)
+include_directories(
+  include
+  ${PROJECT_SOURCE_DIR}
+  ${Boost_INCLUDE_DIRS}
+  ${catkin_INCLUDE_DIRS}
+ "/usr/local/MATLAB/R2020b/extern/include"
+ "/usr/local/MATLAB/R2020b/extern/include/MatlabDataArray"
+ "/usr/local/MATLAB/R2020b/toolbox/ros/include/ros1"
+ "/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/include"
+ "/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/console_bridge/include"
+ "/usr/local/MATLAB/R2020b/toolbox/ros/mlroscpp/custom_messages/include"
+ "/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/boost/include"
+  "include/niryo_one_msgs"
+)
+set (CMAKE_SKIP_BUILD_RPATH false)
+set (CMAKE_BUILD_WITH_INSTALL_RPATH true)
+set (CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+## Get list of .c files in project source directory
+file(GLOB ${PROJECT_NAME}_C_SOURCES RELATIVE ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/*.c)
+## Get list of .cpp files in project source directory
+file(GLOB ${PROJECT_NAME}_CPP_SOURCES RELATIVE ${PROJECT_SOURCE_DIR} ${PROJECT_SOURCE_DIR}/*.cpp)
+link_directories("/usr/local/MATLAB/R2020b/extern/bin/glnxa64")
+link_directories("/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/console_bridge/lib")
+link_directories("/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/lib")
+link_directories("/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/boost/lib")
+# Declare library
+add_library(
+    niryo_one_msgs_matlab 
+    SHARED
+    src/niryo_one_msgs_ConveyorFeedback_common.cpp
+    src/niryo_one_msgs_msg_ConveyorFeedback_publisher.cpp
+    src/niryo_one_msgs_msg_ConveyorFeedback_subscriber.cpp
+    src/niryo_one_msgs_DigitalIOState_common.cpp
+    src/niryo_one_msgs_msg_DigitalIOState_publisher.cpp
+    src/niryo_one_msgs_msg_DigitalIOState_subscriber.cpp
+    src/niryo_one_msgs_HardwareStatus_common.cpp
+    src/niryo_one_msgs_msg_HardwareStatus_publisher.cpp
+    src/niryo_one_msgs_msg_HardwareStatus_subscriber.cpp
+    src/niryo_one_msgs_LogStatus_common.cpp
+    src/niryo_one_msgs_msg_LogStatus_publisher.cpp
+    src/niryo_one_msgs_msg_LogStatus_subscriber.cpp
+    src/niryo_one_msgs_MatlabMoveResult_common.cpp
+    src/niryo_one_msgs_msg_MatlabMoveResult_publisher.cpp
+    src/niryo_one_msgs_msg_MatlabMoveResult_subscriber.cpp
+    src/niryo_one_msgs_ObjectPose_common.cpp
+    src/niryo_one_msgs_msg_ObjectPose_publisher.cpp
+    src/niryo_one_msgs_msg_ObjectPose_subscriber.cpp
+    src/niryo_one_msgs_Position_common.cpp
+    src/niryo_one_msgs_msg_Position_publisher.cpp
+    src/niryo_one_msgs_msg_Position_subscriber.cpp
+    src/niryo_one_msgs_ProcessState_common.cpp
+    src/niryo_one_msgs_msg_ProcessState_publisher.cpp
+    src/niryo_one_msgs_msg_ProcessState_subscriber.cpp
+    src/niryo_one_msgs_RPY_common.cpp
+    src/niryo_one_msgs_msg_RPY_publisher.cpp
+    src/niryo_one_msgs_msg_RPY_subscriber.cpp
+    src/niryo_one_msgs_RobotMoveCommand_common.cpp
+    src/niryo_one_msgs_msg_RobotMoveCommand_publisher.cpp
+    src/niryo_one_msgs_msg_RobotMoveCommand_subscriber.cpp
+    src/niryo_one_msgs_RobotState_common.cpp
+    src/niryo_one_msgs_msg_RobotState_publisher.cpp
+    src/niryo_one_msgs_msg_RobotState_subscriber.cpp
+    src/niryo_one_msgs_Sequence_common.cpp
+    src/niryo_one_msgs_msg_Sequence_publisher.cpp
+    src/niryo_one_msgs_msg_Sequence_subscriber.cpp
+    src/niryo_one_msgs_SequenceAutorunStatus_common.cpp
+    src/niryo_one_msgs_msg_SequenceAutorunStatus_publisher.cpp
+    src/niryo_one_msgs_msg_SequenceAutorunStatus_subscriber.cpp
+    src/niryo_one_msgs_ShiftPose_common.cpp
+    src/niryo_one_msgs_msg_ShiftPose_publisher.cpp
+    src/niryo_one_msgs_msg_ShiftPose_subscriber.cpp
+    src/niryo_one_msgs_SoftwareVersion_common.cpp
+    src/niryo_one_msgs_msg_SoftwareVersion_publisher.cpp
+    src/niryo_one_msgs_msg_SoftwareVersion_subscriber.cpp
+    src/niryo_one_msgs_ToolCommand_common.cpp
+    src/niryo_one_msgs_msg_ToolCommand_publisher.cpp
+    src/niryo_one_msgs_msg_ToolCommand_subscriber.cpp
+    src/niryo_one_msgs_Trajectory_common.cpp
+    src/niryo_one_msgs_msg_Trajectory_publisher.cpp
+    src/niryo_one_msgs_msg_Trajectory_subscriber.cpp
+    src/niryo_one_msgs_TrajectoryPlan_common.cpp
+    src/niryo_one_msgs_msg_TrajectoryPlan_publisher.cpp
+    src/niryo_one_msgs_msg_TrajectoryPlan_subscriber.cpp
+    src/niryo_one_msgs_ChangeHardwareVersion_request_common.cpp
+    src/niryo_one_msgs_ChangeHardwareVersion_response_common.cpp
+    src/niryo_one_msgs_srv_ChangeHardwareVersion_client.cpp
+    src/niryo_one_msgs_srv_ChangeHardwareVersion_server.cpp
+    src/niryo_one_msgs_msg_ChangeHardwareVersionRequest_publisher.cpp
+    src/niryo_one_msgs_msg_ChangeHardwareVersionRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_ChangeHardwareVersionResponse_publisher.cpp
+    src/niryo_one_msgs_msg_ChangeHardwareVersionResponse_subscriber.cpp
+    src/niryo_one_msgs_ChangeHardwareVersionRequest_common.cpp
+    src/niryo_one_msgs_ChangeHardwareVersionResponse_common.cpp
+    src/niryo_one_msgs_ChangeMotorConfig_request_common.cpp
+    src/niryo_one_msgs_ChangeMotorConfig_response_common.cpp
+    src/niryo_one_msgs_srv_ChangeMotorConfig_client.cpp
+    src/niryo_one_msgs_srv_ChangeMotorConfig_server.cpp
+    src/niryo_one_msgs_msg_ChangeMotorConfigRequest_publisher.cpp
+    src/niryo_one_msgs_msg_ChangeMotorConfigRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_ChangeMotorConfigResponse_publisher.cpp
+    src/niryo_one_msgs_msg_ChangeMotorConfigResponse_subscriber.cpp
+    src/niryo_one_msgs_ChangeMotorConfigRequest_common.cpp
+    src/niryo_one_msgs_ChangeMotorConfigResponse_common.cpp
+    src/niryo_one_msgs_CloseGripper_request_common.cpp
+    src/niryo_one_msgs_CloseGripper_response_common.cpp
+    src/niryo_one_msgs_srv_CloseGripper_client.cpp
+    src/niryo_one_msgs_srv_CloseGripper_server.cpp
+    src/niryo_one_msgs_msg_CloseGripperRequest_publisher.cpp
+    src/niryo_one_msgs_msg_CloseGripperRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_CloseGripperResponse_publisher.cpp
+    src/niryo_one_msgs_msg_CloseGripperResponse_subscriber.cpp
+    src/niryo_one_msgs_CloseGripperRequest_common.cpp
+    src/niryo_one_msgs_CloseGripperResponse_common.cpp
+    src/niryo_one_msgs_ControlConveyor_request_common.cpp
+    src/niryo_one_msgs_ControlConveyor_response_common.cpp
+    src/niryo_one_msgs_srv_ControlConveyor_client.cpp
+    src/niryo_one_msgs_srv_ControlConveyor_server.cpp
+    src/niryo_one_msgs_msg_ControlConveyorRequest_publisher.cpp
+    src/niryo_one_msgs_msg_ControlConveyorRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_ControlConveyorResponse_publisher.cpp
+    src/niryo_one_msgs_msg_ControlConveyorResponse_subscriber.cpp
+    src/niryo_one_msgs_ControlConveyorRequest_common.cpp
+    src/niryo_one_msgs_ControlConveyorResponse_common.cpp
+    src/niryo_one_msgs_DebugColorDetection_request_common.cpp
+    src/niryo_one_msgs_DebugColorDetection_response_common.cpp
+    src/niryo_one_msgs_srv_DebugColorDetection_client.cpp
+    src/niryo_one_msgs_srv_DebugColorDetection_server.cpp
+    src/niryo_one_msgs_msg_DebugColorDetectionRequest_publisher.cpp
+    src/niryo_one_msgs_msg_DebugColorDetectionRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_DebugColorDetectionResponse_publisher.cpp
+    src/niryo_one_msgs_msg_DebugColorDetectionResponse_subscriber.cpp
+    src/niryo_one_msgs_DebugColorDetectionRequest_common.cpp
+    src/niryo_one_msgs_DebugColorDetectionResponse_common.cpp
+    src/niryo_one_msgs_DebugMarkers_request_common.cpp
+    src/niryo_one_msgs_DebugMarkers_response_common.cpp
+    src/niryo_one_msgs_srv_DebugMarkers_client.cpp
+    src/niryo_one_msgs_srv_DebugMarkers_server.cpp
+    src/niryo_one_msgs_msg_DebugMarkersRequest_publisher.cpp
+    src/niryo_one_msgs_msg_DebugMarkersRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_DebugMarkersResponse_publisher.cpp
+    src/niryo_one_msgs_msg_DebugMarkersResponse_subscriber.cpp
+    src/niryo_one_msgs_DebugMarkersRequest_common.cpp
+    src/niryo_one_msgs_DebugMarkersResponse_common.cpp
+    src/niryo_one_msgs_EditGrip_request_common.cpp
+    src/niryo_one_msgs_EditGrip_response_common.cpp
+    src/niryo_one_msgs_srv_EditGrip_client.cpp
+    src/niryo_one_msgs_srv_EditGrip_server.cpp
+    src/niryo_one_msgs_msg_EditGripRequest_publisher.cpp
+    src/niryo_one_msgs_msg_EditGripRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_EditGripResponse_publisher.cpp
+    src/niryo_one_msgs_msg_EditGripResponse_subscriber.cpp
+    src/niryo_one_msgs_EditGripRequest_common.cpp
+    src/niryo_one_msgs_EditGripResponse_common.cpp
+    src/niryo_one_msgs_EditWorkspace_request_common.cpp
+    src/niryo_one_msgs_EditWorkspace_response_common.cpp
+    src/niryo_one_msgs_srv_EditWorkspace_client.cpp
+    src/niryo_one_msgs_srv_EditWorkspace_server.cpp
+    src/niryo_one_msgs_msg_EditWorkspaceRequest_publisher.cpp
+    src/niryo_one_msgs_msg_EditWorkspaceRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_EditWorkspaceResponse_publisher.cpp
+    src/niryo_one_msgs_msg_EditWorkspaceResponse_subscriber.cpp
+    src/niryo_one_msgs_EditWorkspaceRequest_common.cpp
+    src/niryo_one_msgs_EditWorkspaceResponse_common.cpp
+    src/niryo_one_msgs_GetCalibrationCam_request_common.cpp
+    src/niryo_one_msgs_GetCalibrationCam_response_common.cpp
+    src/niryo_one_msgs_srv_GetCalibrationCam_client.cpp
+    src/niryo_one_msgs_srv_GetCalibrationCam_server.cpp
+    src/niryo_one_msgs_msg_GetCalibrationCamRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetCalibrationCamRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetCalibrationCamResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetCalibrationCamResponse_subscriber.cpp
+    src/niryo_one_msgs_GetCalibrationCamRequest_common.cpp
+    src/niryo_one_msgs_GetCalibrationCamResponse_common.cpp
+    src/niryo_one_msgs_GetDigitalIO_request_common.cpp
+    src/niryo_one_msgs_GetDigitalIO_response_common.cpp
+    src/niryo_one_msgs_srv_GetDigitalIO_client.cpp
+    src/niryo_one_msgs_srv_GetDigitalIO_server.cpp
+    src/niryo_one_msgs_msg_GetDigitalIORequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetDigitalIORequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetDigitalIOResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetDigitalIOResponse_subscriber.cpp
+    src/niryo_one_msgs_GetDigitalIORequest_common.cpp
+    src/niryo_one_msgs_GetDigitalIOResponse_common.cpp
+    src/niryo_one_msgs_GetInt_request_common.cpp
+    src/niryo_one_msgs_GetInt_response_common.cpp
+    src/niryo_one_msgs_srv_GetInt_client.cpp
+    src/niryo_one_msgs_srv_GetInt_server.cpp
+    src/niryo_one_msgs_msg_GetIntRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetIntRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetIntResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetIntResponse_subscriber.cpp
+    src/niryo_one_msgs_GetIntRequest_common.cpp
+    src/niryo_one_msgs_GetIntResponse_common.cpp
+    src/niryo_one_msgs_GetPositionList_request_common.cpp
+    src/niryo_one_msgs_GetPositionList_response_common.cpp
+    src/niryo_one_msgs_srv_GetPositionList_client.cpp
+    src/niryo_one_msgs_srv_GetPositionList_server.cpp
+    src/niryo_one_msgs_msg_GetPositionListRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetPositionListRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetPositionListResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetPositionListResponse_subscriber.cpp
+    src/niryo_one_msgs_GetPositionListRequest_common.cpp
+    src/niryo_one_msgs_GetPositionListResponse_common.cpp
+    src/niryo_one_msgs_GetSequenceList_request_common.cpp
+    src/niryo_one_msgs_GetSequenceList_response_common.cpp
+    src/niryo_one_msgs_srv_GetSequenceList_client.cpp
+    src/niryo_one_msgs_srv_GetSequenceList_server.cpp
+    src/niryo_one_msgs_msg_GetSequenceListRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetSequenceListRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetSequenceListResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetSequenceListResponse_subscriber.cpp
+    src/niryo_one_msgs_GetSequenceListRequest_common.cpp
+    src/niryo_one_msgs_GetSequenceListResponse_common.cpp
+    src/niryo_one_msgs_GetTargetPose_request_common.cpp
+    src/niryo_one_msgs_GetTargetPose_response_common.cpp
+    src/niryo_one_msgs_srv_GetTargetPose_client.cpp
+    src/niryo_one_msgs_srv_GetTargetPose_server.cpp
+    src/niryo_one_msgs_msg_GetTargetPoseRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetTargetPoseRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetTargetPoseResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetTargetPoseResponse_subscriber.cpp
+    src/niryo_one_msgs_GetTargetPoseRequest_common.cpp
+    src/niryo_one_msgs_GetTargetPoseResponse_common.cpp
+    src/niryo_one_msgs_GetTrajectoryList_request_common.cpp
+    src/niryo_one_msgs_GetTrajectoryList_response_common.cpp
+    src/niryo_one_msgs_srv_GetTrajectoryList_client.cpp
+    src/niryo_one_msgs_srv_GetTrajectoryList_server.cpp
+    src/niryo_one_msgs_msg_GetTrajectoryListRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetTrajectoryListRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetTrajectoryListResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetTrajectoryListResponse_subscriber.cpp
+    src/niryo_one_msgs_GetTrajectoryListRequest_common.cpp
+    src/niryo_one_msgs_GetTrajectoryListResponse_common.cpp
+    src/niryo_one_msgs_GetWorkspaceList_request_common.cpp
+    src/niryo_one_msgs_GetWorkspaceList_response_common.cpp
+    src/niryo_one_msgs_srv_GetWorkspaceList_client.cpp
+    src/niryo_one_msgs_srv_GetWorkspaceList_server.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceListRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceListRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceListResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceListResponse_subscriber.cpp
+    src/niryo_one_msgs_GetWorkspaceListRequest_common.cpp
+    src/niryo_one_msgs_GetWorkspaceListResponse_common.cpp
+    src/niryo_one_msgs_GetWorkspaceRatio_request_common.cpp
+    src/niryo_one_msgs_GetWorkspaceRatio_response_common.cpp
+    src/niryo_one_msgs_srv_GetWorkspaceRatio_client.cpp
+    src/niryo_one_msgs_srv_GetWorkspaceRatio_server.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceRatioRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceRatioRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceRatioResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceRatioResponse_subscriber.cpp
+    src/niryo_one_msgs_GetWorkspaceRatioRequest_common.cpp
+    src/niryo_one_msgs_GetWorkspaceRatioResponse_common.cpp
+    src/niryo_one_msgs_GetWorkspaceRobotPoses_request_common.cpp
+    src/niryo_one_msgs_GetWorkspaceRobotPoses_response_common.cpp
+    src/niryo_one_msgs_srv_GetWorkspaceRobotPoses_client.cpp
+    src/niryo_one_msgs_srv_GetWorkspaceRobotPoses_server.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceRobotPosesRequest_publisher.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceRobotPosesRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceRobotPosesResponse_publisher.cpp
+    src/niryo_one_msgs_msg_GetWorkspaceRobotPosesResponse_subscriber.cpp
+    src/niryo_one_msgs_GetWorkspaceRobotPosesRequest_common.cpp
+    src/niryo_one_msgs_GetWorkspaceRobotPosesResponse_common.cpp
+    src/niryo_one_msgs_ManagePosition_request_common.cpp
+    src/niryo_one_msgs_ManagePosition_response_common.cpp
+    src/niryo_one_msgs_srv_ManagePosition_client.cpp
+    src/niryo_one_msgs_srv_ManagePosition_server.cpp
+    src/niryo_one_msgs_msg_ManagePositionRequest_publisher.cpp
+    src/niryo_one_msgs_msg_ManagePositionRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_ManagePositionResponse_publisher.cpp
+    src/niryo_one_msgs_msg_ManagePositionResponse_subscriber.cpp
+    src/niryo_one_msgs_ManagePositionRequest_common.cpp
+    src/niryo_one_msgs_ManagePositionResponse_common.cpp
+    src/niryo_one_msgs_ManageProcess_request_common.cpp
+    src/niryo_one_msgs_ManageProcess_response_common.cpp
+    src/niryo_one_msgs_srv_ManageProcess_client.cpp
+    src/niryo_one_msgs_srv_ManageProcess_server.cpp
+    src/niryo_one_msgs_msg_ManageProcessRequest_publisher.cpp
+    src/niryo_one_msgs_msg_ManageProcessRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_ManageProcessResponse_publisher.cpp
+    src/niryo_one_msgs_msg_ManageProcessResponse_subscriber.cpp
+    src/niryo_one_msgs_ManageProcessRequest_common.cpp
+    src/niryo_one_msgs_ManageProcessResponse_common.cpp
+    src/niryo_one_msgs_ManageSequence_request_common.cpp
+    src/niryo_one_msgs_ManageSequence_response_common.cpp
+    src/niryo_one_msgs_srv_ManageSequence_client.cpp
+    src/niryo_one_msgs_srv_ManageSequence_server.cpp
+    src/niryo_one_msgs_msg_ManageSequenceRequest_publisher.cpp
+    src/niryo_one_msgs_msg_ManageSequenceRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_ManageSequenceResponse_publisher.cpp
+    src/niryo_one_msgs_msg_ManageSequenceResponse_subscriber.cpp
+    src/niryo_one_msgs_ManageSequenceRequest_common.cpp
+    src/niryo_one_msgs_ManageSequenceResponse_common.cpp
+    src/niryo_one_msgs_ManageTrajectory_request_common.cpp
+    src/niryo_one_msgs_ManageTrajectory_response_common.cpp
+    src/niryo_one_msgs_srv_ManageTrajectory_client.cpp
+    src/niryo_one_msgs_srv_ManageTrajectory_server.cpp
+    src/niryo_one_msgs_msg_ManageTrajectoryRequest_publisher.cpp
+    src/niryo_one_msgs_msg_ManageTrajectoryRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_ManageTrajectoryResponse_publisher.cpp
+    src/niryo_one_msgs_msg_ManageTrajectoryResponse_subscriber.cpp
+    src/niryo_one_msgs_ManageTrajectoryRequest_common.cpp
+    src/niryo_one_msgs_ManageTrajectoryResponse_common.cpp
+    src/niryo_one_msgs_ObjDetection_request_common.cpp
+    src/niryo_one_msgs_ObjDetection_response_common.cpp
+    src/niryo_one_msgs_srv_ObjDetection_client.cpp
+    src/niryo_one_msgs_srv_ObjDetection_server.cpp
+    src/niryo_one_msgs_msg_ObjDetectionRequest_publisher.cpp
+    src/niryo_one_msgs_msg_ObjDetectionRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_ObjDetectionResponse_publisher.cpp
+    src/niryo_one_msgs_msg_ObjDetectionResponse_subscriber.cpp
+    src/niryo_one_msgs_ObjDetectionRequest_common.cpp
+    src/niryo_one_msgs_ObjDetectionResponse_common.cpp
+    src/niryo_one_msgs_OpenGripper_request_common.cpp
+    src/niryo_one_msgs_OpenGripper_response_common.cpp
+    src/niryo_one_msgs_srv_OpenGripper_client.cpp
+    src/niryo_one_msgs_srv_OpenGripper_server.cpp
+    src/niryo_one_msgs_msg_OpenGripperRequest_publisher.cpp
+    src/niryo_one_msgs_msg_OpenGripperRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_OpenGripperResponse_publisher.cpp
+    src/niryo_one_msgs_msg_OpenGripperResponse_subscriber.cpp
+    src/niryo_one_msgs_OpenGripperRequest_common.cpp
+    src/niryo_one_msgs_OpenGripperResponse_common.cpp
+    src/niryo_one_msgs_PingDxlTool_request_common.cpp
+    src/niryo_one_msgs_PingDxlTool_response_common.cpp
+    src/niryo_one_msgs_srv_PingDxlTool_client.cpp
+    src/niryo_one_msgs_srv_PingDxlTool_server.cpp
+    src/niryo_one_msgs_msg_PingDxlToolRequest_publisher.cpp
+    src/niryo_one_msgs_msg_PingDxlToolRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_PingDxlToolResponse_publisher.cpp
+    src/niryo_one_msgs_msg_PingDxlToolResponse_subscriber.cpp
+    src/niryo_one_msgs_PingDxlToolRequest_common.cpp
+    src/niryo_one_msgs_PingDxlToolResponse_common.cpp
+    src/niryo_one_msgs_PullAirVacuumPump_request_common.cpp
+    src/niryo_one_msgs_PullAirVacuumPump_response_common.cpp
+    src/niryo_one_msgs_srv_PullAirVacuumPump_client.cpp
+    src/niryo_one_msgs_srv_PullAirVacuumPump_server.cpp
+    src/niryo_one_msgs_msg_PullAirVacuumPumpRequest_publisher.cpp
+    src/niryo_one_msgs_msg_PullAirVacuumPumpRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_PullAirVacuumPumpResponse_publisher.cpp
+    src/niryo_one_msgs_msg_PullAirVacuumPumpResponse_subscriber.cpp
+    src/niryo_one_msgs_PullAirVacuumPumpRequest_common.cpp
+    src/niryo_one_msgs_PullAirVacuumPumpResponse_common.cpp
+    src/niryo_one_msgs_PushAirVacuumPump_request_common.cpp
+    src/niryo_one_msgs_PushAirVacuumPump_response_common.cpp
+    src/niryo_one_msgs_srv_PushAirVacuumPump_client.cpp
+    src/niryo_one_msgs_srv_PushAirVacuumPump_server.cpp
+    src/niryo_one_msgs_msg_PushAirVacuumPumpRequest_publisher.cpp
+    src/niryo_one_msgs_msg_PushAirVacuumPumpRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_PushAirVacuumPumpResponse_publisher.cpp
+    src/niryo_one_msgs_msg_PushAirVacuumPumpResponse_subscriber.cpp
+    src/niryo_one_msgs_PushAirVacuumPumpRequest_common.cpp
+    src/niryo_one_msgs_PushAirVacuumPumpResponse_common.cpp
+    src/niryo_one_msgs_RobotMove_request_common.cpp
+    src/niryo_one_msgs_RobotMove_response_common.cpp
+    src/niryo_one_msgs_srv_RobotMove_client.cpp
+    src/niryo_one_msgs_srv_RobotMove_server.cpp
+    src/niryo_one_msgs_msg_RobotMoveRequest_publisher.cpp
+    src/niryo_one_msgs_msg_RobotMoveRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_RobotMoveResponse_publisher.cpp
+    src/niryo_one_msgs_msg_RobotMoveResponse_subscriber.cpp
+    src/niryo_one_msgs_RobotMoveRequest_common.cpp
+    src/niryo_one_msgs_RobotMoveResponse_common.cpp
+    src/niryo_one_msgs_SendCustomDxlValue_request_common.cpp
+    src/niryo_one_msgs_SendCustomDxlValue_response_common.cpp
+    src/niryo_one_msgs_srv_SendCustomDxlValue_client.cpp
+    src/niryo_one_msgs_srv_SendCustomDxlValue_server.cpp
+    src/niryo_one_msgs_msg_SendCustomDxlValueRequest_publisher.cpp
+    src/niryo_one_msgs_msg_SendCustomDxlValueRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SendCustomDxlValueResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SendCustomDxlValueResponse_subscriber.cpp
+    src/niryo_one_msgs_SendCustomDxlValueRequest_common.cpp
+    src/niryo_one_msgs_SendCustomDxlValueResponse_common.cpp
+    src/niryo_one_msgs_SetBool_request_common.cpp
+    src/niryo_one_msgs_SetBool_response_common.cpp
+    src/niryo_one_msgs_srv_SetBool_client.cpp
+    src/niryo_one_msgs_srv_SetBool_server.cpp
+    src/niryo_one_msgs_msg_SetBoolRequest_publisher.cpp
+    src/niryo_one_msgs_msg_SetBoolRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SetBoolResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SetBoolResponse_subscriber.cpp
+    src/niryo_one_msgs_SetBoolRequest_common.cpp
+    src/niryo_one_msgs_SetBoolResponse_common.cpp
+    src/niryo_one_msgs_SetCalibrationCam_request_common.cpp
+    src/niryo_one_msgs_SetCalibrationCam_response_common.cpp
+    src/niryo_one_msgs_srv_SetCalibrationCam_client.cpp
+    src/niryo_one_msgs_srv_SetCalibrationCam_server.cpp
+    src/niryo_one_msgs_msg_SetCalibrationCamRequest_publisher.cpp
+    src/niryo_one_msgs_msg_SetCalibrationCamRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SetCalibrationCamResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SetCalibrationCamResponse_subscriber.cpp
+    src/niryo_one_msgs_SetCalibrationCamRequest_common.cpp
+    src/niryo_one_msgs_SetCalibrationCamResponse_common.cpp
+    src/niryo_one_msgs_SetConveyor_request_common.cpp
+    src/niryo_one_msgs_SetConveyor_response_common.cpp
+    src/niryo_one_msgs_srv_SetConveyor_client.cpp
+    src/niryo_one_msgs_srv_SetConveyor_server.cpp
+    src/niryo_one_msgs_msg_SetConveyorRequest_publisher.cpp
+    src/niryo_one_msgs_msg_SetConveyorRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SetConveyorResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SetConveyorResponse_subscriber.cpp
+    src/niryo_one_msgs_SetConveyorRequest_common.cpp
+    src/niryo_one_msgs_SetConveyorResponse_common.cpp
+    src/niryo_one_msgs_SetDigitalIO_request_common.cpp
+    src/niryo_one_msgs_SetDigitalIO_response_common.cpp
+    src/niryo_one_msgs_srv_SetDigitalIO_client.cpp
+    src/niryo_one_msgs_srv_SetDigitalIO_server.cpp
+    src/niryo_one_msgs_msg_SetDigitalIORequest_publisher.cpp
+    src/niryo_one_msgs_msg_SetDigitalIORequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SetDigitalIOResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SetDigitalIOResponse_subscriber.cpp
+    src/niryo_one_msgs_SetDigitalIORequest_common.cpp
+    src/niryo_one_msgs_SetDigitalIOResponse_common.cpp
+    src/niryo_one_msgs_SetInt_request_common.cpp
+    src/niryo_one_msgs_SetInt_response_common.cpp
+    src/niryo_one_msgs_srv_SetInt_client.cpp
+    src/niryo_one_msgs_srv_SetInt_server.cpp
+    src/niryo_one_msgs_msg_SetIntRequest_publisher.cpp
+    src/niryo_one_msgs_msg_SetIntRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SetIntResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SetIntResponse_subscriber.cpp
+    src/niryo_one_msgs_SetIntRequest_common.cpp
+    src/niryo_one_msgs_SetIntResponse_common.cpp
+    src/niryo_one_msgs_SetLeds_request_common.cpp
+    src/niryo_one_msgs_SetLeds_response_common.cpp
+    src/niryo_one_msgs_srv_SetLeds_client.cpp
+    src/niryo_one_msgs_srv_SetLeds_server.cpp
+    src/niryo_one_msgs_msg_SetLedsRequest_publisher.cpp
+    src/niryo_one_msgs_msg_SetLedsRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SetLedsResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SetLedsResponse_subscriber.cpp
+    src/niryo_one_msgs_SetLedsRequest_common.cpp
+    src/niryo_one_msgs_SetLedsResponse_common.cpp
+    src/niryo_one_msgs_SetSequenceAutorun_request_common.cpp
+    src/niryo_one_msgs_SetSequenceAutorun_response_common.cpp
+    src/niryo_one_msgs_srv_SetSequenceAutorun_client.cpp
+    src/niryo_one_msgs_srv_SetSequenceAutorun_server.cpp
+    src/niryo_one_msgs_msg_SetSequenceAutorunRequest_publisher.cpp
+    src/niryo_one_msgs_msg_SetSequenceAutorunRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SetSequenceAutorunResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SetSequenceAutorunResponse_subscriber.cpp
+    src/niryo_one_msgs_SetSequenceAutorunRequest_common.cpp
+    src/niryo_one_msgs_SetSequenceAutorunResponse_common.cpp
+    src/niryo_one_msgs_SetString_request_common.cpp
+    src/niryo_one_msgs_SetString_response_common.cpp
+    src/niryo_one_msgs_srv_SetString_client.cpp
+    src/niryo_one_msgs_srv_SetString_server.cpp
+    src/niryo_one_msgs_msg_SetStringRequest_publisher.cpp
+    src/niryo_one_msgs_msg_SetStringRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_SetStringResponse_publisher.cpp
+    src/niryo_one_msgs_msg_SetStringResponse_subscriber.cpp
+    src/niryo_one_msgs_SetStringRequest_common.cpp
+    src/niryo_one_msgs_SetStringResponse_common.cpp
+    src/niryo_one_msgs_TakePicture_request_common.cpp
+    src/niryo_one_msgs_TakePicture_response_common.cpp
+    src/niryo_one_msgs_srv_TakePicture_client.cpp
+    src/niryo_one_msgs_srv_TakePicture_server.cpp
+    src/niryo_one_msgs_msg_TakePictureRequest_publisher.cpp
+    src/niryo_one_msgs_msg_TakePictureRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_TakePictureResponse_publisher.cpp
+    src/niryo_one_msgs_msg_TakePictureResponse_subscriber.cpp
+    src/niryo_one_msgs_TakePictureRequest_common.cpp
+    src/niryo_one_msgs_TakePictureResponse_common.cpp
+    src/niryo_one_msgs_UpdateConveyorId_request_common.cpp
+    src/niryo_one_msgs_UpdateConveyorId_response_common.cpp
+    src/niryo_one_msgs_srv_UpdateConveyorId_client.cpp
+    src/niryo_one_msgs_srv_UpdateConveyorId_server.cpp
+    src/niryo_one_msgs_msg_UpdateConveyorIdRequest_publisher.cpp
+    src/niryo_one_msgs_msg_UpdateConveyorIdRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_UpdateConveyorIdResponse_publisher.cpp
+    src/niryo_one_msgs_msg_UpdateConveyorIdResponse_subscriber.cpp
+    src/niryo_one_msgs_UpdateConveyorIdRequest_common.cpp
+    src/niryo_one_msgs_UpdateConveyorIdResponse_common.cpp
+    src/niryo_one_msgs_generatetraj_request_common.cpp
+    src/niryo_one_msgs_generatetraj_response_common.cpp
+    src/niryo_one_msgs_srv_generatetraj_client.cpp
+    src/niryo_one_msgs_srv_generatetraj_server.cpp
+    src/niryo_one_msgs_msg_generatetrajRequest_publisher.cpp
+    src/niryo_one_msgs_msg_generatetrajRequest_subscriber.cpp
+    src/niryo_one_msgs_msg_generatetrajResponse_publisher.cpp
+    src/niryo_one_msgs_msg_generatetrajResponse_subscriber.cpp
+    src/niryo_one_msgs_generatetrajRequest_common.cpp
+    src/niryo_one_msgs_generatetrajResponse_common.cpp
+)
+target_include_directories(niryo_one_msgs_matlab PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_link_libraries( niryo_one_msgs_matlab
+	"/usr/local/MATLAB/R2020b/extern/bin/glnxa64/libMatlabDataArray.so"
+	"/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/console_bridge/lib/libconsole_bridge.so"
+	"/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/lib/libclass_loader.so"
+	"/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/lib/librosconsole.so"
+	"/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/lib/libroscpp.so"
+	"/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/lib/libroscpp_serialization.so"
+	"/usr/local/MATLAB/R2020b/sys/ros1/glnxa64/ros1/lib/librostime.so"
+	${Boost_LIBRARIES}
+	${CMAKE_DL_LIBS}
+	)
+## Add cmake target dependencies of the executable/library
+## as an example, message headers may need to be generated before nodes
+add_dependencies(
+  niryo_one_msgs_matlab
+  ${${PROJECT_NAME}_EXPORTED_TARGETS}
+  ${catkin_EXPORTED_TARGETS}
+)
+# Causes the visibility macros to use dllexport rather than dllimport,
+# which is appropriate when building the dll but not consuming it.
+target_compile_definitions(niryo_one_msgs_matlab PRIVATE "NIRYO_ONE_MSGS_BUILDING_LIBRARY")
+install(
+  DIRECTORY include/
+  DESTINATION include
+)
+install(
+  TARGETS niryo_one_msgs_matlab
+  EXPORT export_${PROJECT_NAME}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+install (DIRECTORY m/ DESTINATION m/ FILES_MATCHING PATTERN "*.m")
+# Generated 26-Apr-2021 13:08:03
+# Copyright 2019-2020 The MathWorks, Inc.

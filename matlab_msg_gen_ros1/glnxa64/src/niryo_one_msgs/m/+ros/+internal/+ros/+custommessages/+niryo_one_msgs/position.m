@@ -1,0 +1,34 @@
+function [data, info] = position
+%Position gives an empty data for niryo_one_msgs/Position
+% Copyright 2019-2020 The MathWorks, Inc.
+data = struct();
+[data.name, info.name] = ros.internal.ros.messages.ros.char('string',0);
+[data.joints, info.joints] = ros.internal.ros.messages.ros.default_type('double',NaN);
+[data.rpy, info.rpy] = ros.internal.ros.custommessages.niryo_one_msgs.rPY;
+info.rpy.MLdataType = 'struct';
+[data.point, info.point] = ros.internal.ros.messages.geometry_msgs.point;
+info.point.MLdataType = 'struct';
+[data.quaternion, info.quaternion] = ros.internal.ros.messages.geometry_msgs.quaternion;
+info.quaternion.MLdataType = 'struct';
+info.MessageType = 'niryo_one_msgs/Position';
+info.constant = 0;
+info.default = 0;
+info.maxstrlen = NaN;
+info.MaxLen = 1;
+info.MinLen = 1;
+info.MatPath = cell(1,15);
+info.MatPath{1} = 'name';
+info.MatPath{2} = 'joints';
+info.MatPath{3} = 'rpy';
+info.MatPath{4} = 'rpy.roll';
+info.MatPath{5} = 'rpy.pitch';
+info.MatPath{6} = 'rpy.yaw';
+info.MatPath{7} = 'point';
+info.MatPath{8} = 'point.x';
+info.MatPath{9} = 'point.y';
+info.MatPath{10} = 'point.z';
+info.MatPath{11} = 'quaternion';
+info.MatPath{12} = 'quaternion.x';
+info.MatPath{13} = 'quaternion.y';
+info.MatPath{14} = 'quaternion.z';
+info.MatPath{15} = 'quaternion.w';
