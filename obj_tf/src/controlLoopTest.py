@@ -135,7 +135,9 @@ def run():
         n.calibrate_auto()
         print "Go to observation position"
         n.move_pose(0.2, 0, 0.2, 0, math.radians(90), 0)
-
+        jointvalues = group.get_current_joint_values()
+        print("observation pose")
+        print(jointvalues)
         
 
         print "============ Press `Enter` to call moveit go()"
@@ -144,7 +146,9 @@ def run():
         group.go(joint_goal, wait=True)
         simTime = rospy.get_time() - startTime
         print("Planning time: %f" % simTime)
-
+        moveitjointvalues = group.get_current_joint_values()
+        print("observation pose")
+        print(moveitjointvalues)
 
         print "============ Press `Enter` to call ExecuteTrajectoryAction"
         # joint_goal[0] = joint_goal[0]-0.1
@@ -163,19 +167,71 @@ def run():
         from moveit_msgs.msg import RobotTrajectory
         from trajectory_msgs.msg import JointTrajectory
         from trajectory_msgs.msg import JointTrajectoryPoint
+        from niryo_one_msgs.srv import generatetraj,generatetrajResponse
         rt = RobotTrajectory()
         jt = JointTrajectory()
         jt.header.frame_id = '/world'
         jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
-        jtp = JointTrajectoryPoint()
-        jtp.positions = copy.copy(joint_goal)
-        jt.points.append(jtp)
+
 
         jtp = JointTrajectoryPoint()
         jtp.positions = copy.copy(joint_goal)
         jtp.positions[0] = copy.copy(jtp.positions[0]) -0.1
-        jtp.time_from_start.nsecs = 10000000
+        
+
+        rospy.wait_for_service('generatetraj')
+        generate_traj = rospy.ServiceProxy('generatetraj',generatetraj)
+        trajectory = generate_traj(moveitjointvalues,jtp.positions)
+        print("first joint trajectory")
+        print(trajectory)
+
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[0:6]
+            jtp.velocities = trajectory.velocities[0:6]
+            jtp.accelerations = trajectory.acceleration[0:6]
+            jtp.time_from_start.nsecs = 250000000
+     
         jt.points.append(jtp)
+
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[6:12]
+            jtp.velocities = trajectory.velocities[0:12]
+            jtp.accelerations = trajectory.acceleration[6:12]
+            jtp.time_from_start.nsecs = 500000000
+            
+        jt.points.append(jtp)
+
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[12:18]
+            jtp.velocities = trajectory.velocities[12:18]
+            jtp.accelerations = trajectory.acceleration[12:18]
+            jtp.time_from_start.nsecs = 750000000
+        
+        jt.points.append(jtp)
+
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[18:24]
+            jtp.velocities = trajectory.velocities[18:24]
+            jtp.accelerations = trajectory.acceleration[18:24]
+            jtp.time_from_start.nsecs = 1000000000
+            
+        jt.points.append(jtp)
+
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[24:30]
+            jtp.velocities = trajectory.velocities[24:30]
+            jtp.accelerations = trajectory.acceleration[24:30]
+            jtp.time_from_start.nsecs = 1250000000
+        
+        jt.points.append(jtp)
+        print("Joint trajectory")
+        print(jt)
+
         jt.joint_names = respIK.solution.joint_state.name
         rt.joint_trajectory = jt
         goal.trajectory = rt
@@ -217,7 +273,9 @@ def run():
             oscillateY = -0.1
         else:
             oscillateY = 0.1
-        
+        currentjointvalues = group.get_current_joint_values()
+        print("Current joint values")
+        print(currentjointvalues)
         currentPose = group.get_current_pose()
 
 
@@ -242,7 +300,9 @@ def run():
         joint_goal[3] = positions[3]
         joint_goal[4] = positions[4]
         joint_goal[5] = positions[5]
-        print(type(joint_goal[5]))
+        
+
+        trajectory = generate_traj(currentjointvalues,joint_goal)
 
         # send that message over
         rt = RobotTrajectory()
@@ -250,21 +310,59 @@ def run():
         jt.header.frame_id = '/world'
         jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
         jtp = JointTrajectoryPoint()
-        jtp.positions = copy.copy(joint_goal)
+        
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[0:6]
+            jtp.velocities = trajectory.velocities[0:6]
+            jtp.accelerations = trajectory.acceleration[0:6]
+            jtp.time_from_start.nsecs = 250000000
+            
         jt.points.append(jtp)
 
-        jtp = JointTrajectoryPoint()
-        jtp.positions = copy.copy(joint_goal)
-        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.02
-        rospy.loginfo("Joint target positions ")
-        rospy.loginfo(jtp.positions)
-        rospy.loginfo(type(jtp.positions))  
-        jtp.time_from_start.nsecs = 10000000
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[6:12]
+            jtp.velocities = trajectory.velocities[0:12]
+            jtp.accelerations = trajectory.acceleration[6:12]
+            jtp.time_from_start.nsecs = 500000000
+            
         jt.points.append(jtp)
+
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[12:18]
+            jtp.velocities = trajectory.velocities[12:18]
+            jtp.accelerations = trajectory.acceleration[12:18]
+            jtp.time_from_start.nsecs = 750000000
+            
+        jt.points.append(jtp)
+
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[18:24]
+            jtp.velocities = trajectory.velocities[18:24]
+            jtp.accelerations = trajectory.acceleration[18:24]
+            jtp.time_from_start.nsecs = 1000000000
+            
+        jt.points.append(jtp)
+
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[24:30]
+            jtp.velocities = trajectory.velocities[24:30]
+            jtp.accelerations = trajectory.acceleration[24:30]
+            jtp.time_from_start.nsecs = 1250000000
+            
+        jt.points.append(jtp)
+
         jt.joint_names = respIK.solution.joint_state.name
+        
+        
         rt.joint_trajectory = jt
         goal.trajectory = rt
-
+        print("joint trajectory")
+        print(jt)
         client.send_goal(goal, feedback_cb=feedback_callback)
 
         client.wait_for_result()
