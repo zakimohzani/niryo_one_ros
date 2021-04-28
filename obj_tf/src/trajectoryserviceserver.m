@@ -7,7 +7,13 @@ function generatetrajResponse = callbackfunction(~,generatetrajRequest,generatet
     
     t = 0:0.25:1
     [q,qd,qdd] = jtraj(generatetrajRequest.J0,generatetrajRequest.J1,t)
-    generatetrajResponse.Positions = q(:)
-    generatetrajResponse.Velocities = qd(:)
-    generatetrajResponse.Acceleration = qdd(:)
+    q = transpose(q);
+    qd = transpose(qd);
+    qdd = transpose(qdd);
+    q = reshape(q,[30,1]);
+    qd = reshape(qd,[30,1]);
+    qdd = reshape(qdd,[30,1]);
+    generatetrajResponse.Positions = q
+    generatetrajResponse.Velocities = qd
+    generatetrajResponse.Acceleration = qdd
 end
