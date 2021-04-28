@@ -16,6 +16,7 @@ from std_msgs.msg import String
 from moveit_commander.conversions import pose_to_list
 import operator
 
+from niryo_one_msgs.srv import generatetraj,generatetrajResponse
 
 # I didn't make a class, so I'm passing some moveit components via this variable
 global moveitNs
@@ -126,6 +127,19 @@ def state_look_for_new_obj():
     # if event has been created then change state
     currentState = 'state_picking_up_obj';
 
+
+
+from moveit_python_tools.get_ik import GetIK
+from moveit_python_tools.get_fk import GetFK
+from geometry_msgs.msg import PoseStamped
+import actionlib
+from moveit_msgs.msg import ExecuteTrajectoryAction 
+from moveit_msgs.msg import ExecuteTrajectoryGoal
+from moveit_msgs.msg import ExecuteTrajectoryResult
+from moveit_msgs.msg import RobotTrajectory
+from trajectory_msgs.msg import JointTrajectory
+from trajectory_msgs.msg import JointTrajectoryPoint
+
 def state_picking_up_obj():
     global currentState # required for the state machine
     rospy.loginfo('state = state_picking_up_obj')
@@ -134,7 +148,12 @@ def state_picking_up_obj():
     group = moveitNs.group
     listener = moveitNs.listener    
   
-    
+
+    def feedback_callback(feedback):
+        print('Received some feedback from executeTraj')
+    client = actionlib.SimpleActionClient('/execute_trajectory', ExecuteTrajectoryAction)
+    client.wait_for_server()
+
     rate = rospy.Rate(10) # doesn't work
     
     startTime = rospy.get_time()    
@@ -177,40 +196,80 @@ def state_picking_up_obj():
         target_pose.position.z = 0.2
 
 
-    
-        group.set_pose_target(target_pose)
+        # HACK: copied in code forom controlLoopTest.py
+        gik = GetIK("arm")
+        ps = PoseStamped()
+        ps.header.frame_id = 'base_link'
+        ps.pose.position.x = trans[0]
+        ps.pose.position.y = trans[1]
+        ps.pose.position.z = 0.2
+        ps.pose.orientation = target_pose.orientation
+        respIK = gik.get_ik(ps)
+        print("Printing result of GetIK")
+        print(respIK)
         
-        
-        # BUG: Niryo driver's doesn't actually wait for the movement to complete
-        # before sending a 'complete' signal to Moveit
-        # Hence, the following sentence is not a blocking statement
-        # setting the wait-timer too low would mean the robot will never move
-        # because plan after plan after plan are continously being streamed to 
-        # it
-        
-        """
-        startTime = rospy.get_time()
-        plan = group.go(wait=True)
-        simTime = rospy.get_time() - startTime
-        print("Planning & execution time: %f" % simTime)  
-        """
+        print("Extracting positions")
+        positions = respIK.solution.joint_state.position
+        print(positions)        
 
-        startTime = rospy.get_time()        
-        plan = group.plan()
-        simTime = rospy.get_time() - startTime
-        print("Planning time: %f" % simTime)
-        
-        #print("Plan output:")
-        #print(plan)        
-        #print(len(plan.joint_trajectory.points))
-        
-        startTime = rospy.get_time() 
-        group.execute(plan, wait=True)
-        simTime = rospy.get_time() - startTime
-        print("Execution time: %f" % simTime)
-     
-        
+        if not positions:
+            print("Invalid FK")
+            continue
 
+        joint_currently = group.get_current_joint_values()
+        joint_goal = group.get_current_joint_values()
+
+        # HACK: resolve this list-tuple dilemma.
+        joint_goal[0] = positions[0]
+        joint_goal[1] = positions[1]
+        joint_goal[2] = positions[2]
+        joint_goal[3] = positions[3]
+        joint_goal[4] = positions[4]
+        joint_goal[5] = positions[5]
+        
+        print("current joint vals")
+        print(joint_currently)
+        
+        print("target joint vals")
+        print(joint_goal)        
+
+        #trying to catch the object by adding extra movement in the desired joint
+        joint_goal[0] = joint_goal[0]+0.2
+
+        goal = ExecuteTrajectoryGoal()
+
+
+        # send that message over
+        rt = RobotTrajectory()
+        jt = JointTrajectory()
+        jt.header.frame_id = '/world'
+        jt.header.stamp.secs = 0
+        jt.header.stamp.nsecs = 0
+
+        rospy.wait_for_service('generatetraj')
+        generate_traj = rospy.ServiceProxy('generatetraj',generatetraj)
+        trajectory = generate_traj(joint_currently,joint_goal)
+
+        
+        for i in range(5):
+            jtp = JointTrajectoryPoint()
+            jtp.positions = trajectory.positions[(i*6):(i+1)*6]
+            jtp.velocities = trajectory.velocities[(i*6):(i+1)*6]
+            jtp.accelerations = trajectory.acceleration[(i*6):(i+1)*6]
+            jtp.time_from_start.nsecs = (i)*250000000
+            jt.points.append(jtp)
+        
+        
+        jt.joint_names = respIK.solution.joint_state.name
+        print("Joint trajectory")
+        print(jt)        
+
+        rt.joint_trajectory = jt
+        goal.trajectory = rt
+
+        client.send_goal(goal, feedback_cb=feedback_callback)
+
+        client.wait_for_result()
         #print("Stopping arm")
         # Calling `stop()` ensures that there is no residual movement
         #group.stop()
@@ -327,6 +386,7 @@ def run():
         # End of state machine code    
         
         time.sleep(1)
+
 
 if __name__ == '__main__':
     try:
