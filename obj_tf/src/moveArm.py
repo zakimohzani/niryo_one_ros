@@ -234,7 +234,7 @@ def state_picking_up_obj():
         print(joint_goal)        
 
         #trying to catch the object by adding extra movement in the desired joint
-        joint_goal[0] = joint_goal[0]+0.2
+        joint_goal[0] = joint_goal[0]+ 0
 
         goal = ExecuteTrajectoryGoal()
 
@@ -256,7 +256,7 @@ def state_picking_up_obj():
             jtp.positions = trajectory.positions[(i*6):(i+1)*6]
             jtp.velocities = trajectory.velocities[(i*6):(i+1)*6]
             jtp.accelerations = trajectory.acceleration[(i*6):(i+1)*6]
-            jtp.time_from_start.nsecs = (i)*250000000
+            jtp.time_from_start.nsecs = (i)*250*1000*1000
             jt.points.append(jtp)
         
         
@@ -278,7 +278,7 @@ def state_picking_up_obj():
         #group.clear_pose_targets()
 
         # rate.sleep() # doesn't work 
-        time.sleep(0.1)
+        time.sleep(0.01)
         
         
     # if event has been created then change state
