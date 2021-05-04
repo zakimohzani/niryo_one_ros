@@ -3,7 +3,9 @@ import time
 import zmq
 import numpy as np
 import roboticstoolbox as rtb
+import cProfile
 
+print("Function called")
 context = zmq.Context()
 socket = context.socket(zmq.REP)
 socket.bind("tcp://*:5555")
