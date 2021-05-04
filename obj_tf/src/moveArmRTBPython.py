@@ -107,10 +107,11 @@ def state_look_for_new_obj():
     #print(list_of_objs)
 
     distance_of_objs_from_end_effector = []
-    
+
     lowest_distance_so_far = 100
     obj_name_with_the_lowest_distance = ''
     obj_distance_dict = {}
+    new_obj_distance_dict = {}
     for obj_id in list_of_objs:
         try:
             (trans,rot) = listener.lookupTransform('/base_link', obj_id, rospy.Time(0))
@@ -118,12 +119,12 @@ def state_look_for_new_obj():
             continue
             
         desired_y_pos = start_pose.position.y - 0.05        
-        
+        if trans[1] > -0.3:
+            continue
         distance = sqrt( (trans[0] - start_pose.position.x)**2 + \
                         (trans[1] - desired_y_pos)**2 )
         obj_distance_dict[obj_id] = distance
 
-    
     obj_name_with_the_lowest_distance = min(obj_distance_dict.iteritems(), key=operator.itemgetter(1))[0]
             
     #print(obj_distance_dict)
