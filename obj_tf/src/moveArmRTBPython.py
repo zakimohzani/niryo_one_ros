@@ -17,6 +17,8 @@ from moveit_commander.conversions import pose_to_list
 import operator
 
 from niryo_one_msgs.srv import generatetraj,generatetrajResponse
+import zmq
+import numpy as np
 
 # I didn't make a class, so I'm passing some moveit components via this variable
 global moveitNs
@@ -24,6 +26,11 @@ moveitNs = SimpleNamespace()
 global start_pose
 
 global currentState
+
+context = zmq.Context()
+print("conecting to server....")
+socket = context.socket(zmq.REQ)
+socket.connect("tcp://localhost:5555")
 
 def state_going_to_pickup():
     global currentState # required for the state machine
@@ -234,7 +241,7 @@ def state_picking_up_obj():
         print(joint_goal)        
 
         #trying to catch the object by adding extra movement in the desired joint
-        joint_goal[0] = joint_goal[0]+ 0
+        joint_goal[0] = joint_goal[0]+ 0.05
 
         goal = ExecuteTrajectoryGoal()
 
@@ -246,16 +253,25 @@ def state_picking_up_obj():
         jt.header.stamp.secs = 0
         jt.header.stamp.nsecs = 0
 
-        rospy.wait_for_service('generatetraj')
-        generate_traj = rospy.ServiceProxy('generatetraj',generatetraj)
-        trajectory = generate_traj(joint_currently,joint_goal)
+        # rospy.wait_for_service('generatetraj')
+        # generate_traj = rospy.ServiceProxy('generatetraj',generatetraj)
+        # trajectory = generate_traj(joint_currently,joint_goal)
 
-        
+        j = np.array([joint_currently,joint_goal])
+        print("joints array is : ",j)
+        print (j.shape)
+        print(j.dtype)
+        socket.send(j)
+
+        message = socket.recv()
+        jtraj = np.frombuffer(message,dtype = 'float64').reshape(15,6)
+        print("trajectory recieved")
+
         for i in range(5):
             jtp = JointTrajectoryPoint()
-            jtp.positions = trajectory.positions[(i*6):(i+1)*6]
-            jtp.velocities = trajectory.velocities[(i*6):(i+1)*6]
-            jtp.accelerations = trajectory.acceleration[(i*6):(i+1)*6]
+            jtp.positions = jtraj[i]
+            jtp.velocities = jtraj[i+5]
+            jtp.accelerations = jtraj[i+10]
             jtp.time_from_start.nsecs = (i)*250*1000*1000
             jt.points.append(jtp)
         
