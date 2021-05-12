@@ -11,7 +11,7 @@ class ObjRecogniser():
         s.publisher = rospy.Publisher('/objDetected', ObjRecognised, queue_size=1)
         
         # for simulateObjRecognitionCallback        
-        s.flip = 1
+        s.flip = 0.5
     
     def simulateObjRecognition(s):
         rospy.Timer(rospy.Duration(10), s.simulateObjRecognitionCallback, oneshot=False)
@@ -31,10 +31,10 @@ class ObjRecogniser():
         msg = ObjRecognised()
         msg.detectedTime = detectedTime
         
-        if s.flip == 1:
-            s.flip = -1
+        if s.flip == 0.5:
+            s.flip = 0.5
         else:
-            s.flip = 1
+            s.flip = 0.5
         
         msg.x = s.flip*0.1
         msg.y = 0
