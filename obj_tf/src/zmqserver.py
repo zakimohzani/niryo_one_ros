@@ -20,11 +20,11 @@ while True:
 
 		traj = rtb.jtraj(joints[0],joints[1],len(t))
 		print("trajectory positions")
-		print(traj.y)
+		print(traj.q)
 		print("trajectory velocities")
-		print(traj.yd)
+		print(traj.qd)
 		#trajmessage = np.array([traj.y,traj.yd,traj.ydd])
-		trajmessage = np.vstack((traj.y,traj.yd,traj.ydd))
+		trajmessage = np.vstack((traj.q,traj.qd,traj.qdd))
 
 		socket.send(trajmessage)
 	except Exception:
