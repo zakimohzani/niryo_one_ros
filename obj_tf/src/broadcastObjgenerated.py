@@ -38,7 +38,7 @@ class ObjRecogniser():
         
         msg.x = s.flip*0.1
         msg.y = 0
-        msg.z = 0.2
+        msg.z = 0.2 
         
         s.publisher.publish(msg)
         

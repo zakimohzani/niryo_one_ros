@@ -20,6 +20,11 @@ from niryo_one_msgs.srv import generatetraj,generatetrajResponse
 import zmq
 import numpy as np
 
+import line_profiler
+import atexit
+profile = line_profiler.LineProfiler()
+atexit.register(profile.print_stats)
+
 # I didn't make a class, so I'm passing some moveit components via this variable
 global moveitNs
 moveitNs = SimpleNamespace()
@@ -81,7 +86,7 @@ def state_going_to_pickup():
         currentState = 'state_going_to_pickup';
     else:
         currentState = 'state_look_for_new_obj';
-    
+   
 
 def state_look_for_new_obj():
     global currentState # required for the state machine
@@ -148,6 +153,14 @@ from moveit_msgs.msg import RobotTrajectory
 from trajectory_msgs.msg import JointTrajectory
 from trajectory_msgs.msg import JointTrajectoryPoint
 
+def get_z_values(y):
+    if y<-0.1:
+        z = -y -0.1
+    else: 
+        z = y - 0.1
+    return z
+
+@profile
 def state_picking_up_obj():
     global currentState # required for the state machine
     rospy.loginfo('state = state_picking_up_obj')
@@ -210,7 +223,7 @@ def state_picking_up_obj():
         ps.header.frame_id = 'base_link'
         ps.pose.position.x = trans[0]
         ps.pose.position.y = trans[1]
-        ps.pose.position.z = 0.2
+        ps.pose.position.z = get_z_values(trans[1])
         ps.pose.orientation = target_pose.orientation
         respIK = gik.get_ik(ps)
         print("Printing result of GetIK")
@@ -223,7 +236,8 @@ def state_picking_up_obj():
         if not positions:
             print("Invalid FK")
             continue
-
+        current_pose = group.get_current_pose()
+        print("Current pose is: ", current_pose)
         joint_currently = group.get_current_joint_values()
         joint_goal = group.get_current_joint_values()
 
@@ -350,7 +364,6 @@ def state_picked_up_obj_and_dumping_it():
     currentState = 'state_going_to_pickup';
 
 
-
 def run():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('move_arm_node')
@@ -404,8 +417,7 @@ def run():
         
         time.sleep(1)
 
-
-if __name__ == '__main__':
+if __name__=="__main__":
     try:
         run()
     except rospy.ROSInterruptException:
