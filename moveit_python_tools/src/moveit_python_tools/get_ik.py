@@ -4,7 +4,10 @@ import rospy
 from moveit_msgs.srv import GetPositionIK
 from moveit_msgs.srv import GetPositionIKRequest
 from moveit_msgs.srv import GetPositionIKResponse
-
+import line_profiler
+import atexit
+profile = line_profiler.LineProfiler()
+atexit.register(profile.print_stats)
 
 """
 Class to make IK calls using the /compute_ik service.
@@ -41,7 +44,7 @@ class GetIK(object):
         rospy.loginfo("Waiting for /compute_ik service...")
         self.ik_srv.wait_for_service()
         rospy.loginfo("Connected!")
-
+    @profile
     def get_ik(self, pose_stamped,
                group=None,
                ik_timeout=None,

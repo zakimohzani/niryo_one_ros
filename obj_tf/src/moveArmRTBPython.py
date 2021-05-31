@@ -160,7 +160,7 @@ def get_z_values(y):
         z = y - 0.1
     return z
 
-@profile
+
 def state_picking_up_obj():
     global currentState # required for the state machine
     rospy.loginfo('state = state_picking_up_obj')
