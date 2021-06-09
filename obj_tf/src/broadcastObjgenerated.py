@@ -5,6 +5,7 @@ import time
 import tf
 from SimpleNamespace import SimpleNamespace
 from obj_tf.msg import ObjRecognised
+from std_msgs.msg import Float32
 
 class ObjRecogniser():
     def __init__(s):
@@ -147,7 +148,10 @@ class ConveyorBelt:
 
     def simulateMovement(s):
         s.startTime = rospy.get_time()
-        s.speed = 0.05 # m/s
+        s.subscriber = rospy.Subscriber("/beltspeed",Float32,s.callback)
+
+    def callback(s,data):
+	s.speed = data.data
         
         
     def broadcastConveyorTf(s, y):

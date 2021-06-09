@@ -5,6 +5,7 @@ import time
 import tf
 from SimpleNamespace import SimpleNamespace
 from obj_tf.msg import ObjRecognised
+from std_msgs.msg import Float32
 
 class ObjRecogniser():
     def __init__(s):
@@ -132,7 +133,10 @@ class ConveyorBelt:
 
     def simulateMovement(s):
         s.startTime = rospy.get_time()
-        s.speed = 0.010 # m/s
+        s.subscriber = rospy.Subscriber("/beltspeed",Float32,s.callback)
+
+    def callback(s,data):
+	s.speed = data.data
         
         
     def broadcastConveyorTf(s, y):
@@ -159,31 +163,32 @@ def roboArmFollow(name):
 
 def run():
 
+while not rospy.is_shutdown():
 
     #objRecogniser = ObjRecogniser()
     #objRecogniser.simulateObjRecognition()    
 
     # wait a bit to initialise subscriber
-    rospy.sleep(1)
-    
-    conveyorBelt = ConveyorBelt()
-    conveyorBelt.simulateMovement()    
-    
-    
-    objOnConveyorBeltListMaintainer = ObjOnConveyorBeltListMaintainer()   
-    
-    objTfBroadcaster = ObjTfBroadcaster(objOnConveyorBeltListMaintainer)
-    
-    rospy.loginfo("Let's go")
+	    rospy.sleep(1)
+	    
+	    conveyorBelt = ConveyorBelt()
+	    conveyorBelt.simulateMovement()    
+	    
+	    
+	    objOnConveyorBeltListMaintainer = ObjOnConveyorBeltListMaintainer()   
+	    
+	    objTfBroadcaster = ObjTfBroadcaster(objOnConveyorBeltListMaintainer)
+	    
+	    rospy.loginfo("Let's go")
 
-    rate = rospy.Rate(1)
-  
-    startTime = rospy.get_time()
+	    rate = rospy.Rate(1)
+	  
+	    startTime = rospy.get_time()
     
     # start program to introduce items onto the belt
     #rospy.Timer(rospy.Duration(5), addObjCallback)
     
-    while not rospy.is_shutdown():
+    
 
 #        simTime = rospy.get_time() - startTime
 #        t = simTime
