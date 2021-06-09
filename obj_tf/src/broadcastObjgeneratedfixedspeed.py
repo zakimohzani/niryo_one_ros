@@ -14,10 +14,10 @@ class ObjRecogniser():
         s.publisher = rospy.Publisher('/objDetected', ObjRecognised, queue_size=1)
         
         # for simulateObjRecognitionCallback        
-        s.flip = 1
+        s.flip = 0.5
     
     def simulateObjRecognition(s):
-        rospy.Timer(rospy.Duration(5), s.simulateObjRecognitionCallback, oneshot=False)
+        rospy.Timer(rospy.Duration(1), s.simulateObjRecognitionCallback, oneshot=False)
     
     def simulateObjRecognitionCallback(s, event):
         now = rospy.get_rostime()
@@ -34,14 +34,14 @@ class ObjRecogniser():
         msg = ObjRecognised()
         msg.detectedTime = detectedTime
         
-        if s.flip == 1:
-            s.flip = -1
+        if s.flip == 0.5:
+            s.flip = -0.5
         else:
-            s.flip = 1
+            s.flip = 0.5
         
         msg.x = s.flip*0.1
         msg.y = -1
-        msg.z = 0.2
+        msg.z = 0.2 
         
         s.publisher.publish(msg)
         
@@ -56,7 +56,11 @@ class ObjOnConveyorBeltListMaintainer:
         s.list = []
         s.number = 0
         s.listener = tf.TransformListener()
-        
+
+        broadcastFrequency = 1.0
+        rospy.Timer(rospy.Duration(1.0/broadcastFrequency), 
+                    s.removeObjFromListCallback, oneshot=False) 
+
     def subscriberCallback(s, msg):
         print("SUB:------------")        
         print("SUB: received it")
@@ -76,8 +80,17 @@ class ObjOnConveyorBeltListMaintainer:
     def getList(s):
         return s.list
     
-    def removeObjFromList(s, msg):
-        print("removeObjFromList is undefined")
+    def removeObjFromListCallback(s, msg):
+        y_pos_to_remove_obj = 0.9
+        for item in s.list:
+            #print(item["name"])
+            try:
+                (trans,rot) = s.listener.lookupTransform('/base_link', item["name"], rospy.Time(0))
+            except (tf.LookupException, tf.ExtrapolationException):
+                continue
+            #print("%s, Y:%f" % (item["name"], trans[1]))
+            if trans[1] > y_pos_to_remove_obj:
+                s.list.remove(item)
     
 class ObjTfBroadcaster:
     def __init__(s, objOnConveyorBeltListMaintainer):
@@ -125,10 +138,12 @@ class ConveyorBelt:
         rospy.Timer(rospy.Duration(1.0/broadcastFrequency), s.broadcastCallback, oneshot=False)                
 
     def broadcastCallback(s, event):
-        # update position       
-        global pos
+        # update position
+        global pos       
         t = rospy.get_time() - s.startTime
-        print("Broadcasting %f", t)
+        debug_msg = False        
+        if debug_msg:       
+            print("Broadcasting %f", t)
         s.currentYPos = pos + s.speed * 0.1
         pos = s.currentYPos
         
@@ -137,10 +152,10 @@ class ConveyorBelt:
 
     def simulateMovement(s):
         s.startTime = rospy.get_time()
-        s.subscriber = rospy.Subscriber("/beltspeed",Float32,s.callback)
+        s.speed = 0.05
 
     def callback(s,data):
-	s.speed = data.data
+	    s.speed = data.data
         
         
     def broadcastConveyorTf(s, y):
@@ -167,13 +182,13 @@ def roboArmFollow(name):
 
 def run():
 
-
-    #objRecogniser = ObjRecogniser()
-    #objRecogniser.simulateObjRecognition()    
+    objRecogniser = ObjRecogniser()
+    objRecogniser.simulateObjRecognition()    
 
     # wait a bit to initialise subscriber
     rospy.sleep(1)
     
+    conveyorBelt = ConveyorBelt()
     conveyorBelt.simulateMovement()    
     
     
@@ -183,14 +198,12 @@ def run():
     
     rospy.loginfo("Let's go")
 
-    rate = rospy.Rate(1)conveyorBelt = ConveyorBelt()
-    
-
+    rate = rospy.Rate(1)
+  
     startTime = rospy.get_time()
     
     # start program to introduce items onto the belt
     #rospy.Timer(rospy.Duration(5), addObjCallback)
-    
     
     while not rospy.is_shutdown():
 

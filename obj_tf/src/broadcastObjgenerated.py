@@ -7,6 +7,8 @@ from SimpleNamespace import SimpleNamespace
 from obj_tf.msg import ObjRecognised
 from std_msgs.msg import Float32
 
+pos = 0
+
 class ObjRecogniser():
     def __init__(s):
         s.publisher = rospy.Publisher('/objDetected', ObjRecognised, queue_size=1)
@@ -15,7 +17,7 @@ class ObjRecogniser():
         s.flip = 0.5
     
     def simulateObjRecognition(s):
-        rospy.Timer(rospy.Duration(10), s.simulateObjRecognitionCallback, oneshot=False)
+        rospy.Timer(rospy.Duration(1), s.simulateObjRecognitionCallback, oneshot=False)
     
     def simulateObjRecognitionCallback(s, event):
         now = rospy.get_rostime()
@@ -38,7 +40,7 @@ class ObjRecogniser():
             s.flip = 0.5
         
         msg.x = s.flip*0.1
-        msg.y = 0
+        msg.y = -1
         msg.z = 0.2 
         
         s.publisher.publish(msg)
@@ -136,12 +138,14 @@ class ConveyorBelt:
         rospy.Timer(rospy.Duration(1.0/broadcastFrequency), s.broadcastCallback, oneshot=False)                
 
     def broadcastCallback(s, event):
-        # update position       
+        # update position
+        global pos       
         t = rospy.get_time() - s.startTime
         debug_msg = False        
         if debug_msg:       
             print("Broadcasting %f", t)
-        s.currentYPos = s.speed * t
+        s.currentYPos = pos + s.speed * 0.1
+        pos = s.currentYPos
         
         # call legacy function, can't be bothered to refactor this
         s.broadcastConveyorTf(s.currentYPos)
@@ -151,7 +155,7 @@ class ConveyorBelt:
         s.subscriber = rospy.Subscriber("/beltspeed",Float32,s.callback)
 
     def callback(s,data):
-	s.speed = data.data
+	    s.speed = data.data
         
         
     def broadcastConveyorTf(s, y):
