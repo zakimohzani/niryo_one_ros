@@ -183,7 +183,8 @@ def run():
     
     rospy.loginfo("Let's go")
 
-    rate = rospy.Rate(1)conveyorBelt = ConveyorBelt()
+    rate = rospy.Rate(1)
+    conveyorBelt = ConveyorBelt()
     
 
     startTime = rospy.get_time()
