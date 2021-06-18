@@ -44,7 +44,11 @@ class ObjRecogniser():
         msg.z = 0.2 
         
         s.publisher.publish(msg)
+
+class WasteItem:
+    def __init__(s):
         
+
 
 class ObjOnConveyorBeltListMaintainer:
     # maintains this list and also assigns a readable TF name

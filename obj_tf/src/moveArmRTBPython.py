@@ -97,7 +97,6 @@ def state_look_for_new_obj():
     group = moveitNs.group
     listener = moveitNs.listener       
     
-    
     rospy.loginfo("Getting list of transforms")
 
     list_of_tfs = listener.getFrameStrings()
