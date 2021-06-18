@@ -46,8 +46,13 @@ class ObjRecogniser():
         s.publisher.publish(msg)
 
 class WasteItem:
-    def __init__(s):
-        
+    def __init__(s,x,y,width,height,orientation,objectID,plastictype,state):
+
+        obj_id = objectID
+        time = rospy.Time.now()
+        boundingBox = [x,y,width,height,orientation]
+        platictype = plastictype 
+        state = state
 
 
 class ObjOnConveyorBeltListMaintainer:
@@ -60,7 +65,6 @@ class ObjOnConveyorBeltListMaintainer:
         s.list = []
         s.number = 0
         s.listener = tf.TransformListener()
-
         broadcastFrequency = 1.0
         rospy.Timer(rospy.Duration(1.0/broadcastFrequency), 
                     s.removeObjFromListCallback, oneshot=False) 
@@ -73,13 +77,15 @@ class ObjOnConveyorBeltListMaintainer:
         
         (trans,rot) = s.listener.lookupTransform('/conveyor_belt', '/neels_cam', rospy.Time(0))        
         
-        mapping = { "name": "obj" + str(s.number), \
-                    "detectedTime" : msg.detectedTime, \
-                    "x": trans[0] + msg.x, \
-                    "y": trans[1] + msg.y \
-                    }        
+        # mapping = { "name": "obj" + str(s.number), \
+        #             "detectedTime" : msg.detectedTime, \
+        #             "x": trans[0] + msg.x, \
+        #             "y": trans[1] + msg.y \
+        #             }     
+
+        s.wasteItem = WasteItem(trans[0]+msg.x,trans[1]+msg.y,msg.width,msg.height,msg.orientation,"obj"+str(s.number),msg.plastictype,msg.state)   
         s.number = s.number + 1
-        s.list.append(mapping)
+        s.list.append(s.wasteItem)
     
     def getList(s):
         return s.list
