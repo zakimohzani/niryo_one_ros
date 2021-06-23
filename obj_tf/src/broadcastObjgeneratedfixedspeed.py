@@ -55,6 +55,7 @@ class ObjRecogniser():
         
         s.publisher.publish(msg)
 
+#class defining object on conveyor belt
 class WasteItem:
     def __init__(s,x,y,width,height,orientation,ObjectName,plastictype,state):
 
@@ -147,6 +148,8 @@ class ObjTfBroadcaster:
         orient.y = 0
         orient.z = 0
         orient.w = 1
+        
+        #visualisation marker publisher and marker item
         marker_publisher = rospy.Publisher('visualization_marker', Marker, queue_size=100) 
         
         marker = Marker()
