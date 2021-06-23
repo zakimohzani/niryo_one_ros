@@ -84,6 +84,7 @@ find_package(catkin REQUIRED COMPONENTS
  add_message_files(
    FILES
    ObjRecognised.msg
+   ObjVisualiser.msg
 #   Message2.msg
  )
 
@@ -179,6 +180,7 @@ link_directories(${catkin_LIBRARY_DIRS})
 ## The recommended prefix ensures that target names across packages don't collide
 #add_executable(moveArmCpp src/moveArmCpp.cpp)
 add_executable(createbeltmarker src/createbeltmarker.cpp)
+add_executable(objectvisualiser src/objectvisualiser.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -187,10 +189,13 @@ add_executable(createbeltmarker src/createbeltmarker.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(objectvisualiser ${obj_tf_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(createbeltmarker
+ ${catkin_LIBRARIES}
+)
+target_link_libraries(objectvisualiser
  ${catkin_LIBRARIES}
 )
 
