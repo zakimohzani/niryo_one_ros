@@ -3,6 +3,7 @@
 import rospy
 import time
 import tf
+import random
 from SimpleNamespace import SimpleNamespace
 from obj_tf.msg import ObjRecognised
 from obj_tf.msg import ObjVisualiser
@@ -21,7 +22,7 @@ class ObjRecogniser():
         s.flip = 0.5
     
     def simulateObjRecognition(s):
-        rospy.Timer(rospy.Duration(1), s.simulateObjRecognitionCallback, oneshot=False)
+        rospy.Timer(rospy.Duration(2), s.simulateObjRecognitionCallback, oneshot=False)
     
     def simulateObjRecognitionCallback(s, event):
         now = rospy.get_rostime()
@@ -41,15 +42,16 @@ class ObjRecogniser():
         if s.flip == 0.5:
             s.flip = -0.5
             msg.plastictype = 0
+
         else:
             s.flip = 0.5
             msg.plastictype = 1
         
+        msg.width = random.uniform(0.1,0.3)
+        msg.height = random.uniform(0.1,0.3)
         msg.x = s.flip*0.1
         msg.y = -1
         msg.z = 0.2 
-        msg.width = 0
-        msg.height = 0
         msg.orientation = 0
         msg.state = 0
         
@@ -77,7 +79,7 @@ class ObjOnConveyorBeltListMaintainer:
         s.list = []
         s.number = 0
         s.listener = tf.TransformListener()
-        broadcastFrequency = 1.0
+        broadcastFrequency = 5.0
         rospy.Timer(rospy.Duration(1.0/broadcastFrequency), 
                     s.removeObjFromListCallback, oneshot=False) 
 
@@ -123,7 +125,7 @@ class ObjTfBroadcaster:
         s.objOnConveyorBeltListMaintainer = objOnConveyorBeltListMaintainer
         s.broadcaster = tf.TransformBroadcaster()
 
-        broadcastFrequency = 50.0
+        broadcastFrequency = 100.0
         rospy.Timer(rospy.Duration(1.0/broadcastFrequency), s.broadcastCallback, oneshot=False)        
     
     def broadcastCallback(s, event):
@@ -133,10 +135,12 @@ class ObjTfBroadcaster:
             name = obj.obj_id
             x = obj.boundingBox[0]
             y = obj.boundingBox[1]
+            width = obj.boundingBox[2]
+            height = obj.boundingBox[3]
             plastictype = obj.plastictype
-            s.broadcastObjectTf(name, x, y, plastictype, z=0)
+            s.broadcastObjectTf(name, x, y,width,height, plastictype, z=0)
 
-    def broadcastObjectTf(s, name, x, y, plastictype, z=0):
+    def broadcastObjectTf(s, name, x, y,width, height, plastictype, z=0):
         global objectcounter 
         pos = SimpleNamespace()
         orient = SimpleNamespace()
@@ -168,8 +172,8 @@ class ObjTfBroadcaster:
         marker.pose.orientation.y = 0.0
         marker.pose.orientation.z = 0.0
         marker.pose.orientation.w = 1.0
-        marker.scale.x = 0.1
-        marker.scale.y = 0.1
+        marker.scale.x = height
+        marker.scale.y = width
         marker.scale.z = 0.1
         marker.header.frame_id = "/"+name
         marker.header.stamp = rospy.get_rostime()
@@ -198,7 +202,7 @@ class ConveyorBelt:
         s.speed = 0
         s.startTime = rospy.get_time()
 
-        broadcastFrequency = 50.0
+        broadcastFrequency = 100.0
         rospy.Timer(rospy.Duration(1.0/broadcastFrequency), s.broadcastCallback, oneshot=False)                
 
     def broadcastCallback(s, event):
