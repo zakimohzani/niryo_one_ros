@@ -107,12 +107,14 @@ def bounding_box(frame, mask):
             for cnt in cnts:
                 bigrect = cv2.boundingRect(cnt)
                 rect = cv2.minAreaRect(cnt)
-                box = cv2.boxPoints(rect)
+                #print(rect)
+                box = cv2.cv.BoxPoints(rect)
                 box = np.int0(box)
                 y_values = [box[0][1], box[1][1], box[2][1], box[3][1]]
                 if min(y_values) > 220:
                     if cv2.contourArea(cnt)>500:
                         selected_cnts.append(cnt)
+
         try:
             cnt = max(selected_cnts, key=cv2.contourArea)
         except:
@@ -120,14 +122,14 @@ def bounding_box(frame, mask):
         # for cnt in selected_cnts:
         bigrect = cv2.boundingRect(cnt)
         rect = cv2.minAreaRect(cnt)
-        box = cv2.boxPoints(rect)
+        box = cv2.cv.BoxPoints(rect)
         box = np.int0(box)
         cv2.drawContours(frame, [box], 0, (0, 255), 2)
        # cv2.imshow('Bounding Box', frame)
         frame_copy = frame.copy()
-	cv2.line(frame_copy, (0,220),(200,220),(255,0,0,), thickness_small)
-	cv2.line(frame_copy, (0,525),(200,525),(0,0,255,),thickness_small)
-        frameCopy = cv2.rotate(frame_copy, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        cv2.line(frame_copy, (0,220),(200,220),(255,0,0,), thickness_small)
+        cv2.line(frame_copy, (0,525),(200,525),(0,0,255,),thickness_small)
+        #frameCopy = cv2.rotate(frame_copy, cv2.ROTATE_90_COUNTERCLOCKWISE)
         cv2.imshow(" Object Box", frame_copy)
         centre = get_contour_centroid(cnt)
         return box, rect, centre

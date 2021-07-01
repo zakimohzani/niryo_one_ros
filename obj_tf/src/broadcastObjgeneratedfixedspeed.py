@@ -164,14 +164,14 @@ class ObjTfBroadcaster:
             marker.type = Marker.CYLINDER
         marker.action=Marker.ADD
         marker.id=objectcounter
-        marker.lifetime=rospy.Duration()
+        marker.lifetime=rospy.Duration(10)
         marker.pose.position.x = 0
         marker.pose.position.y = 0
         marker.pose.position.z = 0
         marker.pose.orientation.x = 0.0
         marker.pose.orientation.y = 0.0
         marker.pose.orientation.z = 0.0
-        marker.pose.orientation.w = 1.0
+        marker.pose.orientation.w = 0.0
         marker.scale.x = height
         marker.scale.y = width
         marker.scale.z = 0.1
@@ -179,7 +179,7 @@ class ObjTfBroadcaster:
         marker.header.stamp = rospy.get_rostime()
         marker.header.seq = 1
         if plastictype == 0:
-            marker.color=ColorRGBA(1.0, 0.0, 0.0,1)
+            marker.color=ColorRGBA(0.0, 0.0, 1.0,1)
         else:
             marker.color=ColorRGBA(0.0, 1.0, 0.0,1)
         #lifetime=0,
