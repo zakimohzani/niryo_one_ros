@@ -85,6 +85,8 @@ find_package(catkin REQUIRED COMPONENTS
    FILES
    ObjRecognised.msg
    ObjVisualiser.msg
+   WasteItem.msg
+   WasteItemArr.msg
 #   Message2.msg
  )
 
