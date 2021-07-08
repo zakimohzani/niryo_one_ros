@@ -5,7 +5,11 @@
 	</node>
 
     <node pkg="tf" type="static_transform_publisher" name="neels_cam_tf_publisher" 
+<<<<<<< HEAD
           args="0.39 0.45 0.5 0 0 0 world neels_cam 100">
+=======
+          args="0.5 -1.2 0.5 0 0 0 world neels_cam 100">
+>>>>>>> add-feature/PublishListMaintainer
     </node>
 
 </launch>
