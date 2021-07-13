@@ -148,7 +148,11 @@ def run():
 
         jtp = JointTrajectoryPoint()
         jtp.positions = copy.copy(joint_goal)
+<<<<<<< HEAD
         jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.1
+=======
+        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.6
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
         jtp.time_from_start.nsecs = 10000000
         jt.points.append(jtp)
         jt.joint_names = respIK.solution.joint_state.name

@@ -214,10 +214,18 @@ def state_picking_up_obj():
 
         if not positions:
             print("Invalid FK")
+<<<<<<< HEAD
             continue
 
         joint_currently = group.get_current_joint_values()
         joint_goal = group.get_current_joint_values()
+=======
+            continue   
+
+        joint_goal = group.get_current_joint_values()
+        print("current joint vals")
+        print(joint_goal)
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
 
         # HACK: resolve this list-tuple dilemma.
         joint_goal[0] = positions[0]
@@ -226,6 +234,7 @@ def state_picking_up_obj():
         joint_goal[3] = positions[3]
         joint_goal[4] = positions[4]
         joint_goal[5] = positions[5]
+<<<<<<< HEAD
         
         print("current joint vals")
         print(joint_currently)
@@ -235,6 +244,12 @@ def state_picking_up_obj():
 
         #trying to catch the object by adding extra movement in the desired joint
         joint_goal[0] = joint_goal[0]+ 0
+=======
+        print("target joint vals")
+        print(joint_goal)        
+
+
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
 
         goal = ExecuteTrajectoryGoal()
 
@@ -243,6 +258,7 @@ def state_picking_up_obj():
         rt = RobotTrajectory()
         jt = JointTrajectory()
         jt.header.frame_id = '/world'
+<<<<<<< HEAD
         jt.header.stamp.secs = 0
         jt.header.stamp.nsecs = 0
 
@@ -264,6 +280,19 @@ def state_picking_up_obj():
         print("Joint trajectory")
         print(jt)        
 
+=======
+        jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jt.points.append(jtp)
+
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.02
+        jtp.time_from_start.nsecs = 10000000
+        jt.points.append(jtp)
+        jt.joint_names = respIK.solution.joint_state.name
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
         rt.joint_trajectory = jt
         goal.trajectory = rt
 

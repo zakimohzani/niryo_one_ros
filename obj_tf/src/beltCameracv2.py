@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import rospy
+
 from broadcastObj import ObjRecogniser
 import cv2
 import pyrealsense2 as rs
@@ -11,19 +12,14 @@ import utilsCopy
 from PIL import Image
 import thread
 
-
-
-
-def object_visualisation(y,x,width,height):
-    objRecogniser = ObjRecogniser()
-    objRecogniser.simulateObjRecognitionCallback(y,x,height,width)
-
 if __name__ == '__main__':
 
     rospy.init_node('obj_recog_camera')
     pipe = rs.pipeline()
     config = rs.config()
     config.enable_device_from_file("/home/niryo/test.bag")
+    # config.enable_stream(rs.stream.depth,1280,720,rs.format.z16,30)
+    # config.enable_stream(rs.stream.color,1280,720,rs.format.bgr8,30)
 
     print('starting pipeline')
     profile = pipe.start(config)
@@ -33,7 +29,7 @@ if __name__ == '__main__':
     #     except:
     #         x = x-1
     area = 0
-
+    objRecogniser = ObjRecogniser()
     while not rospy.is_shutdown():
         
         print('waiting for frames')
@@ -63,7 +59,7 @@ if __name__ == '__main__':
         cv2.line(frameCopy,(0,525),(1280,525),(0,0,255),thickness_small)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         shape = frame.shape
-        cv2.imshow("frame", frame)
+        #cv2.imshow("frame", frame)
         # calculate mask for frame (black and white image)
         mask = utilsCopy.objs_mask(frame)
         try:
@@ -80,14 +76,17 @@ if __name__ == '__main__':
         
         #dependant on camera position wrt workspace origin. re-measure for accuracy
         x = float((x-20))/float(1000)
-        y = ((y-47))/(1000)
+        y = float((y-47))/float(1000)
         width = float(width)/1000.0
         height = float(height)/1000.0
         print("Centre of co-ordinates (x,y) wrt camera is {},{}".format(x,y))
         print("width and height are : {},{}".format(width,height))
-        if abs(area - new_area) >10000:
-            thread.start_new_thread(object_visualisation,(y,x,width,height))
+        if (area - new_area) >5000 or (new_area-area) > 5000:
+            print("Visualising object")
+            
+            objRecogniser.simulateObjRecognitionCallback(y,x,height,width)
             area = new_area
         key = cv2.waitKey(1)
         if key == 'escape':
             quit()
+

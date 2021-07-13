@@ -19,10 +19,16 @@ import operator
 from moveit_python_tools.get_ik import GetIK
 from moveit_python_tools.get_fk import GetFK
 from geometry_msgs.msg import PoseStamped
+<<<<<<< HEAD
 from sensor_msgs.msg import JointState
 
 from niryo_one_python_api.niryo_one_api import *
 import math
+=======
+
+
+
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
 
 # I didn't make a class, so I'm passing some moveit components via this variable
 global moveitNs
@@ -35,8 +41,11 @@ global currentState
 def run():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('move_arm_node')
+<<<<<<< HEAD
     rate = rospy.Rate(0.5)
 
+=======
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
     robot = moveit_commander.RobotCommander()
     scene = moveit_commander.PlanningSceneInterface()
 
@@ -97,11 +106,16 @@ def run():
     resp = gfk.get_current_fk()
     from moveit_python_tools.friendly_error_codes import moveit_error_dict
     rospy.loginfo(moveit_error_dict[resp.error_code.val])
+<<<<<<< HEAD
     rospy.loginfo("Printing resp")
     if resp:
         rospy.loginfo(resp)
     else:
         rospy.loginfo("empty response")
+=======
+    rospy.loginfo(resp)
+
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
     print("End of GetFK")
 
     if not positions:
@@ -116,6 +130,7 @@ def run():
         joint_goal[3] = positions[3]
         joint_goal[4] = positions[4]
         joint_goal[5] = positions[5]
+<<<<<<< HEAD
 
         # joint_goal[0] -= 0.005
         # joint_goal[1] += 0.005
@@ -140,18 +155,30 @@ def run():
         print(jointvalues)
         
 
+=======
+        print("target joint vals")
+        print(joint_goal)
+
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
         print "============ Press `Enter` to call moveit go()"
         raw_input()
         startTime = rospy.get_time()        
         group.go(joint_goal, wait=True)
         simTime = rospy.get_time() - startTime
         print("Planning time: %f" % simTime)
+<<<<<<< HEAD
         moveitjointvalues = group.get_current_joint_values()
         print("observation pose")
         print(moveitjointvalues)
 
         print "============ Press `Enter` to call ExecuteTrajectoryAction"
         # joint_goal[0] = joint_goal[0]-0.1
+=======
+
+
+        print "============ Press `Enter` to call ExecuteTrajectoryAction"
+        joint_goal[0] = joint_goal[0]+0.1 
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
 
         raw_input()
         import actionlib
@@ -167,6 +194,7 @@ def run():
         from moveit_msgs.msg import RobotTrajectory
         from trajectory_msgs.msg import JointTrajectory
         from trajectory_msgs.msg import JointTrajectoryPoint
+<<<<<<< HEAD
         from niryo_one_msgs.srv import generatetraj,generatetrajResponse
         rt = RobotTrajectory()
         jt = JointTrajectory()
@@ -199,6 +227,21 @@ def run():
         print("Joint trajectory")
         print(jt)
 
+=======
+        rt = RobotTrajectory()
+        jt = JointTrajectory()
+        jt.header.frame_id = '/world'
+        jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jt.points.append(jtp)
+
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.6
+        jtp.time_from_start.nsecs = 10000000
+        jt.points.append(jtp)
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
         jt.joint_names = respIK.solution.joint_state.name
         rt.joint_trajectory = jt
         goal.trajectory = rt
@@ -218,10 +261,17 @@ def run():
 
 
     import numpy as np
+<<<<<<< HEAD
     y1 = np.arange(-0.2,0.0,0.04)
     y2 = y1[::-1]
     yrange = np.concatenate([y1,y2])
          
+=======
+    y1 = np.arange(-0.2,0.2,0.04)
+    y2 = y1[::-1]
+    yrange = np.concatenate([y1,y2])
+
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
     for i in yrange:
         print(i)
     
@@ -230,6 +280,7 @@ def run():
     while not rospy.is_shutdown():
         i = i + 1
 
+<<<<<<< HEAD
         #oscillate between a range, uses y1 and y2 from above
         # if i > (yrange.size-1):
         #     i = 0
@@ -252,6 +303,17 @@ def run():
         ps.pose.position.y = currentPose.pose.position.y + oscillateY
         ps.pose.position.z = currentPose.pose.position.z
         ps.pose.orientation = currentPose.pose.orientation
+=======
+        if i > (yrange.size-1):
+            i = 0
+        print(yrange[i])
+
+        # get desired pose
+        ps.pose.position.x = 0.2
+        ps.pose.position.y = yrange[i]
+        ps.pose.position.z = 0.2
+        ps.pose.orientation = start_pose.orientation
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
         respIK = gik.get_ik(ps)
         print("Printing result of GetIK")
         print(respIK)
@@ -267,14 +329,19 @@ def run():
         joint_goal[3] = positions[3]
         joint_goal[4] = positions[4]
         joint_goal[5] = positions[5]
+<<<<<<< HEAD
         
         #generating trajectory from matlab trajectory generation ros service
         trajectory = generate_traj(currentjointvalues,joint_goal)
+=======
+
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
 
         # send that message over
         rt = RobotTrajectory()
         jt = JointTrajectory()
         jt.header.frame_id = '/world'
+<<<<<<< HEAD
         jt.header.stamp.secs = 0
         jt.header.stamp.nsecs = 0
         jtp = JointTrajectoryPoint()
@@ -295,15 +362,39 @@ def run():
         goal.trajectory = rt
         print("joint trajectory")
         print(jt)
+=======
+        jt.header.stamp = rospy.Time.now() + rospy.Duration(0.5)
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jt.points.append(jtp)
+
+        jtp = JointTrajectoryPoint()
+        jtp.positions = copy.copy(joint_goal)
+        jtp.positions[0] = copy.copy(jtp.positions[0]) + 0.02
+        jtp.time_from_start.nsecs = 10000000
+        jt.points.append(jtp)
+        jt.joint_names = respIK.solution.joint_state.name
+        rt.joint_trajectory = jt
+        goal.trajectory = rt
+
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
         client.send_goal(goal, feedback_cb=feedback_callback)
 
         client.wait_for_result()
 
+<<<<<<< HEAD
         rate.sleep()
+=======
+        time.sleep(1)
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250
 
 
 if __name__ == '__main__':
     try:
         run()
     except rospy.ROSInterruptException:
+<<<<<<< HEAD
         pass
+=======
+        pass
+>>>>>>> 979d5a821e58ee24e981d4f620f9222c64e72250

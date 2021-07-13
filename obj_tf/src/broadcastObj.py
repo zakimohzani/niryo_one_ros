@@ -7,6 +7,8 @@ import random
 from SimpleNamespace import SimpleNamespace
 from obj_tf.msg import ObjRecognised
 from obj_tf.msg import ObjVisualiser
+from obj_tf.msg import WasteItem
+from obj_tf.msg import WasteItemArr
 from std_msgs.msg import Float32
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Quaternion, Pose, Point, Vector3 
@@ -45,12 +47,12 @@ class ObjRecogniser():
 
         else:
             s.flip = 0.5
-            msg.plastictype = 1
+            msg.plastictype = 0
         
         msg.width = width
         msg.height = height
         msg.x = x
-        msg.y = 0
+        msg.y = y
         msg.z = 0.2 
         msg.orientation = 0
         msg.state = 1
@@ -58,14 +60,14 @@ class ObjRecogniser():
         s.publisher.publish(msg)
 
 #class defining object on conveyor belt
-class WasteItem:
-    def __init__(s,x,y,width,height,orientation,ObjectName,plastictype,state):
+# class WasteItem:
+#     def __init__(s,x,y,width,height,orientation,ObjectName,plastictype,state):
 
-        s.obj_id = ObjectName
-        s.time = rospy.Time.now()
-        s.boundingBox = [x,y,width,height,orientation]
-        s.plastictype = plastictype 
-        s.state = state
+#         s.obj_id = ObjectName
+#         s.time = rospy.Time.now()
+#         s.boundingBox = [x,y,width,height,orientation]
+#         s.plastictype = plastictype 
+#         s.state = state
 
 
 class ObjOnConveyorBeltListMaintainer:
@@ -76,6 +78,7 @@ class ObjOnConveyorBeltListMaintainer:
     def __init__(s):
         s.subscriber = rospy.Subscriber('/objDetected', ObjRecognised, s.subscriberCallback)
         s.publisher = rospy.Publisher('/objVisualiser', ObjVisualiser, queue_size=1)
+        s.list_pub = rospy.Publisher('/activeObjects', WasteItemArr, queue_size=1)
         s.list = []
         s.number = 0
         s.listener = tf.TransformListener()
@@ -88,7 +91,8 @@ class ObjOnConveyorBeltListMaintainer:
         print("SUB: received it")
         print(msg)
         print("SUB:------------")
-        
+        lst = s.listener.getFrameStrings()
+        print("Number of tfs : " + str(len(lst)))
         (trans,rot) = s.listener.lookupTransform('/conveyor_belt', '/neels_cam', rospy.Time(0))        
         
         # mapping = { "name": "obj" + str(s.number), \
@@ -97,7 +101,16 @@ class ObjOnConveyorBeltListMaintainer:
         #             "y": trans[1] + msg.y \
         #             }     
 
-        s.wasteItem = WasteItem(trans[0]+msg.x,trans[1]+msg.y,msg.width,msg.height,msg.orientation,"obj"+str(s.number),msg.plastictype,msg.state)
+        # s.wasteItem = WasteItem()trans[0]+msg.x,trans[1]+msg.y,msg.width,msg.height,msg.orientation,"obj"+str(s.number),msg.plastictype,msg.state)
+        s.wasteItem = WasteItem()
+        s.wasteItem.boundingBox = [trans[0] + msg.x,trans[1]+msg.y, msg.width, msg.height, msg.orientation]
+        print("Trans values are ",trans[0], " ",trans[1])
+        s.wasteItem.obj_id = "obj" + str(s.number)
+        s.wasteItem.obj_num = s.number
+        s.wasteItem.plastictype = msg.plastictype
+        s.wasteItem.state = msg.state
+        s.wasteItem.time = rospy.Time.now()
+
         s.newmsg = ObjVisualiser()
         s.newmsg.name = "/obj"+str(s.number)
         s.newmsg.plastictype = msg.plastictype
@@ -119,6 +132,11 @@ class ObjOnConveyorBeltListMaintainer:
             #print("%s, Y:%f" % (item["name"], trans[1]))
             if trans[1] < y_pos_to_remove_obj:
                 s.list.remove(item)
+        s.lst_msg = WasteItemArr()
+        s.lst_msg.objects = s.list
+        s.lst_msg.header.stamp = rospy.Time.now()
+        s.list_pub.publish(s.lst_msg)
+
     
 class ObjTfBroadcaster:
     def __init__(s, objOnConveyorBeltListMaintainer):
@@ -179,7 +197,7 @@ class ObjTfBroadcaster:
         marker.header.stamp = rospy.get_rostime()
         marker.header.seq = 1
         if plastictype == 0:
-            marker.color=ColorRGBA(1.0, 0.0, 0.0,1)
+            marker.color=ColorRGBA(0.0, 0.0, 1.0,1)
         else:
             marker.color=ColorRGBA(0.0, 1.0, 0.0,1)
         #lifetime=0,
