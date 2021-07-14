@@ -5,7 +5,7 @@
 	</node>
 
     <node pkg="tf" type="static_transform_publisher" name="neels_cam_tf_publisher" 
-          args="0.47 0.18 0.57 0 0 0 world neels_cam 100">
+          args="0.47 0.15 0.57 0 0 0 world initial_cam 100">
     </node>
 
 </launch>

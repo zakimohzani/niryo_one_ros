@@ -44,13 +44,18 @@ class ObjRecogniser():
         if s.flip == 0.5:
             s.flip = -0.5
             msg.plastictype = 0
+ 
 
         else:
             s.flip = 0.5
             msg.plastictype = 0
-        
-        msg.width = width
-        msg.height = height
+        if width<height:
+            msg.width = height
+            msg.height = width
+        else:
+            msg.width = width
+            msg.height = height
+
         msg.x = x
         msg.y = y
         msg.z = 0.2 
@@ -93,7 +98,7 @@ class ObjOnConveyorBeltListMaintainer:
         print("SUB:------------")
         lst = s.listener.getFrameStrings()
         print("Number of tfs : " + str(len(lst)))
-        (trans,rot) = s.listener.lookupTransform('/conveyor_belt', '/neels_cam', rospy.Time(0))        
+        (trans,rot) = s.listener.lookupTransform('/conveyor_belt', '/initial_cam', rospy.Time(0))        
         
         # mapping = { "name": "obj" + str(s.number), \
         #             "detectedTime" : msg.detectedTime, \
@@ -179,7 +184,7 @@ class ObjTfBroadcaster:
         if plastictype == 0:
             marker.type=Marker.CUBE
         else:
-            marker.type = Marker.CYLINDER
+            marker.type = Marker.CUBE
         marker.action=Marker.ADD
         marker.id=objectcounter
         marker.lifetime=rospy.Duration(10)

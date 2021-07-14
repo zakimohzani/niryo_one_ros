@@ -80,11 +80,11 @@ def take_img(client):
 
 
 def objs_mask(img):
-    boundaries = [([0, 50, 0], [100, 255, 100])]
+    boundaries = [([0, 50, 0], [150, 255, 150])]
     for (lower, upper) in boundaries:
         lower = np.array(lower, dtype="uint8")
         upper = np.array(upper, dtype="uint8")
-        mask = cv2.inRange(img, lower, upper)
+        mask = cv2.inRange(img, lower, upper)    
     thresh = cv2.threshold(
         mask, 0, 255, cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
     area1 = np.array([[[0, 0], [200, 0], [200, 20], [0, 20]]], dtype=np.int32)
@@ -92,13 +92,20 @@ def objs_mask(img):
     area2 = np.array(
         [[[0, 520], [200, 520], [200, 541], [0, 541]]], dtype=np.int32)
     cv2.fillPoly(thresh, area2, 0)
+    blur = cv2.GaussianBlur(img,(21,21),0)
+    edges_high_thresh = cv2.Canny(blur,10,80)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(9,9))
+    dilated = cv2.dilate(edges_high_thresh,kernel)
+
+    pre_mask = cv2.cvtColor(blur,cv2.COLOR_BGR2GRAY)
+    mask = cv2.threshold(pre_mask,0,255,cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
     return thresh
 
 
 def bounding_box(frame, mask):
     """Get bounding box of object"""
-    cnts, hierarchy = cv2.findContours(
-        mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)[-2:]
+    
+    cnts, hierarchy = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)[-2:]
     selected_cnts = []
     if cnts is not None:
         counter = 0
@@ -112,35 +119,35 @@ def bounding_box(frame, mask):
                 box = np.int0(box)
                 y_values = [box[0][1], box[1][1], box[2][1], box[3][1]]
                 x_values = [box[0][0], box[1][0], box[2][0], box[3][0]]                
-                if min(y_values) > 20 and max(y_values) < 400:
-                    if min(x_values) > 600 and max(x_values)<1200 :
+                if min(y_values) > 20 and max(y_values) < 700:
+                    if min(x_values) > 580 and max(x_values)<1200 :
                         if cv2.contourArea(cnt)>500:
                             selected_cnts.append(cnt)
-
+        print("Number of eligible contours: ",len(selected_cnts))
         try:
             cnt = max(selected_cnts, key=cv2.contourArea)
+            print("Area of contour: ",cv2.contourArea(cnt))
         except:
             return None
         # for cnt in selected_cnts:
-        if cv2.contourArea(cnt) > 10000:
+        if cv2.contourArea(cnt) > 2000:
             print("contour area is", cv2.contourArea(cnt))
             bigrect = cv2.boundingRect(cnt)
             rect = cv2.minAreaRect(cnt)
             box = cv2.cv.BoxPoints(rect)
             box = np.int0(box)
-            cv2.drawContours(frame, [box], 0, (0, 255), 2)
+            cv2.drawContours(frame, [box], 0, (255, 255), 2)
         # cv2.imshow('Bounding Box', frame)
             frame_copy = frame.copy()
-            cv2.line(frame_copy,(0,20),(1280,20),(255,0,0),thickness_small)
-            cv2.line(frame_copy,(0,400),(1280,400),(0,0,255),thickness_small)
-            cv2.line(frame_copy,(600,0),(600,720),(255,0,0),thickness_small)
-            cv2.line(frame_copy,(1200,0),(1200,720),(0,0,255),thickness_small)
+            # cv2.line(frame_copy,(0,20),(1920,20),(255,0,0),thickness_small)
+            # cv2.line(frame_copy,(0,400),(1920,400),(0,0,255),thickness_small)
+            # cv2.line(frame_copy,(900,0),(900,1080),(255,0,0),thickness_small)
+            # cv2.line(frame_copy,(1900,0),(1900,1080),(0,0,255),thickness_small)
             #frameCopy = cv2.rotate(frame_copy, cv2.ROTATE_90_COUNTERCLOCKWISE)
-            cv2.imshow(" Object Box", frame_copy)
+            #cv2.imshow(" Object Box", frame)
             centre = get_contour_centroid(cnt)
             return box, rect, centre
     return None
-
 
 def standardize_img(img):
     array_type = img.dtype

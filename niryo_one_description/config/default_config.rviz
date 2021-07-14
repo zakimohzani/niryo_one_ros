@@ -9,7 +9,7 @@ Panels:
         - /RobotModel1
         - /TF1/Frames1
       Splitter Ratio: 0.5
-    Tree Height: 565
+    Tree Height: 359
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -120,12 +120,182 @@ Visualization Manager:
           Value: false
         base_link:
           Value: true
+        conveyor_belt:
+          Value: true
         elbow_link:
           Value: false
         forearm_link:
           Value: false
         hand_link:
           Value: false
+        initial_cam:
+          Value: true
+        obj0:
+          Value: true
+        obj1:
+          Value: true
+        obj10:
+          Value: true
+        obj11:
+          Value: true
+        obj12:
+          Value: true
+        obj13:
+          Value: true
+        obj14:
+          Value: true
+        obj15:
+          Value: true
+        obj16:
+          Value: true
+        obj17:
+          Value: true
+        obj18:
+          Value: true
+        obj19:
+          Value: true
+        obj2:
+          Value: true
+        obj20:
+          Value: true
+        obj21:
+          Value: true
+        obj22:
+          Value: true
+        obj23:
+          Value: true
+        obj24:
+          Value: true
+        obj25:
+          Value: true
+        obj26:
+          Value: true
+        obj27:
+          Value: true
+        obj28:
+          Value: true
+        obj29:
+          Value: true
+        obj3:
+          Value: true
+        obj30:
+          Value: true
+        obj31:
+          Value: true
+        obj32:
+          Value: true
+        obj33:
+          Value: true
+        obj34:
+          Value: true
+        obj35:
+          Value: true
+        obj36:
+          Value: true
+        obj37:
+          Value: true
+        obj38:
+          Value: true
+        obj39:
+          Value: true
+        obj4:
+          Value: true
+        obj40:
+          Value: true
+        obj41:
+          Value: true
+        obj42:
+          Value: true
+        obj43:
+          Value: true
+        obj44:
+          Value: true
+        obj45:
+          Value: true
+        obj46:
+          Value: true
+        obj47:
+          Value: true
+        obj48:
+          Value: true
+        obj49:
+          Value: true
+        obj5:
+          Value: true
+        obj50:
+          Value: true
+        obj51:
+          Value: true
+        obj52:
+          Value: true
+        obj53:
+          Value: true
+        obj54:
+          Value: true
+        obj55:
+          Value: true
+        obj56:
+          Value: true
+        obj57:
+          Value: true
+        obj58:
+          Value: true
+        obj59:
+          Value: true
+        obj6:
+          Value: true
+        obj60:
+          Value: true
+        obj61:
+          Value: true
+        obj62:
+          Value: true
+        obj63:
+          Value: true
+        obj64:
+          Value: true
+        obj65:
+          Value: true
+        obj66:
+          Value: true
+        obj67:
+          Value: true
+        obj68:
+          Value: true
+        obj69:
+          Value: true
+        obj7:
+          Value: true
+        obj70:
+          Value: true
+        obj71:
+          Value: true
+        obj72:
+          Value: true
+        obj73:
+          Value: true
+        obj74:
+          Value: true
+        obj75:
+          Value: true
+        obj76:
+          Value: true
+        obj77:
+          Value: true
+        obj78:
+          Value: true
+        obj79:
+          Value: true
+        obj8:
+          Value: true
+        obj80:
+          Value: true
+        obj81:
+          Value: true
+        obj82:
+          Value: true
+        obj9:
+          Value: true
         shoulder_link:
           Value: false
         tool_link:
@@ -150,6 +320,175 @@ Visualization Manager:
                       hand_link:
                         tool_link:
                           {}
+          conveyor_belt:
+            obj0:
+              {}
+            obj1:
+              {}
+            obj10:
+              {}
+            obj11:
+              {}
+            obj12:
+              {}
+            obj13:
+              {}
+            obj14:
+              {}
+            obj15:
+              {}
+            obj16:
+              {}
+            obj17:
+              {}
+            obj18:
+              {}
+            obj19:
+              {}
+            obj2:
+              {}
+            obj20:
+              {}
+            obj21:
+              {}
+            obj22:
+              {}
+            obj23:
+              {}
+            obj24:
+              {}
+            obj25:
+              {}
+            obj26:
+              {}
+            obj27:
+              {}
+            obj28:
+              {}
+            obj29:
+              {}
+            obj3:
+              {}
+            obj30:
+              {}
+            obj31:
+              {}
+            obj32:
+              {}
+            obj33:
+              {}
+            obj34:
+              {}
+            obj35:
+              {}
+            obj36:
+              {}
+            obj37:
+              {}
+            obj38:
+              {}
+            obj39:
+              {}
+            obj4:
+              {}
+            obj40:
+              {}
+            obj41:
+              {}
+            obj42:
+              {}
+            obj43:
+              {}
+            obj44:
+              {}
+            obj45:
+              {}
+            obj46:
+              {}
+            obj47:
+              {}
+            obj48:
+              {}
+            obj49:
+              {}
+            obj5:
+              {}
+            obj50:
+              {}
+            obj51:
+              {}
+            obj52:
+              {}
+            obj53:
+              {}
+            obj54:
+              {}
+            obj55:
+              {}
+            obj56:
+              {}
+            obj57:
+              {}
+            obj58:
+              {}
+            obj59:
+              {}
+            obj6:
+              {}
+            obj60:
+              {}
+            obj61:
+              {}
+            obj62:
+              {}
+            obj63:
+              {}
+            obj64:
+              {}
+            obj65:
+              {}
+            obj66:
+              {}
+            obj67:
+              {}
+            obj68:
+              {}
+            obj69:
+              {}
+            obj7:
+              {}
+            obj70:
+              {}
+            obj71:
+              {}
+            obj72:
+              {}
+            obj73:
+              {}
+            obj74:
+              {}
+            obj75:
+              {}
+            obj76:
+              {}
+            obj77:
+              {}
+            obj78:
+              {}
+            obj79:
+              {}
+            obj8:
+              {}
+            obj80:
+              {}
+            obj81:
+              {}
+            obj82:
+              {}
+            obj9:
+              {}
+          initial_cam:
+            {}
       Update Interval: 0
       Value: true
     - Class: rviz/MarkerArray
@@ -165,7 +504,90 @@ Visualization Manager:
       Marker Topic: visualization_marker
       Name: Marker
       Namespaces:
-        {}
+        lines: true
+        obj0: true
+        obj1: true
+        obj10: true
+        obj11: true
+        obj12: true
+        obj13: true
+        obj14: true
+        obj15: true
+        obj16: true
+        obj17: true
+        obj18: true
+        obj19: true
+        obj2: true
+        obj20: true
+        obj21: true
+        obj22: true
+        obj23: true
+        obj24: true
+        obj25: true
+        obj26: true
+        obj27: true
+        obj28: true
+        obj29: true
+        obj3: true
+        obj30: true
+        obj31: true
+        obj32: true
+        obj33: true
+        obj34: true
+        obj35: true
+        obj36: true
+        obj37: true
+        obj38: true
+        obj39: true
+        obj4: true
+        obj40: true
+        obj41: true
+        obj42: true
+        obj43: true
+        obj44: true
+        obj45: true
+        obj46: true
+        obj47: true
+        obj48: true
+        obj49: true
+        obj5: true
+        obj50: true
+        obj51: true
+        obj52: true
+        obj53: true
+        obj54: true
+        obj55: true
+        obj56: true
+        obj57: true
+        obj58: true
+        obj59: true
+        obj6: true
+        obj60: true
+        obj61: true
+        obj62: true
+        obj63: true
+        obj64: true
+        obj65: true
+        obj66: true
+        obj67: true
+        obj68: true
+        obj69: true
+        obj7: true
+        obj70: true
+        obj71: true
+        obj72: true
+        obj73: true
+        obj74: true
+        obj75: true
+        obj76: true
+        obj77: true
+        obj78: true
+        obj79: true
+        obj8: true
+        obj80: true
+        obj81: true
+        obj82: true
+        obj9: true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -193,7 +615,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 4.09296036
+      Distance: 2.45452929
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
@@ -208,18 +630,18 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.49039802
+      Pitch: 0.935397744
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.0104078855
+      Yaw: 3.08541441
     Saved: ~
 Window Geometry:
   Displays:
-    collapsed: false
-  Height: 846
-  Hide Left Dock: false
-  Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a000002c4fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000028000002c4000000d700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000002c4fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730100000028000002c4000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000005990000003efc0100000002fb0000000800540069006d00650100000000000005990000030000fffffffb0000000800540069006d0065010000000000000450000000000000000000000314000002c400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+    collapsed: true
+  Height: 583
+  Hide Left Dock: true
+  Hide Right Dock: true
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a000002c4fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730000000028000002c4000000d700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f000001bdfc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a005600690065007700730000000028000001bd000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000003000000003efc0100000002fb0000000800540069006d00650100000000000003000000030000fffffffb0000000800540069006d0065010000000000000450000000000000000000000300000001bd00000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -227,7 +649,7 @@ Window Geometry:
   Tool Properties:
     collapsed: false
   Views:
-    collapsed: false
-  Width: 1433
-  X: 467
-  Y: 47
+    collapsed: true
+  Width: 768
+  X: 1152
+  Y: 24
