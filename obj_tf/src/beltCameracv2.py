@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 import rospy
-
+import argparse
 from broadcastObj import ObjRecogniser
 import cv2
 import pyrealsense2 as rs
@@ -17,7 +17,7 @@ if __name__ == '__main__':
     rospy.init_node('obj_recog_camera')
     pipe = rs.pipeline()
     config = rs.config()
-    config.enable_device_from_file("./test1.bag")
+    config.enable_device_from_file("/home/niryo/test1.bag")
     # config.enable_stream(rs.stream.depth,1280,720,rs.format.z16,30)
     # config.enable_stream(rs.stream.color,1280,720,rs.format.bgr8,30)
     
